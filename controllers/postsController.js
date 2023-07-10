@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken")
 const Post = require("../models/post")
 
 exports.postsPage = asyncHandler(async (req, res, next) => {
-
+    //render post page
 })
 
 exports.postsSubmit = asyncHandler(async (req, res, next) => {

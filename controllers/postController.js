@@ -11,6 +11,7 @@ exports.postPage = asyncHandler(async (req, res, next) => {
     //get the post from req.params.id. if DNE, render error page
     try {
         const post = await Post.findOne({ _id: req.params.postid }).populate("user").exec();
+        const allCommentOnPost = await Comment.find({post: req.params.postid}).exec();
         const userIsAuthor = await isUserAuthor(req.token, post.user.username);
 
         if (post.isPrivate) {
