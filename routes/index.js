@@ -29,7 +29,7 @@ router.post('/login', loginController.loginSubmit);
 router.get("/sign-up", signupController.signupPage)
 router.post("/sign-up", signupController.signupSubmit)
 // ACCOUNT page
-router.get("/account", accountController.accountPage)
+router.get("/account/:accountid", accountController.accountPage)
 
 // post-creator page
 router.get("/posts",postsController.postsPage)
