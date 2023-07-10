@@ -25,7 +25,7 @@ exports.postsSubmit = asyncHandler(async (req, res, next) => {
                 isPrivate: false
             })
 
-            // await post.save();
+            await post.save();
 
             const a = await Post.find().populate("user").exec()
 

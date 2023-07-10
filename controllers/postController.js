@@ -1,5 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const Post = require("../models/post")
+const Comment = require("../models/comment")
+
 const jwt = require("jsonwebtoken")
 const util = require('util');
 
@@ -31,17 +33,39 @@ exports.postPage = asyncHandler(async (req, res, next) => {
     }
 })
 exports.postUpdateGet = asyncHandler(async (req, res, next) => {
-
+    //render update form
 })
 exports.postUpdatePost = asyncHandler(async (req, res, next) => {
-
+    try {
+        const postToUpdate = await Post.findOne({ _id: req.params.postid }).exec();
+        const updatedPost = {
+            $set: {
+                title: "newTitle",
+                content: "newContent",
+                isPrivate: true,
+            }
+        };
+        await Post.updateOne(postToUpdate, updatedPost);
+        res.json("post updated")
+    } catch (e) {
+        console.error("post could not be updated. please try again.")
+    }
 })
 
 exports.postDeleteGet = asyncHandler(async (req, res, next) => {
-
+    //render delete form
 })
 exports.postDeletePost = asyncHandler(async (req, res, next) => {
+    try {
+        //delete the post along with the post's comments
+        const post = await Post.findOne({ _id: req.params.postid }).exec();
+        await Post.deleteOne(post)
+        await Comment.deleteMany({ post: req.params.postid })
 
+        res.json("post deleted")
+    } catch (e) {
+        res.json(e)
+    }
 })
 
 async function isUserAuthor(token, authorName) {
