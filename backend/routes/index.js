@@ -19,7 +19,7 @@ const commentController = require('../controllers/commentController');
 
 /* home page. */
 router.get('/', function (req, res, next) {
-	res.render('index', { title: 'Express' });
+	res.json({message:"home page"})
 });
 
 /* login page. */
