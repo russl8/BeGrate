@@ -13,8 +13,8 @@ const loginController = require("../controllers/loginController")
 const signupController = require("../controllers/signupController")
 const postController = require("../controllers/postController")
 const postsController = require("../controllers/postsController");
-const accountController  = require('../controllers/accountController');
-const commentController  = require('../controllers/commentController');
+const accountController = require('../controllers/accountController');
+const commentController = require('../controllers/commentController');
 
 
 /* home page. */
@@ -32,12 +32,12 @@ router.post("/sign-up", signupController.signupSubmit)
 router.get("/account/:accountid", accountController.accountPage)
 
 // post-creator page
-router.get("/posts",postsController.postsPage)
+router.get("/posts", postsController.postsPage)
 router.post("/posts", verifyToken, postsController.postsSubmit);
 
 // INDIVIDUAL post page
-router.get("/posts/:postid",verifyToken, postController.postPage)
-router.post("/posts/:postid",verifyToken, commentController.commentSubmit)
+router.get("/posts/:postid", verifyToken, postController.postPage)
+router.post("/posts/:postid", verifyToken, commentController.commentSubmit)
 
 router.get("/posts/:postid/update", postController.postUpdateGet)
 router.post("/posts/:postid/update", postController.postUpdatePost)
@@ -104,7 +104,6 @@ function verifyToken(req, res, next) {
 		//forbidden status (403)
 		res.sendStatus(403);
 	}
-
 }
 
 module.exports = router;
