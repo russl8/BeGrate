@@ -7,17 +7,44 @@ const bcrypt = require("bcryptjs");
 
 
 exports.signupPage = asyncHandler(async (req, res, next) => {
-    res.json({hi:"hi"})
+    res.json({ hi: "hi" })
 })
+
 exports.signupSubmit = asyncHandler(async (req, res, next) => {
-    //create a mock user
-    const userDetails = {
-        username: "oliispoop",
-        email: "o@gmail.com",
-        password: "password"
+  try {
+    const existingUser = await User.findOne({ username: req.body.username });
+    if (existingUser) {
+      return res.send("User already exists");
     }
-    let passwordError = false;
-    const errors = validationResult(req)
+
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+    const newUser = new User({
+      username: req.body.username,
+      password: hashedPassword,
+      email: req.body.email,
+    });
+
+    await newUser.save();
+    res.send("User Created");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+
+
+// exports.signupSubmit = asyncHandler(async (req, res, next) => {
+    // //create a mock user
+    // const userDetails = {
+    //     username: "oliispoop",
+    //     email: "o@gmail.com",
+    //     password: "password"
+    // }
+    // let passwordError = false;
+    // const errors = validationResult(req)
     // if (req.body.password !== req.body.confirmpassword) {
     // 	passwordError = true
     // }
@@ -28,26 +55,51 @@ exports.signupSubmit = asyncHandler(async (req, res, next) => {
     // 	confirmpassword: req.body.confirmpassword
     // }
 
-    if (!errors.isEmpty()) {
-        console.log("error")
+    // await User.findOne({ username: req.body.username }, async (err, doc) => {
+    //     if (err) { };
+    //     if (doc) res.send("User already exists")
+    //     if (!doc) {
+    //         bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+    //             // if err, do something
+    //             // otherwise, store hashedPassword in DB
+    //             if (!err) {
 
-    } else {
-        bcrypt.hash(userDetails.password, 10, async (err, hashedPassword) => {
-            // if err, do something
-            // otherwise, store hashedPassword in DB
-            if (!err) {
+
+    //                 const newUser = new User({
+    //                     username: req.body.username,
+    //                     password: hashedPassword,
+    //                     email: req.body.email,
+
+    //                 })
+    //                 // await newUser.save();
+    //                 res.send("User Created")
+
+    //             }
+    //         })
+    //     }
+
+    // })
+
+    // if (!errors.isEmpty()) {
+    //     console.log("error")
+
+    // } else {
+    //     bcrypt.hash(userDetails.password, 10, async (err, hashedPassword) => {
+    //         // if err, do something
+    //         // otherwise, store hashedPassword in DB
+    //         if (!err) {
 
 
-                const userHashed = new User({
-                    username: userDetails.username,
-                    password: hashedPassword,
-                    email: userDetails.email
-                });
-                // await userHashed.save();
-                res.json({userHashed})
+    //             const userHashed = new User({
+    //                 username: userDetails.username,
+    //                 password: hashedPassword,
+    //                 email: userDetails.email
+    //             });
+    //             // await userHashed.save();
+    //             res.json({ userHashed })
 
-            }
-        })
+    //         }
+    //     })
 
-    }
-})
+    // }
+// })

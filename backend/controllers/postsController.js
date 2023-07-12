@@ -22,7 +22,8 @@ exports.postsSubmit = asyncHandler(async (req, res, next) => {
                 content: "second post",
                 dateCreated: Date(),
                 user: authData.user,
-                isPrivate: false
+                isPrivate: false,
+                likes: 0
             })
 
             await post.save();

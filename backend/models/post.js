@@ -7,6 +7,8 @@ const PostSchema = new Schema({
     dateCreated: { type: Date, required: true },
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     isPrivate: { type: Boolean, required: true },
+    likes: { type: Number, required: true },
+
 })
 
 // //make url virtual

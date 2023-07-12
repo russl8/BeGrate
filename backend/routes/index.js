@@ -7,7 +7,7 @@ const LocalStrategy = require("passport-local").Strategy
 const User = require("../models/user")
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
-
+const Post = require("../models/post")
 //controllers
 const loginController = require("../controllers/loginController")
 const signupController = require("../controllers/signupController")
@@ -16,11 +16,35 @@ const postsController = require("../controllers/postsController");
 const accountController = require('../controllers/accountController');
 const commentController = require('../controllers/commentController');
 
+// Middleware to set userAuthentication on every request
+router.use((req, res, next) => {
+	// Check if the user is authenticated
+	let isAuthenticated = false;
+
+	jwt.verify(req.token, "secretkey", asyncHandler(async (err, authData) => {
+		if (err) {
+			//user is not signed in.
+			isAuthenticated = false
+		} else {
+			//user is signed in..
+			isAuthenticated = true
+		}
+	}))
+
+	// Set the userAuthentication property on the request object
+	res.locals.userAuthentication = isAuthenticated;
+
+	next();
+});
+
 
 /* home page. */
-router.get('/', function (req, res, next) {
-	res.json({message:"home page"})
-});
+router.get('/', asyncHandler(async (req, res, next) => {
+	const isAuthenticated = res.locals.userAuthentication;
+	const allPosts = await Post.find().populate("user").exec();
+
+	res.json({ message: "home page", isAuthenticated,allPosts })
+}));
 
 /* login page. */
 router.get('/login', loginController.loginPage);
