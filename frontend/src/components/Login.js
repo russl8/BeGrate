@@ -36,7 +36,7 @@ export default function Login() {
             url: "http://localhost:3001/sign-up"
         }).then(res => {
             console.log(res)
-            if (res.data === "User already exists") {
+            if (res.data === "User Created") {
                 console.log("ye");
                 navigate("/")
             }
