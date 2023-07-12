@@ -1,9 +1,9 @@
-import { NavLink } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import React from "react"
 import axios, { Axios } from "axios"
 
 export default function Login() {
-
+    const navigate = useNavigate();
     const [userName, setUserName] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [RuserName, setRUserName] = React.useState("");
@@ -19,7 +19,10 @@ export default function Login() {
             },
             withCredentials: true,
             url: "http://localhost:3001/login"
-        }).then(res => console.log(res))
+        }).then(res => {
+            console.log(res)
+
+        })
     }
     const register = () => {
         axios({
@@ -31,7 +34,13 @@ export default function Login() {
             },
             withCredentials: true,
             url: "http://localhost:3001/sign-up"
-        }).then(res => console.log(res))
+        }).then(res => {
+            console.log(res)
+            if (res.data === "User already exists") {
+                console.log("ye");
+                navigate("/")
+            }
+        })
     }
     return (
         <>
