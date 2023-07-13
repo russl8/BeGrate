@@ -16,27 +16,31 @@ const postsController = require("../controllers/postsController");
 const accountController = require('../controllers/accountController');
 const commentController = require('../controllers/commentController');
 
-// Middleware to set userAuthentication on every request
-router.use((req, res, next) => {
-	// Check if the user is authenticated
-	let isAuthenticated = false;
 
-	jwt.verify(req.token, "secretkey", asyncHandler(async (err, authData) => {
-		if (err) {
-			//user is not signed in.
-			isAuthenticated = false
-		} else {
-			//user is signed in..
-			isAuthenticated = true
-		}
-	}))
-
-	// Set the userAuthentication property on the request object
-	res.locals.userAuthentication = isAuthenticated;
-
-	next();
-});
-
+  
+// // Middleware to set userAuthentication on every request
+// router.use((req, res, next) => {
+// 	// Check if the user is authenticated
+// 	let isAuthenticated = false;
+// 	if (res.locals.token) {
+// 	  jwt.verify(res.locals.token, "secretkey", (err, authData) => {
+// 		if (err) {
+// 		  // User is not signed in.
+// 		  console.log("Not signed in");
+// 		  isAuthenticated = false;
+// 		} else {
+// 		  // User is signed in.
+// 		  console.log("Signed in");
+// 		  isAuthenticated = true;
+// 		}
+// 	  });
+// 	}
+  
+// 	// Set the userAuthentication property on the request object
+// 	res.locals.userAuthentication = isAuthenticated;
+  
+// 	next();
+//   });
 
 /* home page. */
 router.get('/', asyncHandler(async (req, res, next) => {
@@ -49,6 +53,8 @@ router.get('/', asyncHandler(async (req, res, next) => {
 /* login page. */
 router.get('/login', loginController.loginPage);
 router.post('/login', loginController.loginSubmit);
+
+
 //sign up
 router.get("/sign-up", signupController.signupPage)
 router.post("/sign-up", signupController.signupSubmit)
@@ -68,6 +74,7 @@ router.post("/posts/:postid/update", postController.postUpdatePost)
 
 router.get("/posts/:postid/delete", postController.postDeleteGet)
 router.post("/posts/:postid/delete", postController.postDeletePost)
+
 
 
 

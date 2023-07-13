@@ -2,28 +2,14 @@ import { useNavigate } from "react-router-dom";
 import React from "react"
 import axios, { Axios } from "axios"
 
-export default function Login() {
+export default function Login({verifyAuth}) {
     const navigate = useNavigate();
     const [userName, setUserName] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [RuserName, setRUserName] = React.useState("");
     const [Rpassword, setRPassword] = React.useState("");
     const [Remail, setREmail] = React.useState("");
-    const login = () => {
-        axios({
-
-            method: "POST",
-            data: {
-                username: userName,
-                password: password
-            },
-            withCredentials: true,
-            url: "http://localhost:3001/login"
-        }).then(res => {
-            console.log(res)
-
-        })
-    }
+   
     const register = () => {
         axios({
             method: "POST",
@@ -89,7 +75,7 @@ export default function Login() {
                     onChange={(e) => {
                         setPassword(e.target.value)
                     }} />
-                <button onClick={login}>Log In</button>
+                <button onClick={ ()=> verifyAuth(userName,password)}>Log In</button>
             </div>
 
         </>

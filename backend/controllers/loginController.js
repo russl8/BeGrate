@@ -14,17 +14,38 @@ exports.loginPage = asyncHandler(async (req, res, next) => {
 });
 
 exports.loginSubmit = asyncHandler(async (req, res, next) => {
-  console.log("hi")
   passport.authenticate("local", (err, user, info) => {
     if (err) throw err;
-    if (!user) res.send("No user exists");
+    if (!user) res.send({ isAuth: false });
     else {
       req.logIn(user, err => {
         if (err) throw err;
-        res.send("Successfully authenticated")
-        console.log(req.user)
-
       })
+
+      //after a user is signed in, we get a token that contains info to make a request to a protected route
+      jwt.sign({ user: user }, "secretkey", (err, token) => {
+        let isAuthenticated = false;
+
+        jwt.verify(token, "secretkey", (err, authData) => {
+          if (err) {
+            // User is not signed in.
+            console.log("Not signed in");
+            isAuthenticated = false;
+          } else {
+            console.log("Signed in");
+            isAuthenticated = true;
+            // res.json({
+            //   message: "post created",
+            //   authData: authData
+            // })
+          }
+        })
+        // Set the userAuthentication property on the request object
+        res.locals.userAuthentication = isAuthenticated;
+        res.send({ isAuth: res.locals.userAuthentication })
+
+      });
+
     }
 
   })(req, res, next);
