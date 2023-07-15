@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, json } from "react-router-dom";
 import Home from './components/Home';
 import Layout from './components/Layout';
 import Login from './components/Login';
+import CreatePost from './components/CreatePost';
+
 import axios, { Axios } from "axios"
 import { useNavigate } from "react-router-dom";
 
@@ -81,6 +83,12 @@ function App() {
           token: res.data.token,
           userData: res.data.userData
         })
+        //redirect user to home page
+        navigate("/")
+
+
+
+        //extra: if user goes back to login page, verify user if signed in or not. if signed in, send 403
       } else {
         //set auth to false and token to "". and remove the token from the local storage.
         setGlobalState({ ...globalState, userAuth: false, token: "" })
@@ -113,6 +121,7 @@ function App() {
         />} >
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login verifyAuth={loginSetAuth} />} />
+          <Route path = "/posts" element = {<CreatePost/>}/>
         </Route> {/* nav bar route ends */}
       </Routes>
     </div>

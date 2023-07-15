@@ -26,20 +26,21 @@ router.get('/', asyncHandler(async (req, res, next) => {
 }));
 
 router.post("/", asyncHandler(async (req, res, next) => {
-	//verify the token
 	const token = req.body.token
-
-
 	let isAuthenticated = false;
 
+	//verify the token from req.body.token
+	//to make sure it is valid
 	jwt.verify(token, "secretkey", (err, userData) => {
 		if (err) {
 			// User is not signed in.
 			console.log("Not signed in");
 			isAuthenticated = false;
 		} else {
+			//user is signed in and authenticated. 
 			console.log("Signed in");
 			isAuthenticated = true;
+			//res.json the auth status and userdata
 			res.json({isAuthenticated, token,userData})
 		}
 	})
@@ -113,7 +114,7 @@ passport.deserializeUser(async function (id, done) {
 function verifyToken(req, res, next) {
 	//get auth header value
 	const bearerHeader = req.headers["authorization"]
-
+	
 	//check if bearer is undefined
 	if (typeof bearerHeader !== "undefined") {
 		//continue

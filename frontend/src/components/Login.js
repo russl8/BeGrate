@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import React from "react"
-import axios, { Axios } from "axios"
+import axios from  "axios"
 
-export default function Login({verifyAuth}) {
+export default function Login({ verifyAuth }) {
     const navigate = useNavigate();
     const [userName, setUserName] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [RuserName, setRUserName] = React.useState("");
     const [Rpassword, setRPassword] = React.useState("");
     const [Remail, setREmail] = React.useState("");
-   
+
     const register = () => {
         axios({
             method: "POST",
@@ -21,9 +21,8 @@ export default function Login({verifyAuth}) {
             withCredentials: true,
             url: "http://localhost:3001/sign-up"
         }).then(res => {
-            console.log(res)
+            console.log(res.data)
             if (res.data === "User Created") {
-                console.log("ye");
                 navigate("/")
             }
         })
@@ -31,9 +30,9 @@ export default function Login({verifyAuth}) {
     return (
         <>
             <div className="register">
-                <label htmlFor="username">RUsername</label>
+                <label htmlFor="Rusername">RUsername</label>
                 <input type="text"
-                    className="username"
+                    className="RusernameInput"
                     name="RuserName"
                     value={RuserName}
                     onChange={(e) => {
@@ -41,7 +40,7 @@ export default function Login({verifyAuth}) {
                     }} />
                 <label htmlFor="Remail">Remail</label>
                 <input type="text"
-                    className="Remail"
+                    className="RemailInput"
                     name="Remail"
                     value={Remail}
                     onChange={(e) => {
@@ -49,7 +48,7 @@ export default function Login({verifyAuth}) {
                     }} />
                 <label htmlFor="Rpassword">RPassword</label>
                 <input type="password"
-                    className="Rpassword"
+                    className="RpasswordInput"
                     name="Rpassword"
                     value={Rpassword}
                     onChange={(e) => {
@@ -61,7 +60,8 @@ export default function Login({verifyAuth}) {
 
             <div className="login">
                 <label htmlFor="username">Username</label>
-                <input type="text" className="username"
+                <input type="text"
+                    className="usernameInput"
                     name="username"
                     value={userName}
                     onChange={(e) => {
@@ -69,13 +69,13 @@ export default function Login({verifyAuth}) {
                     }} />
                 <label htmlFor="password">Password</label>
                 <input type="password"
-                    className="password"
+                    className="passwordInput"
                     name="password"
                     value={password}
                     onChange={(e) => {
                         setPassword(e.target.value)
                     }} />
-                <button onClick={ ()=> verifyAuth(userName,password)}>Log In</button>
+                <button onClick={() => verifyAuth(userName, password)}>Log In</button>
             </div>
 
         </>
