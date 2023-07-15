@@ -17,39 +17,33 @@ const accountController = require('../controllers/accountController');
 const commentController = require('../controllers/commentController');
 
 
-  
-// // Middleware to set userAuthentication on every request
-// router.use((req, res, next) => {
-// 	// Check if the user is authenticated
-// 	let isAuthenticated = false;
-// 	if (res.locals.token) {
-// 	  jwt.verify(res.locals.token, "secretkey", (err, authData) => {
-// 		if (err) {
-// 		  // User is not signed in.
-// 		  console.log("Not signed in");
-// 		  isAuthenticated = false;
-// 		} else {
-// 		  // User is signed in.
-// 		  console.log("Signed in");
-// 		  isAuthenticated = true;
-// 		}
-// 	  });
-// 	}
-  
-// 	// Set the userAuthentication property on the request object
-// 	res.locals.userAuthentication = isAuthenticated;
-  
-// 	next();
-//   });
-
 /* home page. */
 router.get('/', asyncHandler(async (req, res, next) => {
 	const isAuthenticated = res.locals.userAuthentication;
 	const allPosts = await Post.find().populate("user").exec();
 
-	res.json({ message: "home page", isAuthenticated,allPosts })
+	res.json({ message: "home page", isAuthenticated, allPosts })
 }));
 
+router.post("/", asyncHandler(async (req, res, next) => {
+	//verify the token
+	const token = req.body.token
+
+
+	let isAuthenticated = false;
+
+	jwt.verify(token, "secretkey", (err, userData) => {
+		if (err) {
+			// User is not signed in.
+			console.log("Not signed in");
+			isAuthenticated = false;
+		} else {
+			console.log("Signed in");
+			isAuthenticated = true;
+			res.json({isAuthenticated, token,userData})
+		}
+	})
+}))
 /* login page. */
 router.get('/login', loginController.loginPage);
 router.post('/login', loginController.loginSubmit);

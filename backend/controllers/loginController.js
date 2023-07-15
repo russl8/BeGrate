@@ -15,6 +15,7 @@ exports.loginPage = asyncHandler(async (req, res, next) => {
 
 exports.loginSubmit = asyncHandler(async (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
+    let userData = null;
     if (err) throw err;
     if (!user) res.send({ isAuth: false });
     else {
@@ -31,18 +32,24 @@ exports.loginSubmit = asyncHandler(async (req, res, next) => {
             // User is not signed in.
             console.log("Not signed in");
             isAuthenticated = false;
+
           } else {
             console.log("Signed in");
             isAuthenticated = true;
+            userData = authData;
+
             // res.json({
             //   message: "post created",
             //   authData: authData
             // })
           }
+
         })
+
         // Set the userAuthentication property on the request object
         res.locals.userAuthentication = isAuthenticated;
-        res.send({ isAuth: res.locals.userAuthentication })
+        console.log(userData)
+        res.json({ isAuth: res.locals.userAuthentication,token: token,userData })
 
       });
 
