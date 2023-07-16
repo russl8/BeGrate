@@ -24,7 +24,7 @@ exports.loginSubmit = asyncHandler(async (req, res, next) => {
       })
 
       //after a user is signed in, we get a token that contains info to make a request to a protected route
-      jwt.sign({ user: user }, "secretkey", (err, token) => {
+      jwt.sign({ user: user }, "secretkey", {expiresIn:"100d"},(err, token) => {
         let isAuthenticated = false;
 
         jwt.verify(token, "secretkey", (err, authData) => {
