@@ -1,6 +1,6 @@
 import axios from "axios"
 import React from 'react'
-import { useParams , useNavigate} from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 export default function EditPost() {
     const params = useParams();
     const navigate = useNavigate();
@@ -55,11 +55,13 @@ export default function EditPost() {
                 }
             }).then(res => {
                 const successOrFail = res.data;
-                
 
-                if(successOrFail === "success") {
+
+                if (successOrFail === "success") {
                     navigate(`/posts/${params.id}`)
-                } 
+                } else {
+                    // re-render form with error messages 
+                }
             })
         } catch (e) {
             console.error(e)
