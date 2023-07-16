@@ -57,7 +57,7 @@ router.post("/sign-up", signupController.signupSubmit)
 router.get("/account/:accountid", accountController.accountPage)
 
 // post-creator page
-router.get("/posts", postsController.postsPage)
+router.get("/posts",verifyToken, postsController.postsPage)
 router.post("/posts", verifyToken, postsController.postsSubmit);
 
 // INDIVIDUAL post page

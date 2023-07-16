@@ -4,7 +4,16 @@ const jwt = require("jsonwebtoken")
 const Post = require("../models/post")
 
 exports.postsPage = asyncHandler(async (req, res, next) => {
-    //render post page here?
+    //verify that user is signed to access the posts page.
+    jwt.verify(req.token, "secretkey", asyncHandler(async (err, authData) => {
+        if (err) {
+            //user is not signed in. CANNOT submit post.
+            res.json({ canPost: false })
+        } else {
+            //user is not signed in. can make post.
+            res.json({ canPost: true })
+        }
+    }))
 })
 
 exports.postsSubmit = asyncHandler(async (req, res, next) => {
@@ -26,7 +35,7 @@ exports.postsSubmit = asyncHandler(async (req, res, next) => {
             //save post to db
             await post.save();
             // put post contents in res.json to send to client
-            res.json({ postStatus: "Success", postID: post._id  })
+            res.json({ postStatus: "Success", postID: post._id })
         }
     }))
 });
