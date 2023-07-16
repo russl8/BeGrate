@@ -10,37 +10,16 @@
 
 
 
-import { useParams } from "react-router-dom"
+import { useParams,useNavigate } from "react-router-dom"
 import axios from "axios";
 import React from "react"
+import EditPost from "./EditPost"
 export default function Post() {
     const params = useParams();
-    /* fetch user data from databse
-     user can exist or not exist.
-         if posts exists
-             if post private
-                 is post user === user?
-                     allow access WITH edit button
-                 else 
-                     403 
-             else if post not private
-                 is post user === user?
-                     allow access WITH edit button
-                 else
-                     allow access WITHOUT edit button.
-         else
-             render error page
-
-
-     remarks:
-        - have one base function for the general page. can choose to render edit button.
-          for the postUpdate route, verify that user is the author
-        - the error page can be the same error page used throughout the whole site
-        - the 403 error should redirect the user to the error page too
-    */
-
+    const navigate = useNavigate();
     //state that stores the post data
     const [postData, setPostData] = React.useState(null);
+
     //passing params.id to backend
     React.useEffect(() => {
         //fetch the post data from backend. 
@@ -55,15 +34,23 @@ export default function Post() {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
             }
         }).then(res => {
-            setPostData(res.data)
+            setPostData(res.data);
         })
     }, [])
+
+    const handleEdit = async (e) => {
+        /*  fetch to /posts/:postid/update GET route
+                only return <EditPost/> if user is author. (same as the post page)
+        */
+        navigate(`/posts/${params.id}/update`);
+        
+    }
 
     //only shows when post exists, or user has edit permissions.
     const EditButton = () => {
         if (postData.isVisible && (postData.edit === true)) {
             return (
-                <button>Edit</button>
+                <button className="editButton" onClick={handleEdit}>Edit</button>
             )
         }
     }
@@ -73,7 +60,7 @@ export default function Post() {
         if (postData === null || !postData.isVisible) {
             return (
                 <>
-                    <h1>Post does not exist :&#40;</h1>
+                    <h1 className="postDNE">Page does not exist :&#40;</h1>
                 </>
             )
         } else {
@@ -84,7 +71,7 @@ export default function Post() {
             const isPrivate = postData.post?.isPrivate || false;
             const dateCreated = postData.post?.dateCreated || "";
             return (
-                <div className="post">
+                <div className="postContainer">
                     <h1>{username}</h1>
                     <h2>{title}</h2>
                     <p>{content}</p>

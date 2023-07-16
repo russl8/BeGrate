@@ -64,7 +64,7 @@ router.post("/posts", verifyToken, postsController.postsSubmit);
 router.get("/posts/:postid", verifyToken, postController.postPage)
 router.post("/posts/:postid", verifyToken, commentController.commentSubmit)
 
-router.get("/posts/:postid/update", postController.postUpdateGet)
+router.get("/posts/:postid/update", verifyToken, postController.postUpdateGet)
 router.post("/posts/:postid/update", postController.postUpdatePost)
 
 router.get("/posts/:postid/delete", postController.postDeleteGet)
@@ -82,7 +82,6 @@ passport.use(
 			if (!user) {
 				return done(null, false, { message: "Incorrect username" });
 			}
-
 			bcrypt.compare(password, user.password, (err, res) => {
 				if (res) {
 					// Passwords match! Log the user in
