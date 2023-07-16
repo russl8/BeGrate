@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Layout from './components/Layout';
 import Login from './components/Login';
 import CreatePost from './components/CreatePost';
+import Post from './components/Post';
 
 import axios, { Axios } from "axios"
 import { useNavigate } from "react-router-dom";
@@ -122,6 +123,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login verifyAuth={loginSetAuth} />} />
           <Route path = "/posts" element = {<CreatePost/>}/>
+          <Route path = "/posts/:id" element = {<Post/>}/>
+
+          
         </Route> {/* nav bar route ends */}
       </Routes>
     </div>
