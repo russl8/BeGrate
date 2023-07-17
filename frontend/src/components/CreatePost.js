@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
-
+import uniqid from "uniqid"
 export default function CreatePost() {
     const navigate = useNavigate();
     //make a form for title, content, and isPrivate
@@ -9,7 +9,7 @@ export default function CreatePost() {
     const [postContent, setPostContent] = React.useState("");
     const [postIsPrivate, setPostIsPrivate] = React.useState(false)
     const [canCreatePost, setCanCreatePost] = React.useState(false)
-
+    const [errors, setErrors] = React.useState([])
 
     React.useEffect(() => {
         //make sure that the user actually exists
@@ -43,10 +43,14 @@ export default function CreatePost() {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
             }
         }).then(res => {
-            console.log(res.data)
+            // console.log(res.data)
             // if the post is posted, redirect user to the post page.
             if (res.data.postStatus === "Success") {
                 navigate(`/posts/${res.data.postID}`)
+            } else {
+                //getting the error messages from server then storing it in state
+                setErrors(res.data.errors.errors);
+                // console.log(errors)
             }
         })
     }
@@ -82,7 +86,13 @@ export default function CreatePost() {
                             onChange={(e) => setPostIsPrivate(e.target.checked)}
                         />
                         <button onClick={handleCreatePost}>Create</button>
+                        {/* errors list */}
+                        <ul>
+                            {
+                                errors.map(error => <li key={uniqid()}>{error.msg}</li>)
+                            }
 
+                        </ul>
                     </div>
                     :
                     <h1 className="postDNE">Page does not exist :&#40;</h1>
