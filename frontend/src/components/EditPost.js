@@ -1,6 +1,7 @@
 import axios from "axios"
 import React from 'react'
 import { useParams, useNavigate } from "react-router-dom";
+import uniqid from "uniqid"
 export default function EditPost() {
     const params = useParams();
     const navigate = useNavigate();
@@ -38,6 +39,7 @@ export default function EditPost() {
     const [postTitle, setPostTitle] = React.useState("");
     const [postContent, setPostContent] = React.useState("");
     const [postIsPrivate, setPostIsPrivate] = React.useState(false)
+    const [errors, setErrors] = React.useState([]);
 
     //when a user submits an update
     const handleEditPost = (e) => {
@@ -54,13 +56,17 @@ export default function EditPost() {
                     isPrivate: postIsPrivate
                 }
             }).then(res => {
+                console.log(res)
                 const successOrFail = res.data;
 
-
+                //if post is successfully posted...
                 if (successOrFail === "success") {
                     navigate(`/posts/${params.id}`)
+
                 } else {
-                    // re-render form with error messages 
+                    // update error messages state so the errors can be displayed 
+                    setErrors(res.data.errors.errors);
+
                 }
             })
         } catch (e) {
@@ -109,11 +115,14 @@ export default function EditPost() {
                         <input type="checkbox"
                             name="postIsPrivate"
                             className="postIsPrivateInput"
-                            onChange={(e) => {setPostIsPrivate(e.target.checked)}}
+                            onChange={(e) => { setPostIsPrivate(e.target.checked) }}
                             checked={postIsPrivate}
                         />
                         <button onClick={handleEditPost}>Update</button>
 
+                        <ul>
+                            {errors.map(error => <li key={uniqid()}>{error.msg}</li>)}
+                        </ul>
                     </div>
                     :
                     <ErrorPage />}

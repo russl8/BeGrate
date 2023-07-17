@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const Post = require("../models/post")
 const Comment = require("../models/comment")
-
+const { body, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken")
 const util = require('util');
 
@@ -74,23 +74,38 @@ exports.postUpdateGet = asyncHandler(async (req, res, next) => {
 
     }
 })
-exports.postUpdatePost = asyncHandler(async (req, res, next) => {
+exports.postUpdatePost =[ 
+    body("title", "Post must contain a title!").trim().isLength({ min: 1 }).escape(),
+    body("content", "Post content must be more than five characters!").trim().isLength({ min: 6 }).escape(),
+    
+    asyncHandler(async (req, res, next) => {
     try {
-        const postToUpdate = await Post.findOne({ _id: req.params.postid }).exec();
-        const updatedPost = {
-            $set: {
-                title: req.body.title,
-                content: req.body.content,
-                isPrivate: req.body.isPrivate,
-            }
-        };
-        await Post.updateOne(postToUpdate, updatedPost);
-        res.json("success")
+        //errors array
+        let errors = validationResult(req);
+
+        //if there are errors, display error messages
+        if(errors.errors.length ===0) {
+            const postToUpdate = await Post.findOne({ _id: req.params.postid }).exec();
+            const updatedPost = {
+                $set: {
+                    title: req.body.title,
+                    content: req.body.content,
+                    isPrivate: req.body.isPrivate,
+                }
+            };
+            await Post.updateOne(postToUpdate, updatedPost);
+            res.json("success")
+        } else {
+            res.json({errors: errors})
+        }
+
+
+       
     } catch (e) {
         res.json("failed")
         console.error("post could not be updated. please try again.",e)
     }
-})
+})];
 
 exports.postDeleteGet = asyncHandler(async (req, res, next) => {
     //render delete form
