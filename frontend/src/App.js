@@ -5,15 +5,17 @@ import Layout from './components/Layout';
 import Login from './components/Login';
 import CreatePost from './components/CreatePost';
 import Post from './components/Post';
-import EditPost  from './components/EditPost';
+import EditPost from './components/EditPost';
+import SignUp from './components/SignUp';
 
-import axios, { Axios } from "axios"
+import axios from "axios"
 import { useNavigate } from "react-router-dom";
 
 function App() {
   //declaration of constants
   const navigate = useNavigate();
 
+  const [loginPageErrorMessage, setLoginPageErrorMessage] = React.useState("");
   //add an object key&value for the userID or userData
   const [globalState, setGlobalState] = React.useState({
     userAuth: false,
@@ -61,6 +63,7 @@ function App() {
   }
   //a function used in <Login/> that sets userAuthentication to true, if the user is logged in.
   const loginSetAuth = (username, password) => {
+
     axios({
       //takes 
       method: "POST",
@@ -72,7 +75,7 @@ function App() {
       url: "http://localhost:3001/login"
     }).then(res => {
       const isAuth = res.data.isAuth
-
+      console.log(res.data)
       setGlobalState({ ...globalState, userAuth: isAuth })
 
       if (isAuth) {
@@ -85,6 +88,9 @@ function App() {
           token: res.data.token,
           userData: res.data.userData
         })
+        //authorized. no error message
+        setLoginPageErrorMessage("")
+
         //redirect user to home page
         navigate("/")
 
@@ -95,6 +101,7 @@ function App() {
         //set auth to false and token to "". and remove the token from the local storage.
         setGlobalState({ ...globalState, userAuth: false, token: "" })
         window.localStorage.removeItem("token")
+        setLoginPageErrorMessage("Incorrect Username/Password!")
       }
 
 
@@ -122,12 +129,13 @@ function App() {
           }}
         />} >
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login verifyAuth={loginSetAuth} />} />
-          <Route path = "/posts" element = {<CreatePost/>}/>
-          <Route path = "/posts/:id" element = {<Post/>}/>
-          <Route path = "/posts/:id/update" element = {<EditPost/>}/>
+          <Route path="/login" element={<Login verifyAuth={loginSetAuth} loginPageErrorMessage = { loginPageErrorMessage } />} />
+          <Route path="sign-up" element={<SignUp />} />
+          <Route path="/posts" element={<CreatePost />} />
+          <Route path="/posts/:id" element={<Post />} />
+          <Route path="/posts/:id/update" element={<EditPost />} />
 
-          
+
         </Route> {/* nav bar route ends */}
       </Routes>
     </div>

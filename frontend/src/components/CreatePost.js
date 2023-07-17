@@ -11,7 +11,7 @@ export default function CreatePost() {
     const [canCreatePost, setCanCreatePost] = React.useState(false)
 
 
-    React.useEffect(()=> {
+    React.useEffect(() => {
         //make sure that the user actually exists
         axios({
             method: "GET",
@@ -23,10 +23,10 @@ export default function CreatePost() {
             }
         }).then(res => {
             setCanCreatePost(res.data.canPost)
-            
+
         })
         // then they can access the page
-    },[])
+    }, [])
     const handleCreatePost = () => {
         // make a request to /posts POST with post info
         axios({
