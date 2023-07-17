@@ -76,7 +76,7 @@ exports.postUpdateGet = asyncHandler(async (req, res, next) => {
 })
 exports.postUpdatePost =[ 
     body("title", "Post must contain a title!").trim().isLength({ min: 1 }).escape(),
-    body("content", "Post content must be more than five characters!").trim().isLength({ min: 6 }).escape(),
+    body("content", "Post content must be more than five characters!").trim().isLength({ min: 6  }).escape(),
     
     asyncHandler(async (req, res, next) => {
     try {

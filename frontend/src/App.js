@@ -1,5 +1,7 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, json } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import axios from "axios"
+
 import Home from './components/Home';
 import Layout from './components/Layout';
 import Login from './components/Login';
@@ -7,9 +9,9 @@ import CreatePost from './components/CreatePost';
 import Post from './components/Post';
 import EditPost from './components/EditPost';
 import SignUp from './components/SignUp';
+import Account from './components/Account';
 
-import axios from "axios"
-import { useNavigate } from "react-router-dom";
+
 
 function App() {
   //declaration of constants
@@ -120,21 +122,23 @@ function App() {
         <Route element={<Layout
           isAuthenticated={globalState.userAuth}
           handleLogout={handleLogout}
-          // WORK ON THIS!!!!!!!!
           userName={() => {
             if (globalState.userData) {
               return globalState.userData.user.username;
             }
             return "Account";
           }}
+          // postData.post?.user?.username || ""
+          // globalState.userData.user._id
+          userId={globalState.userData?.user?._id || ""}
         />} >
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login verifyAuth={loginSetAuth} loginPageErrorMessage = { loginPageErrorMessage } />} />
-          <Route path="sign-up" element={<SignUp />} />
+          <Route path="/login" element={<Login verifyAuth={loginSetAuth} loginPageErrorMessage={loginPageErrorMessage} />} />
+          <Route path="/sign-up" element={<SignUp />} />
           <Route path="/posts" element={<CreatePost />} />
           <Route path="/posts/:id" element={<Post />} />
           <Route path="/posts/:id/update" element={<EditPost />} />
-
+          <Route path="/account/:id" element={<Account />} />
 
         </Route> {/* nav bar route ends */}
       </Routes>

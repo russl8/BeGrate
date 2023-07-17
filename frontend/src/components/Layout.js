@@ -1,9 +1,6 @@
 import { Outlet, NavLink } from "react-router-dom";
 
-export default function Layout({ isAuthenticated, handleLogout , userName}) {
-
-   
-
+export default function Layout({ isAuthenticated, handleLogout, userName, userId }) {
     return (
         <>
             {isAuthenticated ? (
@@ -13,8 +10,8 @@ export default function Layout({ isAuthenticated, handleLogout , userName}) {
                     </div>
                     <div className="layoutRight">
                         <NavLink to="/posts">Create</NavLink>
-                        <NavLink to="/account">{userName}</NavLink>
-                        <button className="logout" onClick = {handleLogout}>Log out</button>
+                        <NavLink to={`/account/${userId}`}>{userName}</NavLink>
+                        <button className="logout" onClick={handleLogout}>Log out</button>
                     </div>
                 </div>
             ) : (
