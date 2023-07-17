@@ -7,31 +7,46 @@ const bcrypt = require("bcryptjs");
 
 
 exports.signupPage = asyncHandler(async (req, res, next) => {
-    res.json({ hi: "hi" })
+  res.json({ hi: "hi" })
 })
 
-exports.signupSubmit = asyncHandler(async (req, res, next) => {
-  try {
-    const existingUser = await User.findOne({ username: req.body.username });
-    if (existingUser) {
-      return res.send("User already exists");
+exports.signupSubmit = [
+  body("username", "Username should be at least six characters!").trim().isLength({ min: 6 }).escape(),
+  body("password", "Password should be at least six characters!").trim().isLength({ min: 6 }).escape(),
+  body("email", "Invalid email! ").trim().isEmail().escape(),
+
+  asyncHandler(async (req, res, next) => {
+
+
+    try {
+      let errs = validationResult(req)
+      const existingUser = await User.findOne({ username: req.body.username });
+      if (existingUser) {
+        errs.errors.push({ msg: "User already exists" })
+        console.log(errs.errors)
+      }
+
+      if (errs.errors.length === 0) {
+
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+        const newUser = new User({
+          username: req.body.username,
+          password: hashedPassword,
+          email: req.body.email,
+        });
+
+        await newUser.save();
+        res.send("User Created");
+      } else {
+        res.json({ errors: errs })
+
+      }
+
+    } catch (err) {
+      console.error(err);
     }
-
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-
-    const newUser = new User({
-      username: req.body.username,
-      password: hashedPassword,
-      email: req.body.email,
-    });
-
-    await newUser.save();
-    res.send("User Created");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-});
+  })]
 
 
 

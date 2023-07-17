@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import React from "react"
 import axios from "axios"
+import uniqid from "uniqid"
 export default function SignUp() {
     const navigate = useNavigate();
 
     const [RuserName, setRUserName] = React.useState("");
     const [Rpassword, setRPassword] = React.useState("");
     const [Remail, setREmail] = React.useState("");
-
+    const [errors,setErrors] = React.useState([])
     const register = () => {
         axios({
             method: "POST",
@@ -19,10 +20,11 @@ export default function SignUp() {
             withCredentials: true,
             url: "http://localhost:3001/sign-up"
         }).then(res => {
-            console.log(res.data)
             if (res.data === "User Created") {
                 navigate("/")
             }
+            setErrors(res.data.errors.errors)
+            console.log(errors)
         })
     }
 
@@ -38,7 +40,7 @@ export default function SignUp() {
                     setRUserName(e.target.value)
                 }} />
             <label htmlFor="Remail">Email</label>
-            <input type="text"
+            <input type="email"
                 className="RemailInput"
                 name="Remail"
                 value={Remail}
@@ -53,6 +55,9 @@ export default function SignUp() {
                 onChange={(e) => {
                     setRPassword(e.target.value)
                 }} />
+                <ul>
+                    {errors.map(error => <li key={uniqid()}>{error.msg}</li>)}
+                </ul>
             <button onClick={register}>Sign Up</button>
         </div>
     )
