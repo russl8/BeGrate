@@ -109,10 +109,10 @@ export default function EditPost() {
                         <input type="checkbox"
                             name="postIsPrivate"
                             className="postIsPrivateInput"
-                            onChange={(e) => setPostIsPrivate(e.target.checked)}
+                            onChange={(e) => {setPostIsPrivate(e.target.checked)}}
                             checked={postIsPrivate}
                         />
-                        <button onClick={handleEditPost}>Create</button>
+                        <button onClick={handleEditPost}>Update</button>
 
                     </div>
                     :

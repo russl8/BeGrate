@@ -81,7 +81,7 @@ exports.postUpdatePost = asyncHandler(async (req, res, next) => {
             $set: {
                 title: req.body.title,
                 content: req.body.content,
-                isPrivate: req.body.isPrivate, /* change later to form data */
+                isPrivate: req.body.isPrivate,
             }
         };
         await Post.updateOne(postToUpdate, updatedPost);
