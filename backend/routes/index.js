@@ -20,7 +20,7 @@ const commentController = require('../controllers/commentController');
 /* home page. */
 router.get('/', asyncHandler(async (req, res, next) => {
 	const isAuthenticated = res.locals.userAuthentication;
-	const allPosts = await Post.find().populate("user").exec();
+	const allPosts = await Post.find({isPrivate : false}).populate("user").exec();
 
 	res.json({ message: "home page", isAuthenticated, allPosts })
 }));
@@ -54,7 +54,7 @@ router.post('/login', loginController.loginSubmit);
 router.get("/sign-up", signupController.signupPage)
 router.post("/sign-up", signupController.signupSubmit)
 // ACCOUNT page
-router.get("/account/:accountid", accountController.accountPage)
+router.get("/account/:accountid",verifyToken2, accountController.accountPage)
 
 // post-creator page
 router.get("/posts",verifyToken, postsController.postsPage)
@@ -130,5 +130,28 @@ function verifyToken(req, res, next) {
 		res.sendStatus(403);
 	}
 }
+
+function verifyToken2(req, res, next) {
+	//get auth header value
+	const bearerHeader = req.headers["authorization"]
+	
+	//check if bearer is undefined
+	if (typeof bearerHeader !== "undefined") {
+		//continue
+		//take the token out of the "Bearer <access_token>"
+		const bearer = bearerHeader.split(" ");
+		//get token 
+		const bearerToken = bearer[1];
+		//set the token
+		req.token = bearerToken;
+		//move on to the next middleware
+		next();
+	} else {
+		//forbidden status (403)
+		res.json({msg: "user not signed in"})
+		next();
+	}
+}
+
 
 module.exports = router;

@@ -60,7 +60,7 @@ export default function Post() {
         if (postData === null || !postData.isVisible) {
             return (
                 <>
-                    <h1 className="postDNE">Page does not exist :&#40;</h1>
+                    {/* <h1 className="postDNE">Page does not exist :&#40;</h1> */}
                 </>
             )
         } else {

@@ -27,6 +27,7 @@ export default function Home() {
     <div>
       <h1>{currentText}</h1>
       {allPosts.map(post => {
+
         return (
           <div className="homepagePost">
 
@@ -41,6 +42,8 @@ export default function Home() {
           </div>
 
         )
+
+
       })}
     </div>
   );

@@ -12,9 +12,13 @@ export default function Account() {
             method: "GET",
             url: `http://localhost:3001/account/${params.id}`,
             withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+            }
         }).then(res => {
+            console.log(res)
+
             setAccountDetails(res.data)
-            console.log(res.data)
         })
 
     }, [])
@@ -30,23 +34,28 @@ export default function Account() {
 
                         <div className="accountPostContainer">
                             {accountDetails.posts.map(post => {
-                                return (
-                                    <NavLink to={`/posts/${post._id}`} key={uniqid()}>
+                                    return (
+                                        <NavLink to={`/posts/${post._id}`} key={uniqid()}>
 
-                                        <div className="accountPost">
-                                            <h2> {post.title}</h2>
-                                            <p>{post.content}</p>
-                                            <p>{post.dateCreated}</p>
-                                        </div>
-                                    </NavLink>
+                                            <div className="accountPost">
+                                                <h2> {post.title}</h2>
+                                                <p>{post.content}</p>
+                                                <p>{post.dateCreated}</p>
+                                            </div>
+                                        </NavLink>
 
-                                )
+                                    )
+                                
+
                             })}
                         </div>
                     </div>
 
                     :
-                    <h1 className="postDNE">Page does not exist :&#40;</h1>
+                    <>
+                        {/* <h1 className="postDNE">Page does not exist :&#40;</h1> */}
+
+                    </>
 
             }
 
