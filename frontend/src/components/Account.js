@@ -21,7 +21,7 @@ export default function Account() {
             setAccountDetails(res.data)
         })
 
-    }, [])
+    }, params)
     return (
         <>
             {
@@ -36,7 +36,6 @@ export default function Account() {
                             {accountDetails.posts.map(post => {
                                     return (
                                         <NavLink to={`/posts/${post._id}`} key={uniqid()}>
-
                                             <div className="accountPost">
                                                 <h2> {post.title}</h2>
                                                 <p>{post.content}</p>

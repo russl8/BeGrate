@@ -23,7 +23,7 @@ export default function SignUp() {
             if (res.data === "User Created") {
                 navigate("/")
             }
-            setErrors(res.data.errors.errors)
+            setErrors(res.data.errors)
             console.log(errors)
         })
     }
