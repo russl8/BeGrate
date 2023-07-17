@@ -10,7 +10,7 @@
 
 
 
-import { useParams,useNavigate } from "react-router-dom"
+import { useParams, useNavigate, NavLink } from "react-router-dom"
 import axios from "axios";
 import React from "react"
 import EditPost from "./EditPost"
@@ -43,7 +43,7 @@ export default function Post() {
                 only return <EditPost/> if user is author. (same as the post page)
         */
         navigate(`/posts/${params.id}/update`);
-        
+
     }
 
     //only shows when post exists, or user has edit permissions.
@@ -70,9 +70,12 @@ export default function Post() {
             const likes = postData.post?.likes || 0;
             const isPrivate = postData.post?.isPrivate || false;
             const dateCreated = postData.post?.dateCreated || "";
+            const userid = postData.post?.user?._id || ""
             return (
                 <div className="postContainer">
-                    <h1>{username}</h1>
+                    <NavLink to = {`/account/${userid}`}>
+                        <h1>{username}</h1>
+                    </NavLink>
                     <h2>{title}</h2>
                     <p>{content}</p>
                     <p>{likes} Likes</p>

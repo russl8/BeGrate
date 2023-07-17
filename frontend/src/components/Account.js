@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams, NavLink } from "react-router-dom"
 import React from "react"
 import axios from "axios"
 import uniqid from "uniqid"
@@ -31,11 +31,15 @@ export default function Account() {
                         <div className="accountPostContainer">
                             {accountDetails.posts.map(post => {
                                 return (
-                                    <div className="accountPost" key={uniqid()}>
-                                        <h2> {post.title}</h2>
-                                        <p>{post.content}</p>
-                                        <p>{post.dateCreated}</p>
-                                    </div>
+                                    <NavLink to={`/posts/${post._id}`} key={uniqid()}>
+
+                                        <div className="accountPost">
+                                            <h2> {post.title}</h2>
+                                            <p>{post.content}</p>
+                                            <p>{post.dateCreated}</p>
+                                        </div>
+                                    </NavLink>
+
                                 )
                             })}
                         </div>
