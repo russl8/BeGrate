@@ -56,6 +56,28 @@ export default function Post() {
     }
 
 
+    const handleDelete = async (e) => {
+        axios({
+            method: "POST",
+            url: `http://localhost:3001/posts/${params.id}/delete`,
+        }).then(res => {
+            //redirect user to account page after deleting the post.
+            if (res.data.msg === "post deleted") {
+                navigate(`/account/${res.data.postAuthor}`)
+            }
+        })
+    }
+
+    //only shows when post exists, or user has edit permissions.
+    const DeleteButton = () => {
+        if (postData.isVisible && (postData.edit === true)) {
+            return (
+                <button className="DeleteButton" onClick={handleDelete}>Delete</button>
+            )
+        }
+    }
+
+
     const PageRender = () => {
         if (postData === null || !postData.isVisible) {
             return (
@@ -73,7 +95,7 @@ export default function Post() {
             const userid = postData.post?.user?._id || ""
             return (
                 <div className="postContainer">
-                    <NavLink to = {`/account/${userid}`}>
+                    <NavLink to={`/account/${userid}`}>
                         <h1>{username}</h1>
                     </NavLink>
                     <h2>{title}</h2>
@@ -82,6 +104,7 @@ export default function Post() {
                     <p>{isPrivate ? "Private" : "Public"} </p>
                     <p>{dateCreated}</p>
                     <EditButton />
+                    <DeleteButton />
                 </div>)
         }
     }

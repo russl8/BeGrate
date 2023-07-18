@@ -77,7 +77,7 @@ export default function EditPost() {
 
     const ErrorPage = () => {
         return (
-            <h1 className="postDNE">Page does not exist :&#40;</h1>
+            <></>
         )
     }
 

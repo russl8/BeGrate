@@ -74,38 +74,38 @@ exports.postUpdateGet = asyncHandler(async (req, res, next) => {
 
     }
 })
-exports.postUpdatePost =[ 
+exports.postUpdatePost = [
     body("title", "Post must contain a title!").trim().isLength({ min: 1 }).escape(),
-    body("content", "Post content must be more than five characters!").trim().isLength({ min: 6  }).escape(),
-    
+    body("content", "Post content must be more than five characters!").trim().isLength({ min: 6 }).escape(),
+
     asyncHandler(async (req, res, next) => {
-    try {
-        //errors array
-        let errors = validationResult(req);
+        try {
+            //errors array
+            let errors = validationResult(req);
 
-        //if there are errors, display error messages
-        if(errors.errors.length ===0) {
-            const postToUpdate = await Post.findOne({ _id: req.params.postid }).exec();
-            const updatedPost = {
-                $set: {
-                    title: req.body.title,
-                    content: req.body.content,
-                    isPrivate: req.body.isPrivate,
-                }
-            };
-            await Post.updateOne(postToUpdate, updatedPost);
-            res.json("success")
-        } else {
-            res.json({errors: errors})
+            //if there are errors, display error messages
+            if (errors.errors.length === 0) {
+                const postToUpdate = await Post.findOne({ _id: req.params.postid }).exec();
+                const updatedPost = {
+                    $set: {
+                        title: req.body.title,
+                        content: req.body.content,
+                        isPrivate: req.body.isPrivate,
+                    }
+                };
+                await Post.updateOne(postToUpdate, updatedPost);
+                res.json("success")
+            } else {
+                res.json({ errors: errors })
+            }
+
+
+
+        } catch (e) {
+            res.json("failed")
+            console.error("post could not be updated. please try again.", e)
         }
-
-
-       
-    } catch (e) {
-        res.json("failed")
-        console.error("post could not be updated. please try again.",e)
-    }
-})];
+    })];
 
 exports.postDeleteGet = asyncHandler(async (req, res, next) => {
     //render delete form
@@ -113,13 +113,17 @@ exports.postDeleteGet = asyncHandler(async (req, res, next) => {
 exports.postDeletePost = asyncHandler(async (req, res, next) => {
     try {
         //delete the post along with the post's comments
-        const post = await Post.findOne({ _id: req.params.postid }).exec();
+        const post = await Post.findOne({ _id: req.params.postid }).populate("user").exec();
+        //get post author id to pass to frontend.
+        //because we need to redirect user to author page after deleting
+        const postAuthor = post.user._id.toString()
+        //delete the post and its comments
         await Post.deleteOne(post)
         await Comment.deleteMany({ post: req.params.postid })
-
-        res.json("post deleted")
+        //pass data to client
+        res.json({ msg: "post deleted", postAuthor: postAuthor })
     } catch (e) {
-        res.json(e)
+        res.json({ msg: "post could not be deleted." })
     }
 })
 

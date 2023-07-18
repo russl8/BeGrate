@@ -16,8 +16,6 @@ export default function Account() {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
             }
         }).then(res => {
-            console.log(res)
-
             setAccountDetails(res.data)
         })
 
