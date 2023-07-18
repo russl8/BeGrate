@@ -1,24 +1,44 @@
 const asyncHandler = require('express-async-handler')
 const Comment = require("../models/comment")
 const Post = require("../models/post")
+const jwt = require("jsonwebtoken")
+const util = require('util');
+
 
 exports.commentSubmit = asyncHandler(async (req, res, next) => {
+    // get the commenter user data.
+    const currentUser = await getUser(req.token);
 
-    //set the mock comment post to postid
-
-
-    //get the post via req.params.postid 64ac70c30ef609f6e3157df5
+    //get the post via req.params
     const post = await Post.findOne({ _id: req.params.postid }).populate("user").exec();
-    console.log(post)
-    //make a mock comment 
-    const mockComment = new Comment({
-        content: "mockcomment",
-        dateCreated: Date(),
+
+    //get client comment data.
+    // console.log(req.body)
+
+    //create the comment.
+    const comment = new Comment({
+        content: req.body.comment,
+        dateCreated: req.body.dateCreated,
         post: post._id,
-        user: post.user._id
+        user: currentUser._id
 
     })
-    //add commnet to db
-    await mockComment.save();
 
-});     
+    // //add comment to db
+    await comment.save();
+
+});
+
+async function getUser(token) {
+
+    const verifyJwt = util.promisify(jwt.verify);
+
+    try {
+        const authData = await verifyJwt(token, "secretkey");
+        const currentUser = authData.user;
+
+        return currentUser;
+    } catch (error) {
+        return null
+    }
+}

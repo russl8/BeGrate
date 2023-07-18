@@ -62,7 +62,7 @@ router.post("/posts", verifyToken, postsController.postsSubmit);
 
 // INDIVIDUAL post page
 router.get("/posts/:postid", verifyToken, postController.postPage)
-router.post("/posts/:postid", verifyToken, commentController.commentSubmit)
+router.post("/posts/:postid", verifyToken2, commentController.commentSubmit)
 
 router.get("/posts/:postid/update", verifyToken, postController.postUpdateGet)
 router.post("/posts/:postid/update", postController.postUpdatePost)

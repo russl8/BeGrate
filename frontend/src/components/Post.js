@@ -1,15 +1,3 @@
-/**
- * 
- * 
- * 
- *          TODO: EDIT BUTTON FUNCTIONALITY AND UPDATE ROUTE
- * 
- * 
- * 
- */
-
-
-
 import { useParams, useNavigate, NavLink } from "react-router-dom"
 import axios from "axios";
 import React from "react"
@@ -19,6 +7,7 @@ export default function Post() {
     const navigate = useNavigate();
     //state that stores the post data
     const [postData, setPostData] = React.useState(null);
+    const [currentComment, setCurrentComment] = React.useState("")
 
     //passing params.id to backend
     React.useEffect(() => {
@@ -77,6 +66,25 @@ export default function Post() {
         }
     }
 
+    //when user submits comment.
+    const handlePostComment = (e) => {
+        // make sure user is logged in to comment in backend
+
+        //make request to backend, send the current comment data., as well as the user data.
+        axios({
+            method: "POST",
+            url: `http://localhost:3001/posts/${params.id}`,
+            data: { comment: currentComment, dateCreated: Date() },
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+            }
+        })
+
+        //set state to "" 
+
+    }
+
 
     const PageRender = () => {
         if (postData === null || !postData.isVisible) {
@@ -112,6 +120,18 @@ export default function Post() {
     return (
         <>
             <PageRender />
+            <div className="commentForm">
+                <label htmlFor="commentInput">Comments</label>
+                <input
+                    type="text"
+                    placeholder="Write a comment!"
+                    className="commentInput"
+                    name="commentInput"
+                    value={currentComment}
+                    onChange={(e) => { setCurrentComment(e.target.value) }}
+                />
+                <button className="commentButton" onClick={handlePostComment}>Send</button>
+            </div>
         </>
 
     )
