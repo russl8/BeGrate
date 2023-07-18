@@ -24,7 +24,6 @@ export default function SignUp() {
                 navigate("/")
             }
             setErrors(res.data.errors)
-            console.log(errors)
         })
     }
 
@@ -56,7 +55,7 @@ export default function SignUp() {
                     setRPassword(e.target.value)
                 }} />
                 <ul>
-                    {errors.map(error => <li key={uniqid()}>{error.msg}</li>)}
+                    {errors?.errors?.map(err => <li key={uniqid()}>{err.msg}</li>)}
                 </ul>
             <button onClick={register}>Sign Up</button>
         </div>

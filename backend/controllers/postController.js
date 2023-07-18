@@ -32,28 +32,30 @@ exports.postPage = asyncHandler(async (req, res, next) => {
     try {
         console.log("here")
         const post = await Post.findOne({ _id: req.params.postid }).populate("user").exec();
-        const allCommentsOnPost = await Comment.find({ post: req.params.postid }).exec();
+        const allCommentsOnPost = await Comment.find({ post: req.params.postid })
+            .populate("user") // Add population of the "user" field
+            .exec();
+
+        const loggedIn = await getUserLogInStatus(req.token)
         const userIsAuthor = await isUserAuthor(req.token, post.user.username);
         if (post.isPrivate) {
-
             if (userIsAuthor) {
-                res.json({ post: post, edit: true, allCommentsOnPost: allCommentsOnPost, isVisible: true })
+                res.json({ post: post, edit: true, allCommentsOnPost: allCommentsOnPost, isVisible: true, loggedIn: loggedIn });
             } else {
-                res.json({ msg: "PAGE DOES NOT EXIST. RENDER ERROR PAGE", isVisible: false })
-
+                res.json({ msg: "PAGE DOES NOT EXIST. RENDER ERROR PAGE", isVisible: false, loggedIn: loggedIn });
             }
         } else {
             if (userIsAuthor) {
-                res.json({ post: post, edit: true, allCommentsOnPost: allCommentsOnPost, isVisible: true })
+                res.json({ post: post, edit: true, allCommentsOnPost: allCommentsOnPost, isVisible: true, loggedIn: loggedIn });
             } else {
-                res.json({ post: post, edit: false, allCommentsOnPost: allCommentsOnPost, isVisible: true })
+                res.json({ post: post, edit: false, allCommentsOnPost: allCommentsOnPost, isVisible: true, loggedIn: loggedIn });
             }
         }
     } catch (e) {
-        res.json({ msg: "PAGE DOES NOT EXIST. RENDER ERROR PAGE", isVisible: false })
-
+        res.json({ msg: "PAGE DOES NOT EXIST. RENDER ERROR PAGE", isVisible: false });
     }
-})
+});
+
 
 exports.postUpdateGet = asyncHandler(async (req, res, next) => {
     try {
@@ -62,7 +64,7 @@ exports.postUpdateGet = asyncHandler(async (req, res, next) => {
 
 
         if (userIsAuthor) {
-            res.json({ post: post, edit: true })
+            res.json({ post: post, edit: true, })
         } else {
             res.json({ msg: "PAGE DOES NOT EXIST. RENDER ERROR PAGE", edit: false })
 
@@ -127,6 +129,7 @@ exports.postDeletePost = asyncHandler(async (req, res, next) => {
     }
 })
 
+//verifies that user is the author of the post.
 async function isUserAuthor(token, authorName) {
     const verifyJwt = util.promisify(jwt.verify);
 
@@ -143,5 +146,18 @@ async function isUserAuthor(token, authorName) {
         // Handle invalid token error
         console.error('Invalid token:', error);
         return false;
+    }
+}
+
+// returns whether a user is signed in or not.
+async function getUserLogInStatus(token) {
+
+    const verifyJwt = util.promisify(jwt.verify);
+
+    try {
+        const authData = await verifyJwt(token, "secretkey");
+        return true;
+    } catch (error) {
+        return false
     }
 }

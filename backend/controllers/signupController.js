@@ -21,9 +21,15 @@ exports.signupSubmit = [
     try {
       let errs = validationResult(req)
       const existingUser = await User.findOne({ username: req.body.username });
+      const existingEmail = await User.findOne({ email: req.body.email });
+
       if (existingUser) {
         errs.errors.push({ msg: "Username already exists. Please try using another username." })
       }
+      if (existingEmail) {
+        errs.errors.push({ msg: "Email already exists. Please try using another email." })
+      }
+
 
       if (errs.errors.length === 0) {
 

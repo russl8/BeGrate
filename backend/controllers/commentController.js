@@ -6,26 +6,36 @@ const util = require('util');
 
 
 exports.commentSubmit = asyncHandler(async (req, res, next) => {
-    // get the commenter user data.
-    const currentUser = await getUser(req.token);
 
-    //get the post via req.params
-    const post = await Post.findOne({ _id: req.params.postid }).populate("user").exec();
+    try {
+        // get the commenter user data.
+        const currentUser = await getUser(req.token);
 
-    //get client comment data.
-    // console.log(req.body)
+        //get the post via req.params
+        const post = await Post.findOne({ _id: req.params.postid }).populate("user").exec();
 
-    //create the comment.
-    const comment = new Comment({
-        content: req.body.comment,
-        dateCreated: req.body.dateCreated,
-        post: post._id,
-        user: currentUser._id
+        //get client comment data.
+        // console.log(req.body)
 
-    })
+        //create the comment.
+        const comment = new Comment({
+            content: req.body.comment || "",
+            dateCreated: req.body.dateCreated,
+            post: post._id,
+            user: currentUser._id
 
-    // //add comment to db
-    await comment.save();
+        })
+
+        // //add comment to db
+        await comment.save();
+
+        const commentWithPopulatedUser = await Comment.findOne({_id: comment._id.toString()}).populate("user").exec();
+        res.json(commentWithPopulatedUser)
+
+    } catch (e) {
+        console.error(e)
+    }
+
 
 });
 
