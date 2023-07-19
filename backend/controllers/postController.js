@@ -151,20 +151,17 @@ exports.postLike = asyncHandler(async (req, res, next) => {
             console.log(currentPost)
             //pulling fron currentPost.likes
 
+            //delete the username from liked array and update.
             const update = { $pull: { likes: { $in: [currentUser.username] } } };
             await Post.updateOne(currentPost, update);
-
             res.json({ likeStatus: "unliked" });
-
         } else {
             // add the user to the "like" array
             const update = { $push: { likes: currentUser.username } }
             await Post.updateOne(currentPost, update);
             console.log(await Post.find().exec())
             res.json({ likeStatus: "liked" })
-
         }
-
     } catch (e) {
         console.error(e)
     }

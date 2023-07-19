@@ -29,7 +29,7 @@ export default function Home() {
       {allPosts.map(post => {
 
         return (
-          <div className="homepagePost">
+          <div className="homepagePost" key = {uniqid()}>
 
             <NavLink key={uniqid()} to={`/posts/${post._id}`}>
               <h1>{post.title}</h1>

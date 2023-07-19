@@ -191,16 +191,13 @@ export default function Post() {
             <div className="likeDiv">
                 {postData?.loggedIn ?
                     <>
+                        {/* conditionally render the like button based on its status */}
                         {likeStatus === "liked" ?
                             <>
                                 <button onClick={handleLike} >&lt;3</button>
-
                             </>
-
                             :
-
                             <button onClick={handleLike} >&lt;/3</button>
-
                         }
                         <p>{likesOnPost}</p>
 

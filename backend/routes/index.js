@@ -5,7 +5,6 @@ const jwt = require("jsonwebtoken")
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy
 const User = require("../models/user")
-const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const Post = require("../models/post")
 //controllers
