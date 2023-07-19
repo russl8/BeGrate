@@ -11,9 +11,10 @@ export default function Post() {
     const [currentComment, setCurrentComment] = React.useState("")
     const [allCommentsOnPost, setAllCommentsOnPost] = React.useState([])
     const [likesOnPost, setLikesOnPost] = React.useState(postData?.post?.likes?.length || 0)
-    const [likeStatus, setLikeStatus] = React.useState("unliked")
+    const [likeStatus, setLikeStatus] = React.useState("none")
     //fetch the post and comment data from backend. 
     React.useEffect(() => {
+        //set the initial post status
         axios({
             method: "GET",
             withCredentials: true,
@@ -27,6 +28,20 @@ export default function Post() {
             setAllCommentsOnPost(res.data.allCommentsOnPost); // Update the state here
             setLikesOnPost(res.data.post?.likes?.length || 0)
         });
+
+        //set the inital like status
+        axios({
+            method: "POST",
+            withCredentials: true,
+            url: `http://localhost:3001/posts/${params.id}/like`,
+            headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+            }
+
+        }).then(res => {
+            // set local like status. but liking and unlikng is actually updated in backend.
+            setLikeStatus(res.data.likeStatus)
+        })
     }, []);
 
 
@@ -173,14 +188,15 @@ export default function Post() {
             }
 
         }).then(res => {
+            // set local like status. but liking and unlikng is actually updated in backend.
             setLikeStatus(res.data.likeStatus)
-            if (likeStatus === "liked") {
+
+            // console.log(res.data.likeStatus)
+            if (res.data.likeStatus === "liked") {
                 setLikesOnPost(likesOnPost + 1)
-            } else if (likeStatus === "unliked") {
+            } else if (res.data.likeStatus === "unliked") {
                 setLikesOnPost(likesOnPost - 1)
-
             }
-
         })
     }
 
@@ -194,10 +210,10 @@ export default function Post() {
                         {/* conditionally render the like button based on its status */}
                         {likeStatus === "liked" ?
                             <>
-                                <button onClick={handleLike} >&lt;3</button>
+                                <button onClick={handleLike} >&lt;/3</button>
                             </>
                             :
-                            <button onClick={handleLike} >&lt;/3</button>
+                            <button onClick={handleLike} >&lt;3</button>
                         }
                         <p>{likesOnPost}</p>
 
