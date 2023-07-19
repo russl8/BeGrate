@@ -41,7 +41,7 @@ exports.postsSubmit = [
                             dateCreated: Date(),
                             user: authData.user,
                             isPrivate: req.body.isPrivate,
-                            likes: 0
+                            likes: []
                         })
                         //save post to db
                         await post.save();

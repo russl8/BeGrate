@@ -10,6 +10,7 @@ export default function Post() {
     const [postData, setPostData] = React.useState(null);
     const [currentComment, setCurrentComment] = React.useState("")
     const [allCommentsOnPost, setAllCommentsOnPost] = React.useState([])
+    const [likesOnPost,setLikesOnPost] = React.useState(postData?.post?.likes?.length || 0)
     //fetch the post and comment data from backend. 
     React.useEffect(() => {
         axios({
@@ -23,6 +24,7 @@ export default function Post() {
             console.log(res)
             setPostData(res.data);
             setAllCommentsOnPost(res.data.allCommentsOnPost); // Update the state here
+            setLikesOnPost(res.data.post?.likes?.length || 0)
         });
     }, []);
 
@@ -82,7 +84,7 @@ export default function Post() {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
             }
         }).then(res => {
-            console.log(res, "hi")
+            // console.log(res, "hi")
 
             //update the comment state with the new comment
             setAllCommentsOnPost([...allCommentsOnPost, res.data])
@@ -126,7 +128,7 @@ export default function Post() {
             const username = postData.post?.user?.username || "";
             const title = postData.post?.title || "";
             const content = postData.post?.content || "";
-            const likes = postData.post?.likes || 0;
+            const likes = postData.post?.likes || [];
             const isPrivate = postData.post?.isPrivate || false;
             const dateCreated = postData.post?.dateCreated || "";
             const userid = postData.post?.user?._id || ""
@@ -137,7 +139,7 @@ export default function Post() {
                     </NavLink>
                     <h2>{title}</h2>
                     <p>{content}</p>
-                    <p>{likes} Likes</p>
+                    <p>{likes.length} Likes</p>
                     <p>{isPrivate ? "Private" : "Public"} </p>
                     <p>{dateCreated}</p>
                     <EditButton />
@@ -146,12 +148,65 @@ export default function Post() {
         }
     }
 
+    const handleLike = (e) => {
+        /*
+            pass in the liker's user data to the backend.
+            in the backend, create a new POST for handling added likes in /posts/:id/like
+
+            user in the like arrays?
+                true
+                    remove the user from "like" array
+                false
+                    add the user to the "like" array
+
+
+            refresh state over here
+            the length of array = the number of likes. boom 
+        */
+        axios({
+            method: "POST",
+            withCredentials: true,
+            url: `http://localhost:3001/posts/${params.id}/like`,
+            headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+            }
+
+        }).then(res => {
+            console.log(res.data.likeStatus);
+
+            if(res.data.likeStatus === "liked") {
+                setLikesOnPost(likesOnPost +1)
+            } else if (res.data.likeStatus === "unliked") {
+                setLikesOnPost(likesOnPost -1)
+
+            }
+           
+        })
+    }
+
     return (
         <>
             <PageRender />
+            {/* for conditionally rendering like and comment fields */}
+            <div className="likeDiv">
+                {postData?.loggedIn ?
+                    <>
+                        <button onClick={handleLike} >&lt;3</button>
+                        <p>{likesOnPost}</p>
+
+                    </>
+
+                    :
+                    <>
+                    </>
+                }
+            </div>
+
+
             <div className="commentForm">
                 <label htmlFor="commentInput">Comments</label>
 
+                {/* comment field */}
                 {postData?.loggedIn ?
                     <>
                         <input
@@ -167,7 +222,7 @@ export default function Post() {
 
                     :
                     <>
-                        <h4>You must be logged in to comment!</h4>
+                        <h4>You must be logged in to like and comment!</h4>
                     </>
                 }
 

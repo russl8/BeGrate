@@ -9,6 +9,7 @@ export default function SignUp() {
     const [Rpassword, setRPassword] = React.useState("");
     const [Remail, setREmail] = React.useState("");
     const [errors,setErrors] = React.useState([])
+    //posting register data to form
     const register = () => {
         axios({
             method: "POST",
@@ -28,7 +29,7 @@ export default function SignUp() {
     }
 
     return (
-
+        
         <div className="register">
             <label htmlFor="Rusername">Username</label>
             <input type="text"

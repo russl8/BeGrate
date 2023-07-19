@@ -19,7 +19,7 @@ export default function Account() {
             setAccountDetails(res.data)
         })
 
-    }, params)
+    }, params.id)
     return (
         <>
             {

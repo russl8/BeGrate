@@ -129,6 +129,49 @@ exports.postDeletePost = asyncHandler(async (req, res, next) => {
     }
 })
 
+
+exports.postLike = asyncHandler(async (req, res, next) => {
+
+    try {
+        //look for the current user given req.token.
+        const currentUser = await getUser(req.token);
+
+        //look for the post that the user is currentlly about to like OR unlike.
+        const currentPost = await Post.findOne({ _id: req.params.postid });
+
+        //determine whether or not the user is in the post's "likes" array.
+        const userInLikesArray = currentPost.likes.includes(currentUser.username)
+
+        if (userInLikesArray) {
+            /*
+                TODO: remove the user from "like" array
+                refresh state in frontend
+                the length of array = the number of likes. boom 
+            */
+            console.log(currentPost)
+            //pulling fron currentPost.likes
+
+            const update = { $pull: { likes: { $in: [currentUser.username] } } };
+            await Post.updateOne(currentPost, update);
+
+            res.json({ likeStatus: "unliked" });
+
+        } else {
+            // add the user to the "like" array
+            const update = { $push: { likes: currentUser.username } }
+            await Post.updateOne(currentPost, update);
+            console.log(await Post.find().exec())
+            res.json({ likeStatus: "liked" })
+
+        }
+
+    } catch (e) {
+        console.error(e)
+    }
+
+})
+
+
 //verifies that user is the author of the post.
 async function isUserAuthor(token, authorName) {
     const verifyJwt = util.promisify(jwt.verify);
@@ -159,5 +202,20 @@ async function getUserLogInStatus(token) {
         return true;
     } catch (error) {
         return false
+    }
+}
+
+//get the crrent user. need to pass token
+async function getUser(token) {
+
+    const verifyJwt = util.promisify(jwt.verify);
+
+    try {
+        const authData = await verifyJwt(token, "secretkey");
+        const currentUser = authData.user;
+
+        return currentUser;
+    } catch (error) {
+        return null
     }
 }
