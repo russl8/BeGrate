@@ -207,7 +207,7 @@ export default function Post() {
                             :
                             <button onClick={handleLike} >&lt;3</button>
                         }
-                        <p>{likesOnPost}</p>
+                        <p>{likesOnPost} {likesOnPost ===1 ? "like" : "likes"}</p>
 
                     </>
 

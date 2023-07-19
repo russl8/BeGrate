@@ -38,6 +38,9 @@ export default function Account() {
                                                 <h2> {post.title}</h2>
                                                 <p>{post.content}</p>
                                                 <p>{post.dateCreated}</p>
+
+                                                <p>{post.likes.length} {post.likes.length ===1 ? "like" : "likes"} </p>
+
                                             </div>
                                         </NavLink>
 
