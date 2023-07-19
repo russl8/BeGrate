@@ -11,7 +11,8 @@ export default function Post() {
     const [currentComment, setCurrentComment] = React.useState("")
     const [allCommentsOnPost, setAllCommentsOnPost] = React.useState([])
     const [likesOnPost, setLikesOnPost] = React.useState(postData?.post?.likes?.length || 0)
-    const [likeStatus, setLikeStatus] = React.useState("none")
+    const [likeStatus, setLikeStatus] = React.useState("")
+    
     //fetch the post and comment data from backend. 
     React.useEffect(() => {
         //set the initial post status
@@ -23,7 +24,7 @@ export default function Post() {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
             }
         }).then(res => {
-            console.log(res)
+            // console.log(res)
             setPostData(res.data);
             setAllCommentsOnPost(res.data.allCommentsOnPost); // Update the state here
             setLikesOnPost(res.data.post?.likes?.length || 0)
@@ -31,7 +32,7 @@ export default function Post() {
 
         //set the inital like status
         axios({
-            method: "POST",
+            method: "GET",
             withCredentials: true,
             url: `http://localhost:3001/posts/${params.id}/like`,
             headers: {
@@ -39,7 +40,8 @@ export default function Post() {
             }
 
         }).then(res => {
-            // set local like status. but liking and unlikng is actually updated in backend.
+            // set initial like status
+            console.log(res.data.likeStatus)
             setLikeStatus(res.data.likeStatus)
         })
     }, []);

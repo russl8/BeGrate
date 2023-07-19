@@ -63,6 +63,7 @@ router.post("/posts", verifyToken, postsController.postsSubmit);
 router.get("/posts/:postid", verifyToken, postController.postPage)
 router.post("/posts/:postid", verifyToken2, commentController.commentSubmit)
 router.post("/posts/:postid/like", verifyToken2, postController.postLike)
+router.get("/posts/:postid/like", verifyToken2, postController.getLike)
 
 
 router.get("/posts/:postid/update", verifyToken, postController.postUpdateGet)

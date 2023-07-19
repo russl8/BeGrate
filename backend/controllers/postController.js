@@ -129,6 +129,28 @@ exports.postDeletePost = asyncHandler(async (req, res, next) => {
     }
 })
 
+exports.getLike = asyncHandler(async (req,res,next) => {
+    try {
+        //look for the current user given req.token.
+        const currentUser = await getUser(req.token);
+
+        //look for the post that the user is currentlly about to like OR unlike.
+        const currentPost = await Post.findOne({ _id: req.params.postid });
+
+        //determine whether or not the user is in the post's "likes" array.
+        const userInLikesArray = currentPost.likes.includes(currentUser.username)
+
+        if (userInLikesArray) {
+            res.json({ likeStatus: "liked" });
+        } else {        
+            res.json({ likeStatus: "unliked" })
+        }
+    } catch (e) {
+        console.error(e)
+    }
+
+})
+
 
 exports.postLike = asyncHandler(async (req, res, next) => {
 
