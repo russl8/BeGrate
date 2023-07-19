@@ -129,6 +129,9 @@ exports.postDeletePost = asyncHandler(async (req, res, next) => {
     }
 })
 
+//gets the post's initaal like status (liked/unliked)
+//is the same as postLike but only returns the likeStatus
+//    ie. does not modify database at all.
 exports.getLike = asyncHandler(async (req,res,next) => {
     try {
         //look for the current user given req.token.
