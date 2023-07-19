@@ -1,8 +1,8 @@
 import { useParams, useNavigate, NavLink } from "react-router-dom"
 import axios from "axios";
 import React from "react"
-import EditPost from "./EditPost"
 import uniqid from 'uniqid'
+
 export default function Post() {
     const params = useParams();
     const navigate = useNavigate();
@@ -56,7 +56,7 @@ export default function Post() {
 
     }
 
-    //only shows when post exists, or user has edit permissions.
+    //only shows when post existsr AND has edit permissions.
     const EditButton = () => {
         if (postData.isVisible && (postData.edit === true)) {
             return (
@@ -79,7 +79,7 @@ export default function Post() {
         })
     }
 
-    //only shows when post exists, or user has edit permissions.
+    //only shows when post exists, and user has edit permissions.
     const DeleteButton = () => {
         if (postData.isVisible && (postData.edit === true)) {
             return (
@@ -134,7 +134,7 @@ export default function Post() {
         )
     }
 
-    //renders most of the page, except for comment input.
+    //renders most of the page, except for comment input as there is a bug with input field.
     const PageRender = () => {
         if (postData === null || !postData.isVisible) {
             return (
@@ -170,16 +170,6 @@ export default function Post() {
         /*
             pass in the liker's user data to the backend.
             in the backend, create a new POST for handling added likes in /posts/:id/like
-
-            user in the like arrays?
-                true
-                    remove the user from "like" array
-                false
-                    add the user to the "like" array
-
-
-            refresh state over here
-            the length of array = the number of likes. boom 
         */
         axios({
             method: "POST",
@@ -231,7 +221,7 @@ export default function Post() {
             <div className="commentForm">
                 <label htmlFor="commentInput">Comments</label>
 
-                {/* comment field */}
+                {/* comment field  only renders when user is logged in.*/}
                 {postData?.loggedIn ?
                     <>
                         <input
