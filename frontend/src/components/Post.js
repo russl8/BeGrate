@@ -10,7 +10,8 @@ export default function Post() {
     const [postData, setPostData] = React.useState(null);
     const [currentComment, setCurrentComment] = React.useState("")
     const [allCommentsOnPost, setAllCommentsOnPost] = React.useState([])
-    const [likesOnPost,setLikesOnPost] = React.useState(postData?.post?.likes?.length || 0)
+    const [likesOnPost, setLikesOnPost] = React.useState(postData?.post?.likes?.length || 0)
+    const [likeStatus, setLikeStatus] = React.useState("unliked")
     //fetch the post and comment data from backend. 
     React.useEffect(() => {
         axios({
@@ -172,15 +173,14 @@ export default function Post() {
             }
 
         }).then(res => {
-            console.log(res.data.likeStatus);
-
-            if(res.data.likeStatus === "liked") {
-                setLikesOnPost(likesOnPost +1)
-            } else if (res.data.likeStatus === "unliked") {
-                setLikesOnPost(likesOnPost -1)
+            setLikeStatus(res.data.likeStatus)
+            if (likeStatus === "liked") {
+                setLikesOnPost(likesOnPost + 1)
+            } else if (likeStatus === "unliked") {
+                setLikesOnPost(likesOnPost - 1)
 
             }
-           
+
         })
     }
 
@@ -191,7 +191,17 @@ export default function Post() {
             <div className="likeDiv">
                 {postData?.loggedIn ?
                     <>
-                        <button onClick={handleLike} >&lt;3</button>
+                        {likeStatus === "liked" ?
+                            <>
+                                <button onClick={handleLike} >&lt;3</button>
+
+                            </>
+
+                            :
+
+                            <button onClick={handleLike} >&lt;/3</button>
+
+                        }
                         <p>{likesOnPost}</p>
 
                     </>
