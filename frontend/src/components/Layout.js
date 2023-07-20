@@ -8,11 +8,11 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
             <Container sx={{ mb: 8 }}>
                 {isAuthenticated ? (
                     <AppBar sx={{ position: "fixed", }}>
-                        <Box sx={{ display: "flex", justifyContent: "space-between", mx: 4, my: 1, alignItems: "center" }}>
+                        <Box sx={{ display: "flex", justifyContent: "space-between", mx: 4, my: 2, alignItems: "center" }}>
 
 
                             <NavLink to="/" style={{ textDecoration: "none" }}>
-                                <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.headline", mx: 4 }}>AAAAAAAA</Typography>
+                                <Typography variant="h4" sx={{ fontWeight: "bold", color: "primary.headline", mx: 4 }}>BeGrate!</Typography>
                             </NavLink>
 
                             <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -20,7 +20,7 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
                                 <NavLink to="/posts" style={{ textDecoration: "none" }}>
                                     <Button variant="text" sx={{ bgcolor: "primary.button", textTransform: "none" }}>
 
-                                        <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.headline", mx: 4 }}>
+                                        <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.headline", }}>
                                             Create
                                         </Typography>
                                     </Button>
@@ -32,7 +32,7 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
                                 <NavLink to={`/account/${userId} `} style={{ textDecoration: "none", color: "#078080", marginRight: "32px", marginLeft: "32px" }}>
                                     <Button variant="text" sx={{ bgcolor: "primary.button", textTransform: "none" }}>
 
-                                        <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.headline", mx: 4 }}>
+                                        <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.headline", }}>
                                             {userName()}
                                         </Typography>
                                     </Button>
@@ -41,8 +41,8 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
 
 
 
-                                <Button sx={{  bgcolor: "primary.button" }} variant="text" onClick={handleLogout} style={{ textTransform: 'none' }}>
-                                    <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.buttonText", mx: 4 }}>
+                                <Button sx={{ bgcolor: "primary.button", mr: 4 }} variant="text" onClick={handleLogout} style={{ textTransform: 'none' }}>
+                                    <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.buttonText", }}>
                                         Log out
                                     </Typography>
                                 </Button>
@@ -52,35 +52,28 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
                         </Box>
                     </AppBar>
                 ) : (
-                    <AppBar sx={{ position: "fixed" }}>
+                    <AppBar sx={{ position: "fixed", }}>
+                        <Box sx={{ display: "flex", justifyContent: "space-between", mx: 4, my: 2, alignItems: "center" }}>
 
-                        <Box sx={{ display: "flex", alignItems: "center", mx: 8, my: 1, justifyContent: 'space-between' }}>
 
-                            <div className="layoutLeft">
+                            <NavLink to="/" style={{ textDecoration: "none" }}>
+                                <Typography variant="h4" sx={{ fontWeight: "bold", color: "primary.headline", mx: 4 }}>BeGrate!</Typography>
+                            </NavLink>
 
-                                <NavLink to="/" style={{ textDecoration: "none" }}>
 
-                                    <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.headline" }}>
-                                        AAAAAAAA
+                            <NavLink to="/login" style={{ textDecoration: "none", marginRight: "32px" }}>
+                                <Button variant="text" sx={{ bgcolor: "primary.button", textTransform: "none" }}>
+
+                                    <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.headline" }}>
+                                        Login
                                     </Typography>
-                                </NavLink>
-                            </div>
-                            <div className="layoutRight">
+                                </Button>
+                            </NavLink>
 
-                                <NavLink to="/login" style={{ textDecoration: "none" }}>
-                                    <Button variant="text" sx={{ bgcolor: "primary.button", textTransform: "none" }}>
-
-                                        <Typography variant="h6" sx={{ fontWeight: "bold", color: "primary.headline" }}>
-                                            Login
-                                        </Typography>
-                                    </Button>
-                                </NavLink>
-                            </div>
                         </Box>
                     </AppBar>
                 )}
             </Container >
-
             <Outlet />
         </>
     );

@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import axios from "axios"
-
+import "./App.css"
 import Home from './components/Home';
 import Layout from './components/Layout';
 import Login from './components/Login';
@@ -10,6 +10,7 @@ import Post from './components/Post';
 import EditPost from './components/EditPost';
 import SignUp from './components/SignUp';
 import Account from './components/Account';
+import { Container, Box } from "@mui/material";
 
 
 
@@ -116,7 +117,7 @@ function App() {
   */
 
   return (
-    <div className="App">
+    <Box className="App" sx={{bgcolor:"#f8f5f2"}}>
       <Routes>
         {/* nav bar  */}
         <Route element={<Layout
@@ -142,7 +143,7 @@ function App() {
 
         </Route> {/* nav bar route ends */}
       </Routes>
-    </div>
+    </Box>
   );
 }
 
