@@ -12,7 +12,7 @@ export default function Post() {
     const [allCommentsOnPost, setAllCommentsOnPost] = React.useState([])
     const [likesOnPost, setLikesOnPost] = React.useState(postData?.post?.likes?.length || 0)
     const [likeStatus, setLikeStatus] = React.useState("")
-    
+
     //fetch the post and comment data from backend. 
     React.useEffect(() => {
         //set the initial post status
@@ -207,7 +207,7 @@ export default function Post() {
                             :
                             <button onClick={handleLike} >&lt;3</button>
                         }
-                        <p>{likesOnPost} {likesOnPost ===1 ? "like" : "likes"}</p>
+                        <p>{likesOnPost} {likesOnPost === 1 ? "like" : "likes"}</p>
 
                     </>
 
