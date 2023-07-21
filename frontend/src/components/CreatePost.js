@@ -65,10 +65,9 @@ export default function CreatePost() {
                     ?
                     <Container sx={{
                         pt: 3,
-
                         display: "flex",
                         flexDirection: "column",
-                        alignItems: "flex-start",
+                        alignItems: "center",
                         justifyContent: "center"
                     }}>
 
@@ -81,41 +80,35 @@ export default function CreatePost() {
                             name="postTitle"
                             value={postTitle}
                             onChange={(e) => {
-                                setPostTitle(e.target.value)
+                                // setPostTitle(e.target.value)
+                                setPostTitle(e.target.value.replace(/\s/g, ''));
+
                             }}
-                            sx={{ bgcolor: "form.input", color: "form.label" }}
+                            sx={{
+                                 bgcolor: "form.input", 
+                                 color: "form.label",
+                                 width: 400
+                                 }}
+
                         />
                         <TextField
                             id="outlined-multiline-static"
                             label="Describe your day!"
                             multiline
                             rows={8}
-                            defaultValue="Default Value"
                             variant="outlined"
                             type="postContent"
                             className="postContentInput"
                             name="postContent"
                             value={postContent}
-                            sx={{ bgcolor: "form.input" }}
                             onChange={(e) => {
                                 setPostContent(e.target.value)
                             }}
-                        />
-
-                        {/* <Checkbox
-                            defaultChecked
                             sx={{
-                                color: "form.buttonText",
-                                '&.Mui-checked': {
-                                    color: "form.button",
-                                },
-                                p: 0
-                            }}
-                         type="checkbox"
-                            name="postIsPrivate"
-                            className="postIsPrivateInput"
-                            onChange={(e) => setPostIsPrivate(e.target.checked)}
-                        /> */}
+                                 bgcolor: "form.input"
+                                 }}
+                           
+                        />
 
                         <FormControlLabel
                             control={<Checkbox

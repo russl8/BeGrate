@@ -29,7 +29,7 @@ export default function Home() {
       {allPosts.map(post => {
 
         return (
-          <div className="homepagePost" key = {uniqid()}>
+          <div className="homepagePost" key={uniqid()}>
 
             <NavLink key={uniqid()} to={`/posts/${post._id}`}>
               <h1>{post.title}</h1>
@@ -39,8 +39,8 @@ export default function Home() {
               </NavLink>
 
               <p>{post.content}</p>
-              <p>{post.likes.length} {post.likes.length ===1 ? "like" : "likes"}</p>
-              
+              <p>{post.likes.length} {post.likes.length === 1 ? "like" : "likes"}</p>
+
             </NavLink>
           </div>
 

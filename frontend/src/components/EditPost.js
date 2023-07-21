@@ -98,8 +98,11 @@ export default function EditPost() {
                             name="postTitle"
                             value={postTitle}
                             onChange={(e) => {
-                                setPostTitle(e.target.value)
-                            }} />
+                                // setPostTitle(e.target.value)
+                                setPostTitle(e.target.value.replace(/\s/g, ''));
+
+                            }}
+                        />
 
 
 
@@ -124,12 +127,12 @@ export default function EditPost() {
                         <ul>
                             {
                                 errors !== []
-                                ?
-                                errors.map(error => <li key={uniqid()}>{error.msg}</li>)
-                                :
-                                <>
-                                </>
-                                }
+                                    ?
+                                    errors.map(error => <li key={uniqid()}>{error.msg}</li>)
+                                    :
+                                    <>
+                                    </>
+                            }
                         </ul>
                     </div>
                     :

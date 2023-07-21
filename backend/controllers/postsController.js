@@ -18,7 +18,7 @@ exports.postsPage = asyncHandler(async (req, res, next) => {
 
 exports.postsSubmit = [
     body("title", "Post must contain a title!").trim().isLength({ min: 1 }).escape(),
-    body("content", "Post content must be more than five characters!").trim().isLength({ min: 5 }).escape(),
+    body("content", "Post length should be between 5-280 characters long!").trim().isLength({ min: 5,max:280 }).escape(),
 
     asyncHandler(async (req, res, next) => {
 
@@ -36,7 +36,7 @@ exports.postsSubmit = [
 
                     if (errors.errors.length === 0) {
                         const post = new Post({
-                            title: req.body.title,
+                            title: req.body.title.split(" ")[0],
                             content: req.body.content,
                             dateCreated: Date(),
                             user: authData.user,
