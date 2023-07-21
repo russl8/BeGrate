@@ -2,6 +2,8 @@ import axios from "axios"
 import React from 'react'
 import { useParams, useNavigate } from "react-router-dom";
 import uniqid from "uniqid"
+import { Container, TextField, Checkbox, Typography, Button, FormControlLabel, Box } from "@mui/material";
+
 export default function EditPost() {
     const params = useParams();
     const navigate = useNavigate();
@@ -21,12 +23,13 @@ export default function EditPost() {
                 const title = res.data?.post?.title || ""
                 const content = res.data?.post?.content || ""
                 const isPrivate = res.data?.post?.isPrivate || false
+                const u = res.data?.post?.user?.username || ""
 
                 setCanEditPost(edit);
                 setPostTitle(title)
                 setPostContent(content)
                 setPostIsPrivate(isPrivate)
-
+                setUsername(u)
             })
 
         } catch (e) {
@@ -40,6 +43,7 @@ export default function EditPost() {
     const [postContent, setPostContent] = React.useState("");
     const [postIsPrivate, setPostIsPrivate] = React.useState(false)
     const [errors, setErrors] = React.useState([]);
+    const [username, setUsername] = React.useState("false")
 
     //when a user submits an update
     const handleEditPost = (e) => {
@@ -91,9 +95,34 @@ export default function EditPost() {
             {
                 canEditPost
                     ?
-                    <div className="editPost">
-                        <label htmlFor="postTitle">Title</label>
-                        <input type="postTitle"
+                    <Container sx={{
+                        pt: 3,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}>
+
+
+                        <Container
+                            disableGutters
+                            sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "flex-start",
+                                width: 400,
+                                mb: 1
+                            }}>
+                            <Typography sx={{fontWeight:"bold"}}>
+                                @{username} is editing a post...
+                            </Typography>
+                        </Container>
+
+                        <TextField
+                            id="outlined-basic"
+                            label="Your day in one word..."
+                            variant="outlined"
+                            type="postTitle"
                             className="postTitleInput"
                             name="postTitle"
                             value={postTitle}
@@ -102,41 +131,78 @@ export default function EditPost() {
                                 setPostTitle(e.target.value.replace(/\s/g, ''));
 
                             }}
+                            sx={{
+                                bgcolor: "form.input",
+                                color: "form.label",
+                                width: 400,
+                                mb: 1
+                            }}
+
                         />
-
-
-
-                        <label htmlFor="postContent">Content</label>
-                        <input type="text"
+                        <TextField
+                            id="outlined-multiline-static"
+                            label="Describe your day!"
+                            multiline
+                            rows={8}
+                            variant="outlined"
+                            type="postContent"
                             className="postContentInput"
                             name="postContent"
                             value={postContent}
                             onChange={(e) => {
                                 setPostContent(e.target.value)
                             }}
-                        />
-                        <label htmlFor="postIsPrivate">Private</label>
-                        <input type="checkbox"
-                            name="postIsPrivate"
-                            className="postIsPrivateInput"
-                            onChange={(e) => { setPostIsPrivate(e.target.checked) }}
-                            checked={postIsPrivate}
-                        />
-                        <button onClick={handleEditPost}>Update</button>
+                            sx={{
+                                bgcolor: "form.input",
+                                width: 400,
+                                mb: 1
+                            }}
 
+                        />
+
+                        <FormControlLabel
+                            control={<Checkbox
+                                sx={{
+                                    color: "form.buttonText",
+                                    '&.Mui-checked': {
+                                        color: "form.button",
+                                    },
+                                    p: 0
+                                }}
+                                name="postIsPrivate"
+                                className="postIsPrivateInput"
+                                onChange={(e) => { setPostIsPrivate(e.target.checked) }}
+                                checked={postIsPrivate}
+                            />}
+                            label="Keep Private?"
+                            labelPlacement="start"
+                            sx={{
+                                p: 0,
+                                m: 0,
+                                mb: 1,
+                            }}
+                        />
+
+
+                        <Button variant="contained"
+                            sx={{
+                                bgcolor: "form.button",
+                                m: 0
+                            }} onClick={handleEditPost}>
+                            <Typography>Update Post</Typography>
+                        </Button>
+                        {/* errors list */}
                         <ul>
                             {
-                                errors !== []
-                                    ?
-                                    errors.map(error => <li key={uniqid()}>{error.msg}</li>)
-                                    :
-                                    <>
-                                    </>
+                                errors.map(error => <li key={uniqid()}>{error.msg}</li>)
                             }
+
                         </ul>
-                    </div>
+                    </Container>
                     :
-                    <ErrorPage />}
+                    <></>
+         
+            }
         </>
 
     )

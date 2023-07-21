@@ -8,17 +8,17 @@ exports.postsPage = asyncHandler(async (req, res, next) => {
     jwt.verify(req.token, "secretkey", asyncHandler(async (err, authData) => {
         if (err) {
             //user is not signed in. CANNOT submit post.
-            res.json({ canPost: false })
+            res.json({ canPost: false, username: "" })
         } else {
             //user is not signed in. can make post.
-            res.json({ canPost: true })
+            res.json({ canPost: true, username: authData.user.username })
         }
     }))
 })
 
 exports.postsSubmit = [
     body("title", "Post must contain a title!").trim().isLength({ min: 1 }).escape(),
-    body("content", "Post length should be between 5-280 characters long!").trim().isLength({ min: 5,max:280 }).escape(),
+    body("content", "Post length should be between 5-280 characters long!").trim().isLength({ min: 5, max: 280 }).escape(),
 
     asyncHandler(async (req, res, next) => {
 
@@ -48,7 +48,7 @@ exports.postsSubmit = [
                         // put post contents in res.json to send to client
                         res.json({ postStatus: "Success", postID: post._id })
                     } else {
-                        res.json({ postStatus: "Failed",errors: errors});
+                        res.json({ postStatus: "Failed", errors: errors });
                     }
 
 

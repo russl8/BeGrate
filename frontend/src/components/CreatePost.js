@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 import uniqid from "uniqid"
-import { Container, TextField, Checkbox, Typography, Button, FormControlLabel } from "@mui/material";
+import { Container, TextField, Checkbox, Typography, Button, FormControlLabel, Box } from "@mui/material";
 import "../styles/CreatePost.css"
 
 export default function CreatePost() {
@@ -13,6 +13,7 @@ export default function CreatePost() {
     const [postIsPrivate, setPostIsPrivate] = React.useState(false)
     const [canCreatePost, setCanCreatePost] = React.useState(false)
     const [errors, setErrors] = React.useState([])
+    const [username, setUsername] = React.useState("");
 
     React.useEffect(() => {
         //make sure that the user actually exists
@@ -26,6 +27,7 @@ export default function CreatePost() {
             }
         }).then(res => {
             setCanCreatePost(res.data.canPost)
+            setUsername(res.data.username)
 
         })
         // then they can access the page
@@ -71,6 +73,21 @@ export default function CreatePost() {
                         justifyContent: "center"
                     }}>
 
+
+                        <Container
+                            disableGutters
+                            sx={{
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "flex-start",
+                                width: 400,
+                                mb: 1
+                            }}>
+                            <Typography sx={{ fontWeight: "bold" }}>
+                                @{username} is creating a post...
+                            </Typography>
+                        </Container>
+
                         <TextField
                             id="outlined-basic"
                             label="Your day in one word..."
@@ -85,10 +102,11 @@ export default function CreatePost() {
 
                             }}
                             sx={{
-                                 bgcolor: "form.input", 
-                                 color: "form.label",
-                                 width: 400
-                                 }}
+                                bgcolor: "form.input",
+                                color: "form.label",
+                                width: 400,
+                                mb: 1
+                            }}
 
                         />
                         <TextField
@@ -105,9 +123,11 @@ export default function CreatePost() {
                                 setPostContent(e.target.value)
                             }}
                             sx={{
-                                 bgcolor: "form.input"
-                                 }}
-                           
+                                bgcolor: "form.input",
+                                width: 400,
+                                mb: 1
+                            }}
+
                         />
 
                         <FormControlLabel
@@ -124,13 +144,21 @@ export default function CreatePost() {
                                 checked={postIsPrivate}
                                 onChange={(e) => setPostIsPrivate(e.target.checked)}
                             />}
-                            label="Private Post"
+                            label="Keep Private?"
                             labelPlacement="start"
-                            sx={{p:0,m:0}}
+                            sx={{
+                                p: 0,
+                                m: 0,
+                                mb: 1,
+                            }}
                         />
 
 
-                        <Button variant="contained" sx={{ bgcolor: "form.button" }} onClick={handleCreatePost}>
+                        <Button variant="contained"
+                            sx={{
+                                bgcolor: "form.button",
+                                m: 0
+                            }} onClick={handleCreatePost}>
                             <Typography>Create</Typography>
                         </Button>
                         {/* errors list */}
