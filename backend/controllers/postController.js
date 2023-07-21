@@ -84,6 +84,7 @@ exports.postUpdatePost = [
         try {
             //errors array
             let errors = validationResult(req);
+            // console.log(req.body)
 
             //if there are errors, display error messages
             if (errors.errors.length === 0) {
@@ -96,15 +97,15 @@ exports.postUpdatePost = [
                     }
                 };
                 await Post.updateOne(postToUpdate, updatedPost);
-                res.json("success")
+                res.json({msg: "success", errors: [] })
             } else {
-                res.json({ errors: errors })
+                res.json({ errors: errors ,msg: "failed"})
             }
 
 
 
         } catch (e) {
-            res.json("failed")
+            res.json({errors: [],msg:"failed"})
             console.error("post could not be updated. please try again.", e)
         }
     })];

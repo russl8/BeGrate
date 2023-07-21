@@ -20,7 +20,7 @@ export default function EditPost() {
                 const edit = res.data?.edit || false
                 const title = res.data?.post?.title || ""
                 const content = res.data?.post?.content || ""
-                const isPrivate = res.data?.post?.isPrivate || ""
+                const isPrivate = res.data?.post?.isPrivate || false
 
                 setCanEditPost(edit);
                 setPostTitle(title)
@@ -56,20 +56,20 @@ export default function EditPost() {
                     isPrivate: postIsPrivate
                 }
             }).then(res => {
-                console.log(res)
-                const successOrFail = res.data;
+                // console.log(res.data)
+                const successOrFail = res.data.msg;
 
                 //if post is successfully posted...
                 if (successOrFail === "success") {
                     navigate(`/posts/${params.id}`)
-
                 } else {
                     // update error messages state so the errors can be displayed 
                     setErrors(res.data.errors.errors);
-
                 }
+
             })
         } catch (e) {
+
             console.error(e)
         }
 
@@ -77,7 +77,8 @@ export default function EditPost() {
 
     const ErrorPage = () => {
         return (
-            <></>
+            <>
+            </>
         )
     }
 
@@ -121,7 +122,14 @@ export default function EditPost() {
                         <button onClick={handleEditPost}>Update</button>
 
                         <ul>
-                            {errors.map(error => <li key={uniqid()}>{error.msg}</li>)}
+                            {
+                                errors !== []
+                                ?
+                                errors.map(error => <li key={uniqid()}>{error.msg}</li>)
+                                :
+                                <>
+                                </>
+                                }
                         </ul>
                     </div>
                     :

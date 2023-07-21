@@ -2,6 +2,9 @@ import React from "react";
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 import uniqid from "uniqid"
+import { Container, TextField, Checkbox, Typography, Button, FormControlLabel } from "@mui/material";
+import "../styles/CreatePost.css"
+
 export default function CreatePost() {
     const navigate = useNavigate();
     //make a form for title, content, and isPrivate
@@ -60,32 +63,83 @@ export default function CreatePost() {
             {
                 canCreatePost
                     ?
+                    <Container sx={{
+                        pt: 3,
 
-                    <div className="createPost">
-                        <label htmlFor="postTitle">Title</label>
-                        <input type="postTitle"
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "flex-start",
+                        justifyContent: "center"
+                    }}>
+
+                        <TextField
+                            id="outlined-basic"
+                            label="Your day in one word..."
+                            variant="outlined"
+                            type="postTitle"
                             className="postTitleInput"
                             name="postTitle"
                             value={postTitle}
                             onChange={(e) => {
                                 setPostTitle(e.target.value)
-                            }} />
-
-                        <label htmlFor="postContent">Content</label>
-                        <input type="postContent"
+                            }}
+                            sx={{ bgcolor: "form.input", color: "form.label" }}
+                        />
+                        <TextField
+                            id="outlined-multiline-static"
+                            label="Describe your day!"
+                            multiline
+                            rows={8}
+                            defaultValue="Default Value"
+                            variant="outlined"
+                            type="postContent"
                             className="postContentInput"
                             name="postContent"
                             value={postContent}
+                            sx={{ bgcolor: "form.input" }}
                             onChange={(e) => {
                                 setPostContent(e.target.value)
-                            }} />
-                        <label htmlFor="postIsPrivate">Private</label>
-                        <input type="checkbox"
+                            }}
+                        />
+
+                        {/* <Checkbox
+                            defaultChecked
+                            sx={{
+                                color: "form.buttonText",
+                                '&.Mui-checked': {
+                                    color: "form.button",
+                                },
+                                p: 0
+                            }}
+                         type="checkbox"
                             name="postIsPrivate"
                             className="postIsPrivateInput"
                             onChange={(e) => setPostIsPrivate(e.target.checked)}
+                        /> */}
+
+                        <FormControlLabel
+                            control={<Checkbox
+                                sx={{
+                                    color: "form.buttonText",
+                                    '&.Mui-checked': {
+                                        color: "form.button",
+                                    },
+                                    p: 0
+                                }}
+                                name="postIsPrivate"
+                                className="postIsPrivateInput"
+                                checked={postIsPrivate}
+                                onChange={(e) => setPostIsPrivate(e.target.checked)}
+                            />}
+                            label="Private Post"
+                            labelPlacement="start"
+                            sx={{p:0,m:0}}
                         />
-                        <button onClick={handleCreatePost}>Create</button>
+
+
+                        <Button variant="contained" sx={{ bgcolor: "form.button" }} onClick={handleCreatePost}>
+                            <Typography>Create</Typography>
+                        </Button>
                         {/* errors list */}
                         <ul>
                             {
@@ -93,9 +147,9 @@ export default function CreatePost() {
                             }
 
                         </ul>
-                    </div>
+                    </Container>
                     :
-                    <h1 className="postDNE">Page does not exist :&#40;</h1>
+                    <></>
             }
         </>
 
