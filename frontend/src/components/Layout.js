@@ -5,7 +5,7 @@ import { Typography, AppBar, Box, Button, Container } from "@mui/material";
 export default function Layout({ isAuthenticated, handleLogout, userName, userId }) {
     return (
         <>
-            <Container sx={{ mb: 8 }}>
+            <Container sx={{ mb: 10 }}>
                 {isAuthenticated ? (
                     <AppBar sx={{ position: "fixed", }}>
                         <Box sx={{ display: "flex", justifyContent: "space-between", mx: 4, my: 2, alignItems: "center" }}>
@@ -33,7 +33,7 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
                                     <Button variant="text" sx={{ bgcolor: "primary.button", textTransform: "none" }}>
 
                                         <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.headline", }}>
-                                            {userName()}
+                                            @{userName()}
                                         </Typography>
                                     </Button>
                                 </NavLink>
@@ -43,7 +43,7 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
 
                                 <Button sx={{ bgcolor: "primary.button", mr: 4 }} variant="text" onClick={handleLogout} style={{ textTransform: 'none' }}>
                                     <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.buttonText", }}>
-                                        Log out
+                                        Log Out
                                     </Typography>
                                 </Button>
 
@@ -57,7 +57,7 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
 
 
                             <NavLink to="/" style={{ textDecoration: "none" }}>
-                                <Typography variant="h4" sx={{ fontWeight: "bold", color: "primary.headline", mx: 4 }}>AAAAA!</Typography>
+                                <Typography variant="h4" sx={{ fontWeight: "bold", color: "primary.headline", mx: 4 }}>AAAA!</Typography>
                             </NavLink>
 
 
