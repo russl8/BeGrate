@@ -10,7 +10,7 @@ import Post from './components/Post';
 import EditPost from './components/EditPost';
 import SignUp from './components/SignUp';
 import Account from './components/Account';
-import { Container, Box } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 
 
 
@@ -43,7 +43,7 @@ function App() {
       withCredentials: true,
       url: "http://localhost:3001/"
     }).then(res => {
-      console.log(res.data)
+      // console.log(res.data)
       setGlobalState({
         ...globalState,
         token: res.data.token,
@@ -96,8 +96,6 @@ function App() {
 
         //redirect user to home page
         navigate("/")
-
-
 
         //extra: if user goes back to login page, verify user if signed in or not. if signed in, send 403
       } else {

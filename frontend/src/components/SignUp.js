@@ -2,13 +2,18 @@ import { useNavigate } from "react-router-dom";
 import React from "react"
 import axios from "axios"
 import uniqid from "uniqid"
+import { Box, Button, Container, Typography, TextField } from "@mui/material"
+import { Error } from "@mui/icons-material"
+
+
+
 export default function SignUp() {
     const navigate = useNavigate();
 
     const [RuserName, setRUserName] = React.useState("");
     const [Rpassword, setRPassword] = React.useState("");
     const [Remail, setREmail] = React.useState("");
-    const [errors,setErrors] = React.useState([])
+    const [errors, setErrors] = React.useState([])
     //posting register data to form
     const register = () => {
         axios({
@@ -29,36 +34,120 @@ export default function SignUp() {
     }
 
     return (
-        
-        <div className="register">
-            <label htmlFor="Rusername">Username</label>
-            <input type="text"
-                className="RusernameInput"
-                name="RuserName"
-                value={RuserName}
-                onChange={(e) => {
-                    setRUserName(e.target.value)
-                }} />
-            <label htmlFor="Remail">Email</label>
-            <input type="email"
-                className="RemailInput"
-                name="Remail"
-                value={Remail}
-                onChange={(e) => {
-                    setREmail(e.target.value)
-                }} />
-            <label htmlFor="Rpassword">Password</label>
-            <input type="password"
-                className="RpasswordInput"
-                name="Rpassword"
-                value={Rpassword}
-                onChange={(e) => {
-                    setRPassword(e.target.value)
-                }} />
-                <ul>
-                    {errors?.errors?.map(err => <li key={uniqid()}>{err.msg}</li>)}
-                </ul>
-            <button onClick={register}>Sign Up</button>
-        </div>
+
+        <Container component="main" maxWidth="xs">
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
+            >
+                <Typography component="h1" variant="h4" sx={{ my: 2 }}>
+                    Sign Up
+                </Typography>
+
+                <TextField
+                    id="outlined-basic"
+                    label="Username"
+                    variant="outlined"
+                    type="text"
+                    className="RusernameInput"
+                    name="RuserName"
+                    value={RuserName}
+                    onChange={(e) => {
+                        setRUserName(e.target.value)
+                    }}
+                    sx={{
+                        width: 400, mb: 2, "& label.Mui-focused": {
+                            color: "form.label"
+                        },
+                        "& .MuiOutlinedInput-root": {
+                            "&.Mui-focused fieldset": {
+                                borderColor: "form.label"
+                            }
+                        }
+                    }}
+                />
+                <TextField
+                    id="outlined-basic"
+                    label="Email"
+                    variant="outlined"
+                    type="email"
+                    className="RemailInput"
+                    name="Remail"
+                    value={Remail}
+                    onChange={(e) => {
+                        setREmail(e.target.value)
+                    }}
+                    sx={{
+                        width: 400,
+                        mb: 2,
+                        "& label.Mui-focused": {
+                            color: "form.label"
+                        },
+                        "& .MuiOutlinedInput-root": {
+                            "&.Mui-focused fieldset": {
+                                borderColor: "form.label"
+                            }
+                        }
+                    }}
+
+
+                />
+
+                <TextField
+                    id="outlined-basic"
+                    label="Password"
+                    variant="outlined"
+                    type="password"
+                    className="RpasswordInput"
+                    name="Rpassword"
+                    value={Rpassword}
+                    onChange={(e) => {
+                        setRPassword(e.target.value)
+                    }}
+                    sx={{
+                        width: 400, mb: 2, "& label.Mui-focused": {
+                            color: "form.label"
+                        },
+                        "& .MuiOutlinedInput-root": {
+                            "&.Mui-focused fieldset": {
+                                borderColor: "form.label"
+                            }
+                        }
+                    }}
+
+                />
+                <Button onClick={register} variant="contained" sx={{ bgcolor: "form.button", textTransform: "none" }}>Sign Up</Button>
+
+                <Box sx={{
+                    mt: 2
+                }}>
+
+                    {errors?.errors?.map(err =>
+                        <Typography
+                         key={uniqid()}
+                         sx={{
+                            display:"flex",
+                            justifyContent:"flex-start",
+                            width: 400,
+                            mb:1
+                            
+                         }}
+                         >
+                            <Error
+                                sx={{
+                                    mr: 0.5,
+                                    color: "form.button"
+                                }}></Error>
+                            {err.msg}
+                        </Typography>
+                    )}
+
+                </Box>
+
+            </Box>
+        </Container>
     )
 }

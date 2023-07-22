@@ -1,38 +1,127 @@
 import { NavLink } from "react-router-dom";
 import React from "react"
+import { Container, Box, Typography, TextField, Button } from "@mui/material"
+import { Error } from "@mui/icons-material"
 export default function Login({ verifyAuth, loginPageErrorMessage }) {
     const [userName, setUserName] = React.useState("");
     const [password, setPassword] = React.useState("");
-    const [errorMessage, setErrorMessage] = React.useState(null)
+    const [errorMessage, setErrorMessage] = React.useState("")
 
     React.useEffect(() => {
-        loginPageErrorMessage === "" ? setErrorMessage(null) : setErrorMessage(loginPageErrorMessage)
-        console.log(loginPageErrorMessage, "hi")
-    }, [])
+        console.log(loginPageErrorMessage)
+        setErrorMessage(loginPageErrorMessage)
+        console.log(errorMessage)
+        // loginPageErrorMessage.msg === "" ? setErrorMessage("") : setErrorMessage(loginPageErrorMessage.msg)
+        // console.log(errorMessage)
+    },)
 
     return (
         <>
-            <div className="loginPage">
-                <label htmlFor="username">Username</label>
-                <input type="text"
-                    className="usernameInput"
-                    name="username"
-                    value={userName}
-                    onChange={(e) => {
-                        setUserName(e.target.value)
-                    }} />
-                <label htmlFor="password">Password</label>
-                <input type="password"
-                    className="passwordInput"
-                    name="password"
-                    value={password}
-                    onChange={(e) => {
-                        setPassword(e.target.value)
-                    }} />
-                <button onClick={() => verifyAuth(userName, password)}>Log In</button>
-                <p>{errorMessage}</p>
-                <p className="noAccountText">Don't have an account? <NavLink to="/sign-up">Sign Up</NavLink></p>
-            </div>
+            <Container component="main" maxWidth="xs">
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+
+                    <Typography component="h1" variant="h4" sx={{ my: 2 }}>
+                        Log In
+                    </Typography>
+
+                    <TextField
+                        id="outlined-basic"
+                        label="Username"
+                        variant="outlined"
+                        type="text"
+                        className="usernameInput"
+                        name="username"
+                        value={userName}
+                        onChange={(e) => {
+                            setUserName(e.target.value)
+                        }}
+                        sx={{
+                            width: 400, mb: 2, "& label.Mui-focused": {
+                                color: "form.label"
+                            },
+                            "& .MuiOutlinedInput-root": {
+                                "&.Mui-focused fieldset": {
+                                    borderColor: "form.label"
+                                }
+                            }
+                        }}
+                    />
+                    <TextField
+                        id="outlined-basic"
+                        label="Password"
+                        variant="outlined"
+                        type="password"
+                        className="passwordInput"
+                        name="password"
+                        value={password}
+                        onChange={(e) => {
+                            setPassword(e.target.value)
+                        }}
+                        sx={{
+                            width: 400, mb: 2, "& label.Mui-focused": {
+                                color: "form.label"
+                            },
+                            "& .MuiOutlinedInput-root": {
+                                "&.Mui-focused fieldset": {
+                                    borderColor: "form.label"
+                                }
+                            }
+                        }}
+                    />
+                    {/* <input type="password"
+                        className="passwordInput"
+                        name="password"
+                        value={password}
+                        onChange={(e) => {
+                            setPassword(e.target.value)
+                        }} /> */}
+                    <Button
+                        onClick={() => verifyAuth(userName, password)}
+                        variant="contained"
+                        sx={{
+                            bgcolor: "form.button",
+                            textTransform: "none",
+                            mb: 2
+                        }}>
+                        Log In
+                    </Button>
+
+                    <Typography sx={{
+                        mb: 2,
+                        width: 400,
+                        display: "flex",
+                        justifyContent: "center",
+                    }}>
+                        Don't have an account?
+                        <NavLink to="/sign-up" style={{ textDecoration: "none", color: "#078080" }}>
+                            Sign Up
+                        </NavLink>
+                    </Typography>
+
+                    <Typography
+                        sx={{
+                            m: 0,
+                            display: "flex",
+                            justifyContent: "center",
+                            width: 400
+                        }}>
+                        {errorMessage ?
+                            <Error sx={{ mr: 0.5, color: "form.button" }}></Error>
+                            :
+                            <></>
+                        }
+                        {errorMessage
+                        }</Typography>
+
+
+                </Box>
+            </Container>
 
         </>
 

@@ -2,6 +2,9 @@ import { useParams, useNavigate, NavLink } from "react-router-dom"
 import axios from "axios";
 import React from "react"
 import uniqid from 'uniqid'
+import { Container, Typography, IconButton, Divider } from "@mui/material";
+import { Favorite, Lock } from "@mui/icons-material"
+
 
 export default function Post() {
     const params = useParams();
@@ -151,18 +154,25 @@ export default function Post() {
             const dateCreated = postData.post?.dateCreated || "";
             const userid = postData.post?.user?._id || ""
             return (
-                <div className="postContainer">
-                    <NavLink to={`/account/${userid}`}>
-                        <h1>{username}</h1>
-                    </NavLink>
-                    <h2>{title}</h2>
-                    <p>{content}</p>
-                    <p>{likes.length} Likes</p>
-                    <p>{isPrivate ? "Private" : "Public"} </p>
-                    <p>{dateCreated}</p>
+                <>
+                    <span>
+                        <NavLink to={`/account/${userid}`} style={{ textDecoration: 'none', color: "#f45d48" }}>
+                            <Typography display="inline">
+                                @{username}
+                            </Typography>
+                        </NavLink>
+                        <Typography display="inline">{` · ${dateCreated}`}</Typography>
+                    </span>
+
+                    <Typography variant="h5">{title}</Typography>
+                    <Typography variant="body2">{content}</Typography>
+                    {isPrivate ? <Lock sx={{ mt: 1 }}></Lock> : ""}
+
+                    <Divider sx={{ my: 1 }} />
+
                     <EditButton />
                     <DeleteButton />
-                </div>)
+                </>)
         }
     }
 
@@ -193,21 +203,37 @@ export default function Post() {
     }
 
     return (
-        <>
-            <PageRender />
-            {/* for conditionally rendering like and comment fields */}
-            <div className="likeDiv">
+        <Container sx={{
+            py: 4,
+            bgcolor: "primary.background"
+        }}>
+            <Container
+                sx={{
+                    bgcolor: "card.background",
+                    width: 500,
+                    py: 1
+                }}
+            >
+                <PageRender />
+                {/* for conditionally rendering like and comment fields */}
                 {postData?.loggedIn ?
                     <>
                         {/* conditionally render the like button based on its status */}
                         {likeStatus === "liked" ?
                             <>
-                                <button onClick={handleLike} >&lt;/3</button>
+                                <IconButton aria-label="delete" onClick={handleLike} sx={{ m: 0, p: 0 }}>
+                                    <Favorite sx={{ color: "form.button" }}></Favorite>
+                                </IconButton>
                             </>
                             :
-                            <button onClick={handleLike} >&lt;3</button>
+                            <>
+                                <IconButton aria-label="delete" onClick={handleLike} sx={{ m: 0, p: 0 }}>
+                                    <Favorite ></Favorite>
+                                </IconButton>
+
+                            </>
                         }
-                        <p>{likesOnPost} {likesOnPost === 1 ? "like" : "likes"}</p>
+                        <Typography display="inline"> {`${likesOnPost}`} {/* {likesOnPost === 1 ? "like" : "likes"}*/} </Typography>
 
                     </>
 
@@ -215,10 +241,11 @@ export default function Post() {
                     <>
                     </>
                 }
-            </div>
 
+            </Container>
 
             <div className="commentForm">
+
                 <label htmlFor="commentInput">Comments</label>
 
                 {/* comment field  only renders when user is logged in.*/}
@@ -243,7 +270,7 @@ export default function Post() {
 
             </div>
             <DisplayComments />
-        </>
+        </Container>
 
     )
 }

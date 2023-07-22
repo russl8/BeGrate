@@ -24,10 +24,10 @@ exports.signupSubmit = [
       const existingEmail = await User.findOne({ email: req.body.email });
 
       if (existingUser) {
-        errs.errors.push({ msg: "Username already exists. Please try using another username." })
+        errs.errors.push({ msg: "Username already exists!" })
       }
       if (existingEmail) {
-        errs.errors.push({ msg: "Email already exists. Please try using another email." })
+        errs.errors.push({ msg: "Email already exists!" })
       }
 
 
