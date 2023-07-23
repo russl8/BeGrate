@@ -2,10 +2,16 @@ import { useParams, NavLink } from "react-router-dom"
 import React from "react"
 import axios from "axios"
 import uniqid from "uniqid"
+import { Container, Box, Typography, Grid, Paper, TextField, MenuItem } from "@mui/material"
+
+const sortCategories = ["Newest First", "Oldest First", "Most Liked"]
 export default function Account() {
     const params = useParams();
     // fetch account using useEffect and params.id -> save account details in state
     const [accountDetails, setAccountDetails] = React.useState({});
+    const [allPosts, setAllPosts] = React.useState([]);
+    const [sortMethod, setSortMethod] = React.useState("Newest First")
+
     React.useEffect(() => {
 
         axios({
@@ -17,39 +23,135 @@ export default function Account() {
             }
         }).then(res => {
             setAccountDetails(res.data)
+            setAllPosts(res.data.posts)
         })
 
     }, [params.id])
+
+    React.useEffect(() => {
+
+        // console.log(sortMethod)
+        //fetch to backend, pass sort method
+        axios({
+            method: "POST",
+            url: `http://localhost:3001/account/${params.id}`,
+            withCredentials: true,
+            data: { sortMethod: sortMethod },
+            headers: {
+                Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+            }
+
+
+        }).then(res => {
+            console.log(res.data)
+            setAllPosts(res.data)
+        })
+
+
+        //in baclkend... use switch statement
+        //fetch from database based on the sort method
+        //res.json back to server
+        //in server, update the allPosts state
+
+    }, [sortMethod])
     return (
-        <>
+        <Container >
             {
                 accountDetails.status === "success"
                     ?
-                    <div className="accountPage">
-                        <h1>{accountDetails.user.username}</h1>
-                        <h4>{accountDetails.user.email}</h4>
+                    <Box sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center"
+
+                    }}>
+                        <Typography variant="h3">{accountDetails.user.username}</Typography>
+                        <Typography variant="h6">{accountDetails.user.email}</Typography>
 
 
-                        <div className="accountPostContainer">
-                            {accountDetails.posts.map(post => {
-                                    return (
-                                        <NavLink to={`/posts/${post._id}`} key={uniqid()}>
-                                            <div className="accountPost">
-                                                <h2> {post.title}</h2>
-                                                <p>{post.content}</p>
-                                                <p>{post.dateCreated}</p>
+                        <TextField
+                            select
+                            label="Sort by"
+                            sx={{
+                                width: 400,
+                                color: "#232323",
+                                "& .MuiOutlinedInput-root": {
+                                    "&.Mui-focused fieldset": {
+                                        borderColor: "form.label"
+                                    }
+                                },
+                                "& label.Mui-focused": {
+                                    color: "form.label"
+                                },
 
-                                                <p>{post.likes.length} {post.likes.length ===1 ? "like" : "likes"} </p>
+                            }}
+                            value={sortMethod}
+                            onChange={(e) => { setSortMethod(e.target.value); }}
+                        >
+                            {sortCategories.map(cat => (
+                                <MenuItem key={uniqid()} value={cat} sx={{ color: "#232323" }}>
+                                    {cat}
+                                </MenuItem>
+                            ))}
+                        </TextField>
 
-                                            </div>
+
+                        <Grid sx={{ width: "100%", p: 3 }} container spacing={{ md: 2 }} columns={{ sm: 4, md: 8, lg: 12 }}>
+                            {allPosts.map(post => {
+                                return (
+
+
+                                    <Grid
+                                        item
+                                        sm={4}
+                                        md={4}
+                                        lg={4}
+                                        columns={4}
+                                        sx={{
+
+                                            width: 20,
+                                            height: 300,
+                                            overflow:"hidden",
+                                            display: "flex",
+                                            justifyContent: "center",
+                                            pr: 3
+                                        }}
+                                        className="wadadawd"
+                                        zeroMinWidth
+                                        key={uniqid()}
+                                    >
+
+                                        <NavLink to={`/posts/${post._id}`} style={{ textDecoration: "none" }}>
+                                            <Paper sx={{
+                                                height: 250,
+                                                width: { md: 350, sm: 400, lg: 325 },
+                                                overflow: 'clip',                                                display: "flex",
+                                                flexDirection: "column",
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                                p: 1
+                                            }}>
+                                                <Typography variant="h6" sx={{ fontWeight: "bold" }}> {post.title}</Typography   >
+                                                <Typography variant="body1" >{post.content}</Typography>
+                                                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                                    <Typography variant="body2">{post.dateCreated}</Typography>
+                                                    <Typography variant="body2">{post.likes.length} {post.likes.length === 1 ? "like" : "likes"} </Typography>
+
+                                                </Box>
+                                            </Paper>
+
                                         </NavLink>
+                                    </Grid>
 
-                                    )
-                                
+
+
+                                )
+
 
                             })}
-                        </div>
-                    </div>
+                        </Grid>
+                    </Box>
+
 
                     :
                     <>
@@ -59,6 +161,6 @@ export default function Account() {
 
             }
 
-        </>
+        </Container>
     )
 }

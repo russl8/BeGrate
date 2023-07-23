@@ -48,12 +48,12 @@ router.post("/", asyncHandler(async (req, res, next) => {
 router.get('/login', loginController.loginPage);
 router.post('/login', loginController.loginSubmit);
 
-
 //sign up
 router.get("/sign-up", signupController.signupPage)
 router.post("/sign-up", signupController.signupSubmit)
 // ACCOUNT page
 router.get("/account/:accountid",verifyToken2, accountController.accountPage)
+router.post("/account/:accountid",verifyToken2, accountController.accountSortMethod)
 
 // post-creator page
 router.get("/posts",verifyToken, postsController.postsPage)

@@ -16,9 +16,9 @@ exports.accountPage = asyncHandler(async (req, res, next) => {
         // get user posts
         let userPosts = null
         if (userIsAccountHolder) {
-            userPosts = await Post.find({ user: accountid }).sort({dateCreated:-1}).exec()
+            userPosts = await Post.find({ user: accountid }).sort({ dateCreated: -1 }).exec()
         } else {
-            userPosts = await Post.find({ user: accountid, isPrivate: false }).sort({dateCreated:-1}).exec()
+            userPosts = await Post.find({ user: accountid, isPrivate: false }).sort({ dateCreated: -1 }).exec()
 
         }
 
@@ -28,7 +28,81 @@ exports.accountPage = asyncHandler(async (req, res, next) => {
     } catch (e) {
         res.json({ status: "fail" })
     }
+})
 
+exports.accountSortMethod = asyncHandler(async (req, res, next) => {
+    let sortMethod = "Newest First";
+    console.log(req.params)
+    //get user of account
+    const accountid = req.params.accountid;
+    const accountUser = await User.findOne({ _id: accountid });
+
+    const userIsAccountHolder = await isUserAccountHolder(req.token, accountUser.username)
+    console.log(userIsAccountHolder)
+    // get user posts
+    let userPosts = null
+
+    try {
+        sortMethod = req.body.sortMethod;
+        switch (sortMethod) {
+            case ("Newest First"):
+
+                if (userIsAccountHolder) {
+                    userPosts = await Post.find({ user: accountid }).sort({ dateCreated: -1 }).exec()
+                } else {
+                    userPosts = await Post.find({ user: accountid, isPrivate: false }).sort({ dateCreated: -1 }).exec()
+                }
+
+                break;
+            case ("Oldest First"):
+                if (userIsAccountHolder) {
+                    userPosts = await Post.find({ user: accountid }).sort({ dateCreated: 1 }).exec()
+                } else {
+                    userPosts = await Post.find({ user: accountid, isPrivate: false }).sort({ dateCreated: 1 }).exec()
+                }
+                break;
+            case ("Most Liked"):
+                if (userIsAccountHolder) {
+                    userPosts = await Post.aggregate([
+                        {"$project" : {
+                            "title": 1,
+                            "content": 1,
+                            "dateCreated" : 1,
+                            "user": 1,
+                            "isPrivate": 1,
+                            "likes":1,
+                            "numLikes" : {"$size": "$likes"}
+                        }},
+                        {"$sort": {"numLikes" : -1}}
+                    ]).exec();
+                    // console.log(userPosts)
+                    // userPosts = await Post.find({ user: accountid }).sort({ likes: -1 }).exec()
+                } else {
+                    userPosts = await Post.aggregate([
+
+                        { "$match" : {
+                            "isPrivate": false
+                        }
+                        },
+                        {"$project" : {
+                            "title": 1,
+                            "content": 1,
+                            "dateCreated" : 1,
+                            "user": 1,
+                            "isPrivate": 1,
+                            "likes":1,
+                            "numLikes" : {"$size": "$likes"}
+                        }},
+                        {"$sort": {"numLikes" : -1}}
+                    ]).exec();
+                    // userPosts = await Post.find({ user: accountid, isPrivate: false }).sort({ likes: -1 }).exec()
+                }
+        }
+        // console.log(userPosts)
+        res.json(userPosts)
+    } catch (e) {
+        console.error(e)
+    }
 })
 
 async function isUserAccountHolder(token, accountName) {
