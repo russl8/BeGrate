@@ -1,14 +1,17 @@
 import { Outlet, NavLink } from "react-router-dom";
-import { Typography, AppBar, Box, Button, Container } from "@mui/material";
+import { Typography, AppBar, Box, Button, Container, useTheme, useMediaQuery } from "@mui/material";
 
 
 export default function Layout({ isAuthenticated, handleLogout, userName, userId }) {
+    const theme = useTheme();
+    const isXs = useMediaQuery(theme.breakpoints.down("xs"));
+
     return (
         <>
             <Container sx={{ mb: 10 }}>
                 {isAuthenticated ? (
                     <AppBar sx={{ position: "fixed", }}>
-                        <Box sx={{ display: "flex", justifyContent: "space-between", mx: 4, my: 2, alignItems: "center" }}>
+                        <Box sx={{ display: "flex", justifyContent: "space-between", mx: { xs: -3, sm: 4, md: 4, lg: 4 }, my: 2, alignItems: "center" }}>
 
 
                             <NavLink to="/" style={{ textDecoration: "none" }}>
@@ -32,20 +35,24 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
 
                                 </NavLink>
 
+                                {/* { xs: 1, sm: 4, md: 4, lg: 4 } */}
+                                <Box sx={{
+                                    mx: { xs: 1, sm: 4, md: 4, lg: 4 }
+                                }}>
+                                    <NavLink to={`/account/${userId} `} style={{ textDecoration: "none", color: "#078080" }}>
+                                        <Button variant="text" sx={{
+                                            textTransform: "none", '&:hover': {
+                                                backgroundColor: '#D3D3D3'
+                                            },
+                                        }}>
 
+                                            <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.headline", }}>
+                                                @{userName()}
+                                            </Typography>
+                                        </Button>
+                                    </NavLink>
+                                </Box>
 
-                                <NavLink to={`/account/${userId} `} style={{ textDecoration: "none", color: "#078080", marginRight: "32px", marginLeft: "32px" }}>
-                                    <Button variant="text" sx={{
-                                        textTransform: "none", '&:hover': {
-                                            backgroundColor: '#D3D3D3'
-                                        },
-                                    }}>
-
-                                        <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.headline", }}>
-                                            @{userName()}
-                                        </Typography>
-                                    </Button>
-                                </NavLink>
 
 
 
@@ -73,7 +80,7 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
                     </AppBar>
                 ) : (
                     <AppBar sx={{ position: "fixed", }}>
-                        <Box sx={{ display: "flex", justifyContent: "space-between", mx: 4, my: 2, alignItems: "center" }}>
+                        <Box sx={{ display: "flex", justifyContent: "space-between", mx: { xs: -3, sm: 4, md: 4, lg: 4 }, my: 2, alignItems: "center" }}>
 
 
                             <NavLink to="/" style={{ textDecoration: "none" }}>
@@ -82,11 +89,19 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
 
 
                             <NavLink to="/login" style={{ textDecoration: "none", marginRight: "32px" }}>
-                                <Button variant="text" sx={{
-                                    bgcolor: "primary.button", textTransform: "none", '&:hover': {
-                                        backgroundColor: '#D3D3D3'
-                                    },
-                                }}>
+
+
+                                <Button
+                                    sx={{
+
+                                        '&:hover': {
+                                            backgroundColor: '#D3D3D3'
+                                        },
+                                    }}
+                                    variant="text"
+                                    style={{ textTransform: 'none' }}
+                                >
+
 
                                     <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.headline" }}>
                                         Login
