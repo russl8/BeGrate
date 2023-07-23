@@ -19,7 +19,7 @@ const commentController = require('../controllers/commentController');
 /* home page. */
 router.get('/', asyncHandler(async (req, res, next) => {
 	const isAuthenticated = res.locals.userAuthentication;
-	const allPosts = await Post.find({isPrivate : false}).populate("user").exec();
+	const allPosts = await Post.find({isPrivate : false}).populate("user").sort({dateCreated:-1}).exec();
 
 	res.json({ message: "home page", isAuthenticated, allPosts })
 }));

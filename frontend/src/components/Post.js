@@ -2,8 +2,8 @@ import { useParams, useNavigate, NavLink } from "react-router-dom"
 import axios from "axios";
 import React from "react"
 import uniqid from 'uniqid'
-import { Container, Typography, IconButton, Divider } from "@mui/material";
-import { Favorite, Lock } from "@mui/icons-material"
+import { Container, Typography, IconButton, Divider, TextField, Button } from "@mui/material";
+import { Favorite, Lock, Edit, Delete } from "@mui/icons-material"
 
 
 export default function Post() {
@@ -61,9 +61,19 @@ export default function Post() {
 
     //only shows when post existsr AND has edit permissions.
     const EditButton = () => {
+
+
+
         if (postData.isVisible && (postData.edit === true)) {
             return (
-                <button className="editButton" onClick={handleEdit}>Edit</button>
+
+                <>
+                    <IconButton aria-label="delete" className="editButton" onClick={handleEdit} sx={{ m: 0, p: 0 }}>
+                        <Edit sx={{ color: "form.button" }}></Edit>
+                    </IconButton>
+                    {/* <button className="editButton" onClick={handleEdit}>Edit</button> */}
+                </>
+
             )
         }
     }
@@ -86,7 +96,14 @@ export default function Post() {
     const DeleteButton = () => {
         if (postData.isVisible && (postData.edit === true)) {
             return (
-                <button className="DeleteButton" onClick={handleDelete}>Delete</button>
+
+                <>
+                    <IconButton aria-label="delete"  className="DeleteButton" onClick={handleDelete} sx={{ m: 0, p: 0 }}>
+                        <Delete sx={{ color: "form.button" }}></Delete>
+                    </IconButton>
+                    {/* <button className="DeleteButton" onClick={handleDelete}>Delete</button> */}
+
+                </>
             )
         }
     }
@@ -108,7 +125,7 @@ export default function Post() {
             // console.log(res, "hi")
 
             //update the comment state with the new comment
-            setAllCommentsOnPost([...allCommentsOnPost, res.data])
+            setAllCommentsOnPost([ res.data, ...allCommentsOnPost])
         })
 
 
@@ -116,26 +133,7 @@ export default function Post() {
         setCurrentComment("");
     }
 
-    //display all commments
-    const DisplayComments = () => {
-        // console.log(allCommentsOnPost)
-        return (
-            <div className="commentsContainer">
-                {allCommentsOnPost.map(comment => {
-                    return (
-                        <div className="comment" key={uniqid()}>
-                            <h1>{comment.user.username}</h1>
-                            <p>{comment.content}</p>
-                            <p>{comment.dateCreated}</p>
 
-                        </div>
-                    )
-                })}
-
-            </div>
-
-        )
-    }
 
     //renders most of the page, except for comment input as there is a bug with input field.
     const PageRender = () => {
@@ -201,7 +199,44 @@ export default function Post() {
             }
         })
     }
+    //display all commments
+    const DisplayComments = () => {
+        // console.log(allCommentsOnPost)
+        return (
+            <Container
+                disableGutters
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    width: 500,
+                    mt: 2
+                }}
+            >
+                <Divider sx={{
 
+                    width: 500
+                }} />
+
+                {allCommentsOnPost.map(comment => {
+                    return (
+                        <Container key={uniqid()} sx={{ mt: 1 }}>
+                            <NavLink to={`/account/${comment.user._id}`} style={{ textDecoration: 'none', color: "#f45d48" }}>
+                                <Typography display="inline">
+                                    @{comment.user.username}
+                                </Typography>
+                            </NavLink>
+                            <Typography variant="body2">{comment.content}</Typography>
+
+                            <Typography variant="caption">{comment.dateCreated}</Typography>
+                        </Container>
+                    )
+                })}
+
+            </Container>
+
+        )
+    }
     return (
         <Container sx={{
             py: 4,
@@ -244,22 +279,53 @@ export default function Post() {
 
             </Container>
 
-            <div className="commentForm">
-
-                <label htmlFor="commentInput">Comments</label>
-
+            <Container
+                disableGutters
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: 500,
+                    mt: 2
+                }}>
                 {/* comment field  only renders when user is logged in.*/}
                 {postData?.loggedIn ?
                     <>
-                        <input
-                            type="text"
-                            placeholder="Write a comment!"
+
+                        <TextField
+                            id="outlined-multiline-flexible"
+                            label="Write a comment!"
+                            multiline
+                            maxRows={4}
                             className="commentInput"
                             name="commentInput"
                             value={currentComment}
                             onChange={(e) => { setCurrentComment(e.target.value) }}
+                            sx={{
+                                "& label.Mui-focused": {
+                                    color: "form.label"
+                                },
+                                "& .MuiOutlinedInput-root": {
+                                    "&.Mui-focused fieldset": {
+                                        borderColor: "form.label"
+                                    }
+                                },
+                                display: "flex",
+                                flex: 1
+
+                            }}
                         />
-                        <button className="commentButton" onClick={handlePostComment}>Send</button>
+                        <Button
+                            variant="contained"
+                            onClick={handlePostComment}
+                            sx={{
+                                bgcolor: "form.button",
+                                color: "form.buttontext",
+                                textTransform: "none",
+                                ml: 2
+                            }}
+                        >
+                            Comment
+                        </Button>
                     </>
 
                     :
@@ -268,8 +334,10 @@ export default function Post() {
                     </>
                 }
 
-            </div>
+            </Container>
+
             <DisplayComments />
+
         </Container>
 
     )

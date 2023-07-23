@@ -16,9 +16,9 @@ exports.accountPage = asyncHandler(async (req, res, next) => {
         // get user posts
         let userPosts = null
         if (userIsAccountHolder) {
-            userPosts = await Post.find({ user: accountid })
+            userPosts = await Post.find({ user: accountid }).sort({dateCreated:-1}).exec()
         } else {
-            userPosts = await Post.find({ user: accountid, isPrivate: false })
+            userPosts = await Post.find({ user: accountid, isPrivate: false }).sort({dateCreated:-1}).exec()
 
         }
 

@@ -32,7 +32,10 @@ exports.postPage = asyncHandler(async (req, res, next) => {
     try {
         console.log("here")
         const post = await Post.findOne({ _id: req.params.postid }).populate("user").exec();
-        const allCommentsOnPost = await Comment.find({ post: req.params.postid })
+        
+
+        //sort all comments by newest first
+        const allCommentsOnPost = await Comment.find({ post: req.params.postid }).sort({dateCreated:-1})
             .populate("user") // Add population of the "user" field
             .exec();
 

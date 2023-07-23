@@ -64,7 +64,8 @@ export default function Login({ verifyAuth, loginPageErrorMessage }) {
                             setPassword(e.target.value)
                         }}
                         sx={{
-                            width: 400, mb: 2, "& label.Mui-focused": {
+                            width: 400, mb: 2, 
+                            "& label.Mui-focused": {
                                 color: "form.label"
                             },
                             "& .MuiOutlinedInput-root": {
@@ -86,8 +87,9 @@ export default function Login({ verifyAuth, loginPageErrorMessage }) {
                         variant="contained"
                         sx={{
                             bgcolor: "form.button",
+                            color: "form.buttontext",
                             textTransform: "none",
-                            mb: 2
+                            mb: 1
                         }}>
                         Log In
                     </Button>
