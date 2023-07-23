@@ -65,7 +65,7 @@ export default function Account() {
                         alignItems: "center"
 
                     }}>
-                        <Typography variant="h3">{accountDetails.user.username}</Typography>
+                        <Typography variant="h3" sx={{mt:1}}>{accountDetails.user.username}</Typography>
                         <Typography variant="h6">{accountDetails.user.email}</Typography>
 
 
@@ -74,6 +74,7 @@ export default function Account() {
                             label="Sort by"
                             sx={{
                                 width: 400,
+                                mt:1,
                                 color: "#232323",
                                 "& .MuiOutlinedInput-root": {
                                     "&.Mui-focused fieldset": {
@@ -129,7 +130,9 @@ export default function Account() {
                                                 flexDirection: "column",
                                                 justifyContent: "space-between",
                                                 alignItems: "center",
-                                                p: 1
+                                                p: 1,
+                                                bgColor: "form.background",
+                                                color: "card.headline"
                                             }}>
                                                 <Typography variant="h6" sx={{ fontWeight: "bold" }}> {post.title}</Typography   >
                                                 <Typography variant="body1" >{post.content}</Typography>
