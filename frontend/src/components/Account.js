@@ -96,13 +96,14 @@ export default function Account() {
                         </TextField>
 
 
-                        <Grid sx={{ width: "100%", p: 3 }} container spacing={{ md: 2 }} columns={{ sm: 4, md: 8, lg: 12 }}>
+                        <Grid sx={{ width: "100%", p: 3 }} container spacing={{ md: 2 }} columns={{ xs: 4,sm: 4, md: 8, lg: 12 }}>
                             {allPosts.map(post => {
                                 return (
 
 
                                     <Grid
                                         item
+                                        xs={4}
                                         sm={4}
                                         md={4}
                                         lg={4}
@@ -114,7 +115,6 @@ export default function Account() {
                                             overflow:"hidden",
                                             display: "flex",
                                             justifyContent: "center",
-                                            pr: 3
                                         }}
                                         className="wadadawd"
                                         zeroMinWidth
@@ -124,7 +124,7 @@ export default function Account() {
                                         <NavLink to={`/posts/${post._id}`} style={{ textDecoration: "none" }}>
                                             <Paper sx={{
                                                 height: 250,
-                                                width: { md: 350, sm: 400, lg: 325 },
+                                                width: { xs: 350,md: 350, sm: 400, lg: 325 },
                                                 overflow: 'clip',                                                display: "flex",
                                                 flexDirection: "column",
                                                 justifyContent: "space-between",
