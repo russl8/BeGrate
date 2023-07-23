@@ -69,7 +69,7 @@ export default function Post() {
 
                 <>
                     <IconButton aria-label="delete" className="editButton" onClick={handleEdit} sx={{ m: 0, p: 0 }}>
-                        <Edit sx={{ color: "form.button" }}></Edit>
+                        <Edit sx={{ color: "primary.link" }}></Edit>
                     </IconButton>
                     {/* <button className="editButton" onClick={handleEdit}>Edit</button> */}
                 </>
@@ -99,7 +99,7 @@ export default function Post() {
 
                 <>
                     <IconButton aria-label="delete"  className="DeleteButton" onClick={handleDelete} sx={{ m: 0, p: 0 }}>
-                        <Delete sx={{ color: "form.button" }}></Delete>
+                        <Delete sx={{ color: "primary.link" }}></Delete>
                     </IconButton>
                     {/* <button className="DeleteButton" onClick={handleDelete}>Delete</button> */}
 
@@ -154,7 +154,7 @@ export default function Post() {
             return (
                 <>
                     <span>
-                        <NavLink to={`/account/${userid}`} style={{ textDecoration: 'none', color: "#f45d48" }}>
+                        <NavLink to={`/account/${userid}`} style={{ textDecoration: 'none', color: "#078080" }}>
                             <Typography display="inline">
                                 @{username}
                             </Typography>
@@ -221,7 +221,7 @@ export default function Post() {
                 {allCommentsOnPost.map(comment => {
                     return (
                         <Container key={uniqid()} sx={{ mt: 1 }}>
-                            <NavLink to={`/account/${comment.user._id}`} style={{ textDecoration: 'none', color: "#f45d48" }}>
+                            <NavLink to={`/account/${comment.user._id}`} style={{ textDecoration: 'none', color: "#078080" }}>
                                 <Typography display="inline">
                                     @{comment.user.username}
                                 </Typography>

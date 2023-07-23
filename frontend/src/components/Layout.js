@@ -18,9 +18,14 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
                             <Box sx={{ display: "flex", alignItems: "center" }}>
 
                                 <NavLink to="/posts" style={{ textDecoration: "none" }}>
-                                    <Button variant="text" sx={{ bgcolor: "primary.button", textTransform: "none" }}>
+                                    <Button variant="text" sx={{
+                                        textTransform: "none",
+                                        '&:hover': {
+                                            backgroundColor: '#D3D3D3'
+                                        },
+                                    }}>
 
-                                        <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.headline", }}>
+                                        <Typography variant="p" sx={{ color: "primary.headline", fontWeight: "bold", }}>
                                             Create
                                         </Typography>
                                     </Button>
@@ -30,7 +35,11 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
 
 
                                 <NavLink to={`/account/${userId} `} style={{ textDecoration: "none", color: "#078080", marginRight: "32px", marginLeft: "32px" }}>
-                                    <Button variant="text" sx={{ bgcolor: "primary.button", textTransform: "none" }}>
+                                    <Button variant="text" sx={{
+                                        textTransform: "none", '&:hover': {
+                                            backgroundColor: '#D3D3D3'
+                                        },
+                                    }}>
 
                                         <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.headline", }}>
                                             @{userName()}
@@ -41,7 +50,18 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
 
 
 
-                                <Button sx={{ bgcolor: "primary.button", mr: 4 }} variant="text" onClick={handleLogout} style={{ textTransform: 'none' }}>
+
+                                <Button
+                                    sx={{
+                                        mr: 4,
+                                        '&:hover': {
+                                            backgroundColor: '#D3D3D3'
+                                        },
+                                    }}
+                                    variant="text"
+                                    onClick={handleLogout}
+                                    style={{ textTransform: 'none' }}
+                                >
                                     <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.buttonText", }}>
                                         Log Out
                                     </Typography>
@@ -62,7 +82,11 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
 
 
                             <NavLink to="/login" style={{ textDecoration: "none", marginRight: "32px" }}>
-                                <Button variant="text" sx={{ bgcolor: "primary.button", textTransform: "none" }}>
+                                <Button variant="text" sx={{
+                                    bgcolor: "primary.button", textTransform: "none", '&:hover': {
+                                        backgroundColor: '#D3D3D3'
+                                    },
+                                }}>
 
                                     <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.headline" }}>
                                         Login
