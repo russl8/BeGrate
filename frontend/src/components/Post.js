@@ -2,7 +2,7 @@ import { useParams, useNavigate, NavLink } from "react-router-dom"
 import axios from "axios";
 import React from "react"
 import uniqid from 'uniqid'
-import { Container, Typography, IconButton, Divider, TextField, Button } from "@mui/material";
+import { Container, Typography, IconButton, Divider, TextField, Button, Box } from "@mui/material";
 import { Favorite, Lock, Edit, Delete } from "@mui/icons-material"
 
 
@@ -135,7 +135,7 @@ export default function Post() {
 
 
 
-    //renders most of the page, except for comment input as there is a bug with input field.
+    //RENDER THE CONTENT OF THE POST INCLUDING USER, POSTCONTENT, LIKE,COMMENT,EDIT BUTTONS
     const PageRender = () => {
         if (postData === null || !postData.isVisible) {
             return (
@@ -152,7 +152,14 @@ export default function Post() {
             const dateCreated = postData.post?.dateCreated || "";
             const userid = postData.post?.user?._id || ""
             return (
-                <>
+                <Container
+                    disableGutters
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        overflow: "hidden    "
+                    }}
+                >
                     <span>
                         <NavLink to={`/account/${userid}`} style={{ textDecoration: 'none', color: "#6246ea" }}>
                             <Typography display="inline">
@@ -163,14 +170,45 @@ export default function Post() {
                     </span>
 
                     <Typography variant="h5">{title}</Typography>
-                    <Typography variant="body2">{content}</Typography>
-                    {isPrivate ? <Lock sx={{ mt: 1 }}></Lock> : ""}
+                    <Typography variant="body2" sx={{ overflow: "hidden" }}>{content}</Typography>
+                    {isPrivate ? <Lock sx={{ mt: 1 }}></Lock> : <></>}
 
                     <Divider sx={{ my: 1 }} />
 
-                    <EditButton />
-                    <DeleteButton />
-                </>)
+                    <Box>
+                        <EditButton />
+                        <DeleteButton />
+
+                        {/* conditionally render the like button based on userAuth status */}
+                        {postData?.loggedIn ?
+                            <>
+                                {likeStatus === "liked" ?
+                                    <>
+                                        <IconButton aria-label="delete" onClick={handleLike} sx={{ m: 0, p: 0 }}>
+                                            <Favorite sx={{ color: "primary.like" }}></Favorite>
+                                        </IconButton>
+                                    </>
+                                    :
+                                    <>
+                                        <IconButton aria-label="delete" onClick={handleLike} sx={{ m: 0, p: 0 }}>
+                                            <Favorite ></Favorite>
+                                        </IconButton>
+
+                                    </>
+                                }
+                                <Typography display="inline"> {`${likesOnPost}`} {/* {likesOnPost === 1 ? "like" : "likes"}*/} </Typography>
+
+                            </>
+
+                            :
+                            <>
+                            </>
+                        }
+
+                    </Box>
+
+                </Container>
+            )
         }
     }
 
@@ -209,24 +247,21 @@ export default function Post() {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    width: 500,
+                    alignItems: "center",
                     mt: 2
                 }}
             >
-                <Divider sx={{
-
-                    width: 500
-                }} />
+                <Divider sx={{display:"flex"}} />
 
                 {allCommentsOnPost.map(comment => {
                     return (
-                        <Container key={uniqid()} sx={{ mt: 1 }}>
+                        <Container key={uniqid()} sx={{ mt: 1, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "flex-start" }}>
                             <NavLink to={`/account/${comment.user._id}`} style={{ textDecoration: 'none', color: "#6246ea" }}>
                                 <Typography display="inline">
                                     @{comment.user.username}
                                 </Typography>
                             </NavLink>
-                            <Typography variant="body2">{comment.content}</Typography>
+                            <Typography variant="body2" >{comment.content}</Typography>
 
                             <Typography variant="caption">{comment.dateCreated}</Typography>
                         </Container>
@@ -246,46 +281,20 @@ export default function Post() {
             <Container
                 sx={{
                     bgcolor: "card.background",
-                    width: 500,
-                    py: 1
+                    py: 1,
+                    overflow: "hidden"
                 }}
             >
                 <PageRender />
-                {/* for conditionally rendering like and comment fields */}
-                {postData?.loggedIn ?
-                    <>
-                        {/* conditionally render the like button based on its status */}
-                        {likeStatus === "liked" ?
-                            <>
-                                <IconButton aria-label="delete" onClick={handleLike} sx={{ m: 0, p: 0 }}>
-                                    <Favorite sx={{ color: "primary.like" }}></Favorite>
-                                </IconButton>
-                            </>
-                            :
-                            <>
-                                <IconButton aria-label="delete" onClick={handleLike} sx={{ m: 0, p: 0 }}>
-                                    <Favorite ></Favorite>
-                                </IconButton>
 
-                            </>
-                        }
-                        <Typography display="inline"> {`${likesOnPost}`} {/* {likesOnPost === 1 ? "like" : "likes"}*/} </Typography>
-
-                    </>
-
-                    :
-                    <>
-                    </>
-                }
 
             </Container>
 
             <Container
-                disableGutters
+                
                 sx={{
                     display: "flex",
                     justifyContent: "center",
-                    width: 500,
                     mt: 2
                 }}>
                 {/* comment field  only renders when user is logged in.*/}

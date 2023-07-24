@@ -53,11 +53,6 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
                                     </NavLink>
                                 </Box>
 
-
-
-
-
-
                                 <Button
                                     sx={{
                                         mr: 4,
