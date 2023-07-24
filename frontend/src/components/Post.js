@@ -276,7 +276,7 @@ export default function Post() {
     return (
         <Container disableGutters
             sx={{
-                py: 4,
+                py: -2,
                 bgcolor: "primary.background"
             }}>
             <Container
