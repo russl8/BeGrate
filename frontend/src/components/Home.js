@@ -31,8 +31,8 @@ export default function Home({ userAuth, userName }) {
       {!userAuth
         ?
         <>
-          <Typography variant="h1" textAlign="center">AAAA!</Typography>
-          <Typography variant="h6" textAlign="center">The best blogging site for all your blogging needs. Use the power of words to provide snippets of your daily lives.</Typography>
+          <Typography variant="h1" textAlign="center">BeGrate!</Typography>
+          <Typography variant="h6" textAlign="center">The best blogging site for all your blogging needs. Use the power of words to provide snippets of the things you are thankful for in your daily lives.</Typography>
 
           <Typography variant="body1" textAlign="center" sx={{ my: 1 }}>
             <NavLink to="/sign-up" style={{ textDecoration: "none", color: "#6246ea" }} > Create an account here! </NavLink>

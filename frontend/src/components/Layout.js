@@ -20,7 +20,7 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
 
 
                                 <NavLink to="/" style={{ textDecoration: "none" }}>
-                                    <Typography variant="h4" sx={{ fontWeight: "bold", color: "primary.headline", mx: 4 }}>AAAA!</Typography>
+                                    <Typography variant="h4" sx={{ fontWeight: "bold", color: "primary.headline", mx: 4 }}>BeGrate!</Typography>
                                 </NavLink>
 
                                 <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -84,7 +84,7 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
 
 
                                 <NavLink to="/" style={{ textDecoration: "none" }}>
-                                    <Typography variant="h4" sx={{ fontWeight: "bold", color: "primary.headline", mx: 4 }}>AAAA!</Typography>
+                                    <Typography variant="h4" sx={{ fontWeight: "bold", color: "primary.headline", mx: 4 }}>BeGrate!</Typography>
                                 </NavLink>
 
 
