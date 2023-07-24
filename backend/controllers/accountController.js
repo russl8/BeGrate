@@ -32,6 +32,7 @@ exports.accountPage = asyncHandler(async (req, res, next) => {
 
 exports.accountSortMethod = asyncHandler(async (req, res, next) => {
     let sortMethod = "Newest First";
+    
     console.log(req.params)
     //get user of account
     const accountid = req.params.accountid;
