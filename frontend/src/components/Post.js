@@ -98,7 +98,7 @@ export default function Post() {
             return (
 
                 <>
-                    <IconButton aria-label="delete"  className="DeleteButton" onClick={handleDelete} sx={{ m: 0, p: 0 }}>
+                    <IconButton aria-label="delete" className="DeleteButton" onClick={handleDelete} sx={{ m: 0, p: 0 }}>
                         <Delete sx={{ color: "primary.link" }}></Delete>
                     </IconButton>
                     {/* <button className="DeleteButton" onClick={handleDelete}>Delete</button> */}
@@ -125,7 +125,7 @@ export default function Post() {
             // console.log(res, "hi")
 
             //update the comment state with the new comment
-            setAllCommentsOnPost([ res.data, ...allCommentsOnPost])
+            setAllCommentsOnPost([res.data, ...allCommentsOnPost])
         })
 
 
@@ -154,7 +154,7 @@ export default function Post() {
             return (
                 <>
                     <span>
-                        <NavLink to={`/account/${userid}`} style={{ textDecoration: 'none', color: "#078080" }}>
+                        <NavLink to={`/account/${userid}`} style={{ textDecoration: 'none', color: "#6246ea" }}>
                             <Typography display="inline">
                                 @{username}
                             </Typography>
@@ -221,7 +221,7 @@ export default function Post() {
                 {allCommentsOnPost.map(comment => {
                     return (
                         <Container key={uniqid()} sx={{ mt: 1 }}>
-                            <NavLink to={`/account/${comment.user._id}`} style={{ textDecoration: 'none', color: "#078080" }}>
+                            <NavLink to={`/account/${comment.user._id}`} style={{ textDecoration: 'none', color: "#6246ea" }}>
                                 <Typography display="inline">
                                     @{comment.user.username}
                                 </Typography>
@@ -238,10 +238,11 @@ export default function Post() {
         )
     }
     return (
-        <Container sx={{
-            py: 4,
-            bgcolor: "primary.background"
-        }}>
+        <Container disableGutters
+            sx={{
+                py: 4,
+                bgcolor: "primary.background"
+            }}>
             <Container
                 sx={{
                     bgcolor: "card.background",
@@ -257,7 +258,7 @@ export default function Post() {
                         {likeStatus === "liked" ?
                             <>
                                 <IconButton aria-label="delete" onClick={handleLike} sx={{ m: 0, p: 0 }}>
-                                    <Favorite sx={{ color: "form.button" }}></Favorite>
+                                    <Favorite sx={{ color: "primary.like" }}></Favorite>
                                 </IconButton>
                             </>
                             :
@@ -302,11 +303,11 @@ export default function Post() {
                             onChange={(e) => { setCurrentComment(e.target.value) }}
                             sx={{
                                 "& label.Mui-focused": {
-                                    color: "form.label"
+                                    color: "primary.link"
                                 },
                                 "& .MuiOutlinedInput-root": {
                                     "&.Mui-focused fieldset": {
-                                        borderColor: "form.label"
+                                        borderColor: "primary.link"
                                     }
                                 },
                                 display: "flex",
@@ -319,7 +320,7 @@ export default function Post() {
                             onClick={handlePostComment}
                             sx={{
                                 bgcolor: "form.button",
-                                color: "form.buttontext",
+                                color: "form.buttonText",
                                 textTransform: "none",
                                 ml: 2
                             }}

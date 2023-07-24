@@ -60,11 +60,11 @@ export default function SignUp() {
                     }}
                     sx={{
                         width: 400, mb: 2, "& label.Mui-focused": {
-                            color: "form.label"
+                            color: "primary.link"
                         },
                         "& .MuiOutlinedInput-root": {
                             "&.Mui-focused fieldset": {
-                                borderColor: "form.label"
+                                borderColor: "primary.link"
                             }
                         }
                     }}
@@ -84,11 +84,11 @@ export default function SignUp() {
                         width: 400,
                         mb: 2,
                         "& label.Mui-focused": {
-                            color: "form.label"
+                            color: "primary.link"
                         },
                         "& .MuiOutlinedInput-root": {
                             "&.Mui-focused fieldset": {
-                                borderColor: "form.label"
+                                borderColor: "primary.link"
                             }
                         }
                     }}
@@ -109,17 +109,17 @@ export default function SignUp() {
                     }}
                     sx={{
                         width: 400, mb: 2, "& label.Mui-focused": {
-                            color: "form.label"
+                            color: "primary.link"
                         },
                         "& .MuiOutlinedInput-root": {
                             "&.Mui-focused fieldset": {
-                                borderColor: "form.label"
+                                borderColor: "primary.link"
                             }
                         }
                     }}
 
                 />
-                <Button onClick={register} variant="contained" sx={{ bgcolor: "form.button", textTransform: "none" }}>Sign Up</Button>
+                <Button onClick={register} variant="contained" sx={{ bgcolor: "form.button", color:"form.buttonText",textTransform: "none" }}>Sign Up</Button>
 
                 <Box sx={{
                     mt: 2

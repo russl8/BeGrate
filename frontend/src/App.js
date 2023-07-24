@@ -115,7 +115,7 @@ function App() {
   */
 
   return (
-    <Box className="App" sx={{ bgcolor: "#f8f5f2" }}>
+    <Box className="App" sx={{ bgcolor: "#fffffe" }}>
       <Routes>
         {/* nav bar  */}
         <Route element={<Layout

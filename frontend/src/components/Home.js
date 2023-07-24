@@ -34,8 +34,8 @@ export default function Home({ userAuth, userName }) {
           <Typography variant="h6" textAlign="center">The best blogging site for all your blogging needs. Use the power of words to provide snippets of your daily lives.</Typography>
 
           <Typography variant="body1" textAlign="center" sx={{ my: 1 }}>
-            <NavLink to="/sign-up" style={{ textDecoration: "none", color: "#f45d48" }} > Create an account here! </NavLink>
-            If you have an account already, <NavLink to="/login" style={{ textDecoration: "none", color: "#f45d48" }}>Login</NavLink>
+            <NavLink to="/sign-up" style={{ textDecoration: "none", color: "#6246ea" }} > Create an account here! </NavLink>
+            If you have an account already, <NavLink to="/login" style={{ textDecoration: "none", color: "#6246ea" }}>Login</NavLink>
           </Typography>
 
         </>

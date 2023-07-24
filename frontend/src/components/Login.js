@@ -65,7 +65,7 @@ export default function Login({ verifyAuth, loginPageErrorMessage }) {
                             setPassword(e.target.value)
                         }}
                         sx={{
-                            width: 400, mb: 2, 
+                            width: 400, mb: 2,
                             "& .MuiOutlinedInput-root": {
                                 "&.Mui-focused fieldset": {
                                     borderColor: "primary.link"
@@ -88,7 +88,7 @@ export default function Login({ verifyAuth, loginPageErrorMessage }) {
                         variant="contained"
                         sx={{
                             bgcolor: "form.button",
-                            color: "form.buttontext",
+                            color: "form.buttonText",
                             textTransform: "none",
                             mb: 1
                         }}>
@@ -102,9 +102,7 @@ export default function Login({ verifyAuth, loginPageErrorMessage }) {
                         justifyContent: "center",
                     }}>
                         Don't have an account?
-                        <NavLink to="/sign-up" style={{ textDecoration: "none", color: "#078080" }}>
-                            Sign Up
-                        </NavLink>
+                        <NavLink to="/sign-up" style={{ textDecoration: "none", color: "#6246ea" }}> Sign Up</NavLink>
                     </Typography>
 
                     <Typography

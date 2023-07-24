@@ -11,13 +11,14 @@ import ScrollToTop from "./ScrollToTop";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#f8f5f2",
-      background: "#f8f5f2",
-      headline: "#232323",
-      paragraph: "#222525",
+      main: "#fffffe",
+      background: "#fffffe",
+      headline: "#2b2c34",
+      paragraph: "#2b2c34",
       button: "#078080",
       buttonText: "#232323",
-      link: "#078080"
+      link: "#6246ea",
+      like: "#e45858"
     },
     card: {
       main: "#f8f5f2",
@@ -33,10 +34,10 @@ const theme = createTheme({
       main: "#f8f5f2",
 
       input: "#fffffe",
-      label: "#232323",
-      placeholder: "#232323",
-      button: "#f45d48",
-      buttonText: "#232323"
+      label: "#2b2c34",
+      placeholder: "#2b2c34",
+      button: "#6246ea",
+      buttonText: "#fffffe"
     }
   }
 });
