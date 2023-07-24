@@ -30,11 +30,11 @@ router.get('/', asyncHandler(async (req, res, next) => {
 	try {
 		switch (sortMethod) {
 			case ("Newest First"):
-				userPosts = await Post.find({isPrivate: false }).sort({ dateCreated: -1 }).exec()
+				userPosts = await Post.find({ isPrivate: false }).populate("user").sort({ dateCreated: -1 }).exec()
 				break;
 			case ("Oldest First"):
 
-				userPosts = await Post.find({  isPrivate: false }).sort({ dateCreated: 1 }).exec()
+				userPosts = await Post.find({ isPrivate: false }).populate("user").sort({ dateCreated: 1 }).exec()
 
 				break;
 			case ("Most Liked"):
@@ -59,7 +59,7 @@ router.get('/', asyncHandler(async (req, res, next) => {
 					{
 						"$sort": { "numLikes": -1 }
 					}
-				]).exec();
+				]).populate("user").exec();
 
 		}
 		// console.log(userPosts)

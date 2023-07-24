@@ -132,7 +132,13 @@ export default function Account() {
                                                 bgColor: "form.background",
                                                 color: "card.headline"
                                             }}>
-                                                <Typography variant="h6" sx={{ fontWeight: "bold" }}> {post.title}</Typography   >
+                                                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                                                <Typography variant="body2" sx={{ color: "form.button" }}>@{post.user.username}</Typography>
+
+                                                    <Typography variant="h6" sx={{ fontWeight: "bold" }}> {post.title}</Typography   >
+
+                                                </Box>
+
                                                 <Typography variant="body1" >{post.content}</Typography>
                                                 <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                                                     <Typography variant="body2">{post.dateCreated}</Typography>

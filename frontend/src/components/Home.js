@@ -33,15 +33,15 @@ export default function Home({ userAuth, userName }) {
           <Typography variant="h1" textAlign="center">AAAA!</Typography>
           <Typography variant="h6" textAlign="center">The best blogging site for all your blogging needs. Use the power of words to provide snippets of your daily lives.</Typography>
 
-          <Typography variant="body1" textAlign="center" sx={{my:1}}>
+          <Typography variant="body1" textAlign="center" sx={{ my: 1 }}>
             <NavLink to="/sign-up" style={{ textDecoration: "none", color: "#f45d48" }} > Create an account here! </NavLink>
-            If you have an account already, <NavLink to="/login" style={{ textDecoration: "none", color: "#f45d48" }}>login</NavLink>
+            If you have an account already, <NavLink to="/login" style={{ textDecoration: "none", color: "#f45d48" }}>Login</NavLink>
           </Typography>
 
         </>
         :
         <>
-          <Typography variant="h3" textAlign="center" sx={{py:1}}>Welcome back, {userName}!</Typography>
+          <Typography variant="h3" textAlign="center" sx={{ py: 1 }}>Welcome back, {userName}!</Typography>
         </>
       }
 
@@ -120,7 +120,13 @@ export default function Home({ userAuth, userName }) {
                     bgColor: "form.background",
                     color: "card.headline"
                   }}>
-                    <Typography variant="h6" sx={{ fontWeight: "bold" }}> {post.title}</Typography   >
+                    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                      <Typography variant="body2" sx={{ color: "form.button" }}>@{post.user.username}</Typography>
+
+                      <Typography variant="h6" sx={{ fontWeight: "bold" }}> {post.title}</Typography   >
+
+                    </Box>
+
                     <Typography variant="body1" >{post.content}</Typography>
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                       <Typography variant="body2">{post.dateCreated}</Typography>

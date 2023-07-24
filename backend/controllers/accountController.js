@@ -48,17 +48,17 @@ exports.accountSortMethod = asyncHandler(async (req, res, next) => {
             case ("Newest First"):
 
                 if (userIsAccountHolder) {
-                    userPosts = await Post.find({ user: accountid }).sort({ dateCreated: -1 }).exec()
+                    userPosts = await Post.find({ user: accountid }).populate("user").sort({ dateCreated: -1 }).exec()
                 } else {
-                    userPosts = await Post.find({ user: accountid, isPrivate: false }).sort({ dateCreated: -1 }).exec()
+                    userPosts = await Post.find({ user: accountid, isPrivate: false }).populate("user").sort({ dateCreated: -1 }).exec()
                 }
 
                 break;
             case ("Oldest First"):
                 if (userIsAccountHolder) {
-                    userPosts = await Post.find({ user: accountid }).sort({ dateCreated: 1 }).exec()
+                    userPosts = await Post.find({ user: accountid }).populate("user").sort({ dateCreated: 1 }).exec()
                 } else {
-                    userPosts = await Post.find({ user: accountid, isPrivate: false }).sort({ dateCreated: 1 }).exec()
+                    userPosts = await Post.find({ user: accountid, isPrivate: false }).populate("user").sort({ dateCreated: 1 }).exec()
                 }
                 break;
             case ("Most Liked"):
@@ -74,7 +74,7 @@ exports.accountSortMethod = asyncHandler(async (req, res, next) => {
                             "numLikes" : {"$size": "$likes"}
                         }},
                         {"$sort": {"numLikes" : -1}}
-                    ]).exec();
+                    ]).populate("user").exec();
                     // console.log(userPosts)
                     // userPosts = await Post.find({ user: accountid }).sort({ likes: -1 }).exec()
                 } else {
@@ -94,7 +94,7 @@ exports.accountSortMethod = asyncHandler(async (req, res, next) => {
                             "numLikes" : {"$size": "$likes"}
                         }},
                         {"$sort": {"numLikes" : -1}}
-                    ]).exec();
+                    ]).populate("user").exec();
                     // userPosts = await Post.find({ user: accountid, isPrivate: false }).sort({ likes: -1 }).exec()
                 }
         }
