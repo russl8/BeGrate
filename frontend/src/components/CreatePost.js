@@ -149,7 +149,7 @@ export default function CreatePost() {
                         <FormControlLabel
                             control={<Checkbox
                                 sx={{
-                                    color: "form.buttonText",
+                                    color: "#2b2c34",
                                     '&.Mui-checked': {
                                         color: "form.button",
                                     },
@@ -172,8 +172,10 @@ export default function CreatePost() {
 
                         <Button variant="contained"
                             sx={{
+                                textTransform:"none",
                                 bgcolor: "form.button",
-                                m: 0
+                                m: 0,
+                                color: "primary.buttonText"
                             }} onClick={handleCreatePost}>
                             <Typography>Create</Typography>
                         </Button>

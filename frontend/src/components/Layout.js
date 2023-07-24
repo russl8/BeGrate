@@ -69,7 +69,7 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
                                     onClick={handleLogout}
                                     style={{ textTransform: 'none' }}
                                 >
-                                    <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.buttonText", }}>
+                                    <Typography variant="p" sx={{ fontWeight: "bold", color: "primary.headline", }}>
                                         Log Out
                                     </Typography>
                                 </Button>

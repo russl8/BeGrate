@@ -107,9 +107,10 @@ export default function Home({ userAuth, userName }) {
               >
 
                 <NavLink to={`/posts/${post._id}`} style={{ textDecoration: "none" }}>
-                  <Paper sx={{
+                  <Paper 
+                  sx={{
                     height: { xs: 250, md: 250, sm: 250, lg: 250, xl: 250 },
-                    width: { xs: 250, md: 350, sm: 400, lg: 325, xl: 260 },
+                    width: { xs: 300, md: 350, sm: 400, lg: 325, xl: 260 },
                     overflow: 'clip',
                     display: "flex",
                     flexDirection: "column",
