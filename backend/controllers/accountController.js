@@ -64,37 +64,45 @@ exports.accountSortMethod = asyncHandler(async (req, res, next) => {
             case ("Most Liked"):
                 if (userIsAccountHolder) {
                     userPosts = await Post.aggregate([
-                        {"$project" : {
-                            "title": 1,
-                            "content": 1,
-                            "dateCreated" : 1,
-                            "user": 1,
-                            "isPrivate": 1,
-                            "likes":1,
-                            "numLikes" : {"$size": "$likes"}
-                        }},
-                        {"$sort": {"numLikes" : -1}}
-                    ]).populate("user").exec();
+                        {
+                            "$project": {
+                                "title": 1,
+                                "content": 1,
+                                "dateCreated": 1,
+                                "user": 1,
+                                "isPrivate": 1,
+                                "likes": 1,
+                                "numLikes": { "$size": "$likes" }
+                            }
+                        },
+                        { "$sort": { "numLikes": -1 } }
+                    ]).exec();
+                    await Post.populate(userPosts, { path: "user" });
+
                     // console.log(userPosts)
                     // userPosts = await Post.find({ user: accountid }).sort({ likes: -1 }).exec()
                 } else {
                     userPosts = await Post.aggregate([
-
-                        { "$match" : {
-                            "isPrivate": false
-                        }
+                        {
+                            "$match": {
+                                "isPrivate": false
+                            }
                         },
-                        {"$project" : {
-                            "title": 1,
-                            "content": 1,
-                            "dateCreated" : 1,
-                            "user": 1,
-                            "isPrivate": 1,
-                            "likes":1,
-                            "numLikes" : {"$size": "$likes"}
-                        }},
-                        {"$sort": {"numLikes" : -1}}
-                    ]).populate("user").exec();
+                        {
+                            "$project": {
+                                "title": 1,
+                                "content": 1,
+                                "dateCreated": 1,
+                                "user": 1,
+                                "isPrivate": 1,
+                                "likes": 1,
+                                "numLikes": { "$size": "$likes" }
+                            }
+                        },
+                        { "$sort": { "numLikes": -1 } }
+                    ]).exec();
+                    await Post.populate(userPosts, { path: "user" });
+
                     // userPosts = await Post.find({ user: accountid, isPrivate: false }).sort({ likes: -1 }).exec()
                 }
         }

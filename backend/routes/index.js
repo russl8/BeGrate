@@ -59,9 +59,9 @@ router.get('/', asyncHandler(async (req, res, next) => {
 					{
 						"$sort": { "numLikes": -1 }
 					}
-				]).populate("user").exec();
-
-		}
+				]).exec();
+				await Post.populate(userPosts, {path: "user"});
+			}
 		// console.log(userPosts)
 		res.json(userPosts)
 	} catch (e) {

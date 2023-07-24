@@ -128,7 +128,7 @@ export default function Account() {
                                                 justifyContent: "space-between",
                                                 alignItems: "center",
                                                 p: 2,
-                                                m: 1,
+                                                mx: 1,
                                                 bgColor: "form.background",
                                                 color: "card.headline"
                                             }}>
