@@ -40,14 +40,10 @@ export default function Account() {
             headers: {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
             }
-
-
         }).then(res => {
             console.log(res.data)
             setAllPosts(res.data)
         })
-
-
         //in baclkend... use switch statement
         //fetch from database based on the sort method
         //res.json back to server

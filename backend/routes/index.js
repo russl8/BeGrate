@@ -18,10 +18,55 @@ const commentController = require('../controllers/commentController');
 
 /* home page. */
 router.get('/', asyncHandler(async (req, res, next) => {
-	const isAuthenticated = res.locals.userAuthentication;
-	const allPosts = await Post.find({isPrivate : false}).populate("user").sort({dateCreated:-1}).exec();
+	let sortMethod = req.query.sortMethod || "Newest First";
+	//get user of account
+	// const accountid = req.params.accountid;
+	// const accountUser = await User.findOne({ _id: accountid });
 
-	res.json({ message: "home page", isAuthenticated, allPosts })
+	// const userIsAccountHolder = await isUserAccountHolder(req.token, accountUser.username)
+	// console.log(userIsAccountHolder)
+	// get user posts
+	let userPosts = null
+	try {
+		switch (sortMethod) {
+			case ("Newest First"):
+				userPosts = await Post.find({isPrivate: false }).sort({ dateCreated: -1 }).exec()
+				break;
+			case ("Oldest First"):
+
+				userPosts = await Post.find({  isPrivate: false }).sort({ dateCreated: 1 }).exec()
+
+				break;
+			case ("Most Liked"):
+				userPosts = await Post.aggregate([
+					{
+						"$match": {
+							"isPrivate": false
+						}
+					},
+					{
+						"$project": {
+							"title": 1,
+							"content": 1,
+							"dateCreated": 1,
+							"user": 1,
+							"isPrivate": 1,
+							"likes": 1,
+							"numLikes": { "$size": "$likes" }
+						}
+					},
+
+					{
+						"$sort": { "numLikes": -1 }
+					}
+				]).exec();
+
+		}
+		// console.log(userPosts)
+		res.json(userPosts)
+	} catch (e) {
+		console.error(e)
+	}
 }));
 
 router.post("/", asyncHandler(async (req, res, next) => {
@@ -40,7 +85,7 @@ router.post("/", asyncHandler(async (req, res, next) => {
 			console.log("Signed in");
 			isAuthenticated = true;
 			//res.json the auth status and userdata
-			res.json({isAuthenticated, token,userData})
+			res.json({ isAuthenticated, token, userData })
 		}
 	})
 }))
@@ -52,11 +97,11 @@ router.post('/login', loginController.loginSubmit);
 router.get("/sign-up", signupController.signupPage)
 router.post("/sign-up", signupController.signupSubmit)
 // ACCOUNT page
-router.get("/account/:accountid",verifyToken2, accountController.accountPage)
-router.post("/account/:accountid",verifyToken2, accountController.accountSortMethod)
+router.get("/account/:accountid", verifyToken2, accountController.accountPage)
+router.post("/account/:accountid", verifyToken2, accountController.accountSortMethod)
 
 // post-creator page
-router.get("/posts",verifyToken, postsController.postsPage)
+router.get("/posts", verifyToken, postsController.postsPage)
 router.post("/posts", verifyToken, postsController.postsSubmit);
 
 // INDIVIDUAL post page
@@ -115,7 +160,7 @@ passport.deserializeUser(async function (id, done) {
 function verifyToken(req, res, next) {
 	//get auth header value
 	const bearerHeader = req.headers["authorization"]
-	
+
 	//check if bearer is undefined
 	if (typeof bearerHeader !== "undefined") {
 		//continue
@@ -136,7 +181,7 @@ function verifyToken(req, res, next) {
 function verifyToken2(req, res, next) {
 	//get auth header value
 	const bearerHeader = req.headers["authorization"]
-	
+
 	//check if bearer is undefined
 	if (typeof bearerHeader !== "undefined") {
 		//continue
@@ -150,7 +195,7 @@ function verifyToken2(req, res, next) {
 		next();
 	} else {
 		//forbidden status (403)
-		res.json({msg: "user not signed in"})
+		res.json({ msg: "user not signed in" })
 		next();
 	}
 }
