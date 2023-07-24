@@ -3,7 +3,7 @@ import React from "react"
 import axios from "axios"
 import uniqid from "uniqid"
 import { Container, Box, Typography, Grid, Paper, TextField, MenuItem } from "@mui/material"
-
+import dateFormat from "dateformat"
 const sortCategories = ["Newest First", "Oldest First", "Most Liked"]
 export default function Account() {
     const params = useParams();
@@ -141,7 +141,7 @@ export default function Account() {
 
                                                 <Typography variant="body1" >{post.content}</Typography>
                                                 <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                                                    <Typography variant="body2">{post.dateCreated}</Typography>
+                                                    <Typography variant="body2">{dateFormat(post.dateCreated, "mmmm dS, yyyy")}</Typography>
                                                     <Typography variant="body2">{post.likes.length} {post.likes.length === 1 ? "like" : "likes"} </Typography>
 
                                                 </Box>

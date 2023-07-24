@@ -4,6 +4,7 @@ import axios from "axios";
 
 import { NavLink } from "react-router-dom";
 import { Container, Box, Typography, Grid, Paper, TextField, MenuItem } from "@mui/material";
+import dateFormat from "dateformat";
 const sortCategories = ["Newest First", "Oldest First", "Most Liked"]
 
 export default function Home({ userAuth, userName }) {
@@ -130,7 +131,7 @@ export default function Home({ userAuth, userName }) {
 
                     <Typography variant="body1" >{post.content}</Typography>
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                      <Typography variant="body2">{post.dateCreated}</Typography>
+                      <Typography variant="body2">{dateFormat(post.dateCreated, "mmmm dS, yyyy")}</Typography>
                       <Typography variant="body2">{post.likes.length} {post.likes.length === 1 ? "like" : "likes"} </Typography>
 
                     </Box>

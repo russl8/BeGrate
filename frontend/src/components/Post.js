@@ -4,9 +4,10 @@ import React from "react"
 import uniqid from 'uniqid'
 import { Container, Typography, IconButton, Divider, TextField, Button, Box } from "@mui/material";
 import { Favorite, Lock, Edit, Delete } from "@mui/icons-material"
-
+import dateFormat from "dateformat";
 
 export default function Post() {
+
     const params = useParams();
     const navigate = useNavigate();
     //state that stores the post data
@@ -166,7 +167,7 @@ export default function Post() {
                                 @{username}
                             </Typography>
                         </NavLink>
-                        <Typography display="inline">{` · ${dateCreated}`}</Typography>
+                        <Typography display="inline">{` · ${dateFormat(dateCreated, "mmmm dS, yyyy")}`}</Typography>
                     </span>
 
                     <Typography variant="h5">{title}</Typography>
@@ -251,7 +252,7 @@ export default function Post() {
                     mt: 2
                 }}
             >
-                <Divider sx={{display:"flex"}} />
+                <Divider sx={{ display: "flex" }} />
 
                 {allCommentsOnPost.map(comment => {
                     return (
@@ -263,7 +264,7 @@ export default function Post() {
                             </NavLink>
                             <Typography variant="body2" >{comment.content}</Typography>
 
-                            <Typography variant="caption">{comment.dateCreated}</Typography>
+                            <Typography variant="caption">{dateFormat(comment.dateCreated, "mmmm dS, yyyy")}</Typography>
                         </Container>
                     )
                 })}
@@ -291,7 +292,7 @@ export default function Post() {
             </Container>
 
             <Container
-                
+
                 sx={{
                     display: "flex",
                     justifyContent: "center",
