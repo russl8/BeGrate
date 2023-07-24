@@ -42,14 +42,15 @@ export default function Login({ verifyAuth, loginPageErrorMessage }) {
                             setUserName(e.target.value)
                         }}
                         sx={{
-                            width: 400, mb: 2, "& label.Mui-focused": {
-                                color: "form.label"
-                            },
+                            width: 400, mb: 2,
                             "& .MuiOutlinedInput-root": {
                                 "&.Mui-focused fieldset": {
-                                    borderColor: "form.label"
+                                    borderColor: "form.button"
                                 }
-                            }
+                            },
+                            "& label.Mui-focused": {
+                                color: "form.button"
+                            },
                         }}
                     />
                     <TextField
@@ -65,14 +66,14 @@ export default function Login({ verifyAuth, loginPageErrorMessage }) {
                         }}
                         sx={{
                             width: 400, mb: 2, 
-                            "& label.Mui-focused": {
-                                color: "form.label"
-                            },
                             "& .MuiOutlinedInput-root": {
                                 "&.Mui-focused fieldset": {
-                                    borderColor: "form.label"
+                                    borderColor: "primary.link"
                                 }
-                            }
+                            },
+                            "& label.Mui-focused": {
+                                color: "primary.link"
+                            },
                         }}
                     />
                     {/* <input type="password"

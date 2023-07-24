@@ -65,7 +65,7 @@ export default function Account() {
                         alignItems: "center"
 
                     }}>
-                        <Typography variant="h3" sx={{mt:1}}>{accountDetails.user.username}</Typography>
+                        <Typography variant="h3" sx={{ mt: 1 }}>{accountDetails.user.username}</Typography>
                         <Typography variant="h6">{accountDetails.user.email}</Typography>
 
 
@@ -74,15 +74,15 @@ export default function Account() {
                             label="Sort by"
                             sx={{
                                 width: 400,
-                                mt:1,
+                                mt: 1,
                                 color: "#232323",
                                 "& .MuiOutlinedInput-root": {
                                     "&.Mui-focused fieldset": {
-                                        borderColor: "form.label"
+                                        borderColor: "form.button"
                                     }
                                 },
                                 "& label.Mui-focused": {
-                                    color: "form.label"
+                                    color: "form.button"
                                 },
 
                             }}
@@ -97,7 +97,7 @@ export default function Account() {
                         </TextField>
 
 
-                        <Grid sx={{ width: "100%", p: 3 }} container spacing={{ md: 2 }} columns={{ xs: 4,sm: 4, md: 8, lg: 12 }}>
+                        <Grid sx={{ width: "100%", p: 3 }} container spacing={{ md: 2 }} columns={{ xs: 4, sm: 4, md: 8, lg: 12 }}>
                             {allPosts.map(post => {
                                 return (
 
@@ -113,7 +113,7 @@ export default function Account() {
 
                                             width: 20,
                                             height: 300,
-                                            overflow:"hidden",
+                                            overflow: "hidden",
                                             display: "flex",
                                             justifyContent: "center",
                                         }}
@@ -125,12 +125,14 @@ export default function Account() {
                                         <NavLink to={`/posts/${post._id}`} style={{ textDecoration: "none" }}>
                                             <Paper sx={{
                                                 height: 250,
-                                                width: { xs: 350,md: 350, sm: 400, lg: 325 },
-                                                overflow: 'clip',                                                display: "flex",
+                                                width: { xs: 250, md: 350, sm: 400, lg: 325 },
+                                                overflow: 'clip',
+                                                display: "flex",
                                                 flexDirection: "column",
                                                 justifyContent: "space-between",
                                                 alignItems: "center",
-                                                p: 1,
+                                                p: 2,
+                                                m: 1,
                                                 bgColor: "form.background",
                                                 color: "card.headline"
                                             }}>

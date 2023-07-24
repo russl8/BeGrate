@@ -105,7 +105,15 @@ export default function CreatePost() {
                                 bgcolor: "form.input",
                                 color: "form.label",
                                 width: 400,
-                                mb: 1
+                                mb: 1,
+                                "& .MuiOutlinedInput-root": {
+                                    "&.Mui-focused fieldset": {
+                                        borderColor: "form.button"
+                                    }
+                                },
+                                "& label.Mui-focused": {
+                                    color: "form.button"
+                                },
                             }}
 
                         />
@@ -125,7 +133,15 @@ export default function CreatePost() {
                             sx={{
                                 bgcolor: "form.input",
                                 width: 400,
-                                mb: 1
+                                mb: 1,
+                                "& .MuiOutlinedInput-root": {
+                                    "&.Mui-focused fieldset": {
+                                        borderColor: "form.button"
+                                    }
+                                },
+                                "& label.Mui-focused": {
+                                    color: "form.button"
+                                },
                             }}
 
                         />

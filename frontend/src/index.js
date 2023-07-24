@@ -50,6 +50,7 @@ root.render(
   <React.StrictMode >
     <BrowserRouter>
       <ThemeProvider theme={theme}>
+        {/* scrolls to the top of page after every transition. */}
         <ScrollToTop />
 
         <App />
