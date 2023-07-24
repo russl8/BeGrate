@@ -51,14 +51,14 @@ export default function Account() {
 
     }, [sortMethod])
     return (
-        <Container >
+        <Container disableGutters >
             {
                 accountDetails.status === "success"
                     ?
                     <Box sx={{
                         display: "flex",
                         flexDirection: "column",
-                        alignItems: "center"
+                        alignItems: "center",
 
                     }}>
                         <Typography variant="h3" sx={{ mt: 1 }}>{accountDetails.user.username}</Typography>
@@ -93,7 +93,7 @@ export default function Account() {
                         </TextField>
 
 
-                        <Grid sx={{ width: "100%", p: 3 }} container spacing={{ md: 2 }} columns={{ xs: 4, sm: 4, md: 8, lg: 12 }}>
+                        <Grid sx={{ width: "100%", p: 3 }} container spacing={{ md: 2 }} columns={{ xs: 4, sm: 4, md: 8, lg: 12, xl: 16 }}>
                             {allPosts.map(post => {
                                 return (
 
@@ -120,8 +120,8 @@ export default function Account() {
 
                                         <NavLink to={`/posts/${post._id}`} style={{ textDecoration: "none" }}>
                                             <Paper sx={{
-                                                height: 250,
-                                                width: { xs: 250, md: 350, sm: 400, lg: 325 },
+                                                height: { xs: 250, md: 250, sm: 250, lg: 250, xl: 250 },
+                                                width: { xs: 250, md: 350, sm: 400, lg: 325, xl: 260 },
                                                 overflow: 'clip',
                                                 display: "flex",
                                                 flexDirection: "column",

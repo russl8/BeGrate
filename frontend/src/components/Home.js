@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 import { Container, Box, Typography, Grid, Paper, TextField, MenuItem } from "@mui/material";
 const sortCategories = ["Newest First", "Oldest First", "Most Liked"]
 
-export default function Home() {
+export default function Home({ userAuth, userName }) {
 
   const [currentText, setCurrentText] = useState("");
   const [allPosts, setAllPosts] = useState([])
@@ -20,11 +20,31 @@ export default function Home() {
       .catch((error) => {
         console.error(error);
       });
+
+    console.log(userAuth)
   }, [sortMethod]);
 
 
   return (
-    <div>
+    <Container disableGutters>
+      {!userAuth
+        ?
+        <>
+          <Typography variant="h1" textAlign="center">AAAA!</Typography>
+          <Typography variant="h6" textAlign="center">The best blogging site for all your blogging needs. Use the power of words to provide snippets of your daily lives.</Typography>
+
+          <Typography variant="body1" textAlign="center" sx={{my:1}}>
+            <NavLink to="/sign-up" style={{ textDecoration: "none", color: "#f45d48" }} > Create an account here! </NavLink>
+            If you have an account already, <NavLink to="/login" style={{ textDecoration: "none", color: "#f45d48" }}>login</NavLink>
+          </Typography>
+
+        </>
+        :
+        <>
+          <Typography variant="h3" textAlign="center" sx={{py:1}}>Welcome back, {userName}!</Typography>
+        </>
+      }
+
       <Box sx={{
         display: "flex",
         flexDirection: "column",
@@ -88,8 +108,8 @@ export default function Home() {
 
                 <NavLink to={`/posts/${post._id}`} style={{ textDecoration: "none" }}>
                   <Paper sx={{
-                    height: 250,
-                    width: { xs: 250, md: 350, sm: 400, lg: 325 },
+                    height: { xs: 250, md: 250, sm: 250, lg: 250, xl: 250 },
+                    width: { xs: 250, md: 350, sm: 400, lg: 325, xl: 260 },
                     overflow: 'clip',
                     display: "flex",
                     flexDirection: "column",
@@ -120,6 +140,6 @@ export default function Home() {
           })}
         </Grid>
       </Box>
-    </div>
+    </Container>
   );
 }

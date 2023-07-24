@@ -115,7 +115,7 @@ function App() {
   */
 
   return (
-    <Box className="App" sx={{bgcolor:"#f8f5f2"}}>
+    <Box className="App" sx={{ bgcolor: "#f8f5f2" }}>
       <Routes>
         {/* nav bar  */}
         <Route element={<Layout
@@ -131,7 +131,7 @@ function App() {
           // globalState.userData.user._id
           userId={globalState.userData?.user?._id || ""}
         />} >
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home userAuth={globalState.userAuth} userName={globalState?.userData?.user?.username}/>} />
           <Route path="/login" element={<Login verifyAuth={loginSetAuth} loginPageErrorMessage={loginPageErrorMessage} />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/posts" element={<CreatePost />} />
