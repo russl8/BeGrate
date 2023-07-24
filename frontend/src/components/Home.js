@@ -58,7 +58,7 @@ export default function Home({ userAuth, userName }) {
           select
           label="Sort by"
           sx={{
-            width:"100%",
+            width: "100%",
             mt: 1,
             color: "#232323",
             "& .MuiOutlinedInput-root": {
@@ -108,20 +108,21 @@ export default function Home({ userAuth, userName }) {
               >
 
                 <NavLink to={`/posts/${post._id}`} style={{ textDecoration: "none" }}>
-                  <Paper 
-                  sx={{
-                    height: { xs: 250, md: 250, sm: 250, lg: 250, xl: 250 },
-                    width: { xs: 300, md: 350, sm: 400, lg: 325, xl: 260 },
-                    overflow: 'clip',
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    p: 2,
-                    mx: 1,
-                    bgColor: "form.background",
-                    color: "card.headline"
-                  }}>
+                  <Paper
+                    sx={{
+                      height: { xs: 250, md: 250, sm: 250, lg: 250, xl: 250 },
+                      width: { xs: 275, md: 350, sm: 400, lg: 325, xl: 260 },
+                      overflow: 'clip',
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      p: 2,
+                      mx: 1,
+                      bgColor: "form.background",
+                      color: "card.headline",
+                    }}
+                    >
                     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                       <Typography variant="body2" sx={{ color: "form.button" }}>@{post.user.username}</Typography>
 
