@@ -16,7 +16,7 @@ const theme = createTheme({
       headline: "#2b2c34",
       paragraph: "#2b2c34",
       button: "#078080",
-      buttonText: "#232323",
+      buttonText: "#fffffe",
       link: "#6246ea",
       like: "#e45858"
     },
@@ -24,8 +24,8 @@ const theme = createTheme({
       main: "#f8f5f2",
 
       background: "#fffffe",
-      headline: "#232323",
-      paragraph: "#222525",
+      headline: "##2b2c34",
+      paragraph: "##2b2c34",
       tagBackground: "#078080",
       tagText: "#fffffe",
       highlight: "#078080"
