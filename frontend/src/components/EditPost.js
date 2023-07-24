@@ -110,7 +110,7 @@ export default function EditPost() {
                                 display: "flex",
                                 flexDirection: "row",
                                 justifyContent: "flex-start",
-                                width: 400,
+                                width:  "100%",
                                 mb: 1
                             }}>
                             <Typography sx={{fontWeight:"bold"}}>
@@ -134,7 +134,7 @@ export default function EditPost() {
                             sx={{
                                 bgcolor: "form.input",
                                 color: "form.label",
-                                width: 400,
+                                width:  "100%",
                                 mb: 1
                             }}
 
@@ -154,7 +154,7 @@ export default function EditPost() {
                             }}
                             sx={{
                                 bgcolor: "form.input",
-                                width: 400,
+                                width: "100%",
                                 mb: 1
                             }}
 
@@ -163,7 +163,9 @@ export default function EditPost() {
                         <FormControlLabel
                             control={<Checkbox
                                 sx={{
-                                    color: "form.buttonText",
+                                    color: "#2b2c34",
+
+                                  
                                     '&.Mui-checked': {
                                         color: "form.button",
                                     },
@@ -186,8 +188,10 @@ export default function EditPost() {
 
                         <Button variant="contained"
                             sx={{
+                                textTransform:"none",
                                 bgcolor: "form.button",
-                                m: 0
+                                m: 0,
+                                color: "primary.buttonText"
                             }} onClick={handleEditPost}>
                             <Typography>Update Post</Typography>
                         </Button>

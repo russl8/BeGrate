@@ -80,7 +80,7 @@ export default function CreatePost() {
                                 display: "flex",
                                 flexDirection: "row",
                                 justifyContent: "flex-start",
-                                width: 400,
+                                width:  "100%",
                                 mb: 1
                             }}>
                             <Typography sx={{ fontWeight: "bold" }}>
@@ -104,7 +104,7 @@ export default function CreatePost() {
                             sx={{
                                 bgcolor: "form.input",
                                 color: "form.label",
-                                width: 400,
+                                width:  "100%",
                                 mb: 1,
                                 "& .MuiOutlinedInput-root": {
                                     "&.Mui-focused fieldset": {
@@ -132,7 +132,7 @@ export default function CreatePost() {
                             }}
                             sx={{
                                 bgcolor: "form.input",
-                                width: 400,
+                                width:  "100%",
                                 mb: 1,
                                 "& .MuiOutlinedInput-root": {
                                     "&.Mui-focused fieldset": {
