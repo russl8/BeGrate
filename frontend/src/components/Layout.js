@@ -37,7 +37,7 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
 
                                 {/* { xs: 1, sm: 4, md: 4, lg: 4 } */}
                                 <Box sx={{
-                                    mx: { xs: 1, sm: 4, md: 4, lg: 4 }
+                                    mx: { xs:0, sm: 4, md: 4, lg: 4 }
                                 }}>
                                     <NavLink to={`/account/${userId} `} style={{ textDecoration: "none", color: "#078080" }}>
                                         <Button variant="text" sx={{

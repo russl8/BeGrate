@@ -59,7 +59,7 @@ export default function SignUp() {
                         setRUserName(e.target.value)
                     }}
                     sx={{
-                        width: 400, mb: 2, "& label.Mui-focused": {
+                        width: "100%", mb: 2, "& label.Mui-focused": {
                             color: "primary.link"
                         },
                         "& .MuiOutlinedInput-root": {
@@ -81,7 +81,7 @@ export default function SignUp() {
                         setREmail(e.target.value)
                     }}
                     sx={{
-                        width: 400,
+                        width:  "100%",
                         mb: 2,
                         "& label.Mui-focused": {
                             color: "primary.link"
@@ -108,7 +108,7 @@ export default function SignUp() {
                         setRPassword(e.target.value)
                     }}
                     sx={{
-                        width: 400, mb: 2, "& label.Mui-focused": {
+                        width: "100%", mb: 2, "& label.Mui-focused": {
                             color: "primary.link"
                         },
                         "& .MuiOutlinedInput-root": {
@@ -131,7 +131,7 @@ export default function SignUp() {
                          sx={{
                             display:"flex",
                             justifyContent:"flex-start",
-                            width: 400,
+                            width:  "100%",
                             mb:1
                             
                          }}

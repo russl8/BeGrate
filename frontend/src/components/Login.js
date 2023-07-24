@@ -42,7 +42,7 @@ export default function Login({ verifyAuth, loginPageErrorMessage }) {
                             setUserName(e.target.value)
                         }}
                         sx={{
-                            width: 400, mb: 2,
+                            width:  "100%", mb: 2,
                             "& .MuiOutlinedInput-root": {
                                 "&.Mui-focused fieldset": {
                                     borderColor: "form.button"
@@ -65,7 +65,7 @@ export default function Login({ verifyAuth, loginPageErrorMessage }) {
                             setPassword(e.target.value)
                         }}
                         sx={{
-                            width: 400, mb: 2,
+                            width: "100%", mb: 2,
                             "& .MuiOutlinedInput-root": {
                                 "&.Mui-focused fieldset": {
                                     borderColor: "primary.link"
@@ -97,7 +97,7 @@ export default function Login({ verifyAuth, loginPageErrorMessage }) {
 
                     <Typography sx={{
                         mb: 2,
-                        width: 400,
+                        width: "100%",
                         display: "flex",
                         justifyContent: "center",
                     }}>
@@ -110,7 +110,7 @@ export default function Login({ verifyAuth, loginPageErrorMessage }) {
                             m: 0,
                             display: "flex",
                             justifyContent: "center",
-                            width: 400
+                            width: "100%"
                         }}>
                         {errorMessage ?
                             <Error sx={{ mr: 0.5, color: "form.button" }}></Error>

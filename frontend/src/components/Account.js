@@ -69,7 +69,7 @@ export default function Account() {
                             select
                             label="Sort by"
                             sx={{
-                                width: 400,
+                                width:"100%",
                                 mt: 1,
                                 color: "#232323",
                                 "& .MuiOutlinedInput-root": {
