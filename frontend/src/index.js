@@ -6,7 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { createTheme, ThemeProvider } from "@mui/material"
 import ScrollToTop from "./ScrollToTop";
-
+import {disableReactDevTools} from "@fvilers/disable-react-devtools "
+if(process.env.NODE_ENV === "production") disableReactDevTools();
 // Color theme for MUI components. 
 const theme = createTheme({
   palette: {

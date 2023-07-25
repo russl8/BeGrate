@@ -65,7 +65,7 @@ router.get('/', asyncHandler(async (req, res, next) => {
 		// console.log(userPosts)
 		res.json(userPosts)
 	} catch (e) {
-		console.error(e)
+		res.json(e)
 	}
 }));
 

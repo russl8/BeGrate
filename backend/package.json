@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
-    "serverstart": "SET DEBUG=BeGrate:* & npm run devstart"
+    "serverstart": "SET DEBUG=BeGrate:* & npm run devstart",
+    "build": "npm i"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
