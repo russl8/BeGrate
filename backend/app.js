@@ -22,6 +22,7 @@ const mongoDB = process.env.mongoURL
 main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB)
+  console.log("mongodb is connected")
 }
 // --------------------------view engine setup----------------------------------------
 
