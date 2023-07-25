@@ -5,7 +5,7 @@ import uniqid from "uniqid"
 import { Container, Box, Typography, Grid, Paper, TextField, MenuItem } from "@mui/material"
 import dateFormat from "dateformat"
 const sortCategories = ["Newest First", "Oldest First", "Most Liked"]
-export default function Account() {
+export default function Account({backendUrl}) {
     const params = useParams();
     // fetch account using useEffect and params.id -> save account details in state
     const [accountDetails, setAccountDetails] = React.useState({});
@@ -16,7 +16,7 @@ export default function Account() {
 
         axios({
             method: "GET",
-            url: `http://localhost:3001/account/${params.id}`,
+            url: `${backendUrl}/${params.id}`,
             withCredentials: true,
             headers: {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -34,7 +34,7 @@ export default function Account() {
         //fetch to backend, pass sort method
         axios({
             method: "POST",
-            url: `http://localhost:3001/account/${params.id}`,
+            url: `${backendUrl}/${params.id}`,
             withCredentials: true,
             data: { sortMethod: sortMethod },
             headers: {

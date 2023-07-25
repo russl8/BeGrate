@@ -2,9 +2,9 @@ import axios from "axios"
 import React from 'react'
 import { useParams, useNavigate } from "react-router-dom";
 import uniqid from "uniqid"
-import { Container, TextField, Checkbox, Typography, Button, FormControlLabel, Box } from "@mui/material";
+import { Container, TextField, Checkbox, Typography, Button, FormControlLabel, Box, } from "@mui/material";
 
-export default function EditPost() {
+export default function EditPost({backendUrl}) {
     const params = useParams();
     const navigate = useNavigate();
     //fetch backend for post details and whether a user can edit or not (boolean)
@@ -13,7 +13,7 @@ export default function EditPost() {
             axios({
                 method: "GET",
                 withCredentials: true,
-                url: `http://localhost:3001/posts/${params.id}/update`,
+                url: `${backendUrl}/posts/${params.id}/update`,
                 headers: {
                     Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
                 },
@@ -53,7 +53,7 @@ export default function EditPost() {
         try {
             axios({
                 method: "POST",
-                url: `http://localhost:3001/posts/${params.id}/update`,
+                url: `${backendUrl}/posts/${params.id}/update`,
                 data: {
                     title: postTitle,
                     content: postContent,

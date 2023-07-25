@@ -5,7 +5,7 @@ import uniqid from "uniqid"
 import { Container, TextField, Checkbox, Typography, Button, FormControlLabel, Box } from "@mui/material";
 import "../styles/CreatePost.css"
 
-export default function CreatePost() {
+export default function CreatePost({backendUrl}) {
     const navigate = useNavigate();
     //make a form for title, content, and isPrivate
     const [postTitle, setPostTitle] = React.useState("");
@@ -20,7 +20,7 @@ export default function CreatePost() {
         axios({
             method: "GET",
             withCredentials: true,
-            url: "http://localhost:3001/posts",
+            url: backendUrl+ "/posts",
             //needed to verify token in backend. remember to json.parse the token :D
             headers: {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -42,7 +42,7 @@ export default function CreatePost() {
                 isPrivate: postIsPrivate
             },
             withCredentials: true,
-            url: "http://localhost:3001/posts",
+            url: backendUrl+ "/posts",
             //needed to verify token in backend. remember to json.parse the token :D
             headers: {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`

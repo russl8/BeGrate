@@ -2,7 +2,7 @@ import { Outlet, NavLink } from "react-router-dom";
 import { Typography, AppBar, Box, Button, Container, useTheme, useMediaQuery , Divider} from "@mui/material";
 
 
-export default function Layout({ isAuthenticated, handleLogout, userName, userId }) {
+export default function Layout({ isAuthenticated, handleLogout, userName, userId, backendUrl }) {
     const theme = useTheme();
     const isXs = useMediaQuery(theme.breakpoints.down("xs"));
 

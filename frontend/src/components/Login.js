@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import React from "react"
 import { Container, Box, Typography, TextField, Button } from "@mui/material"
 import { Error } from "@mui/icons-material"
-export default function Login({ verifyAuth, loginPageErrorMessage }) {
+export default function Login({ verifyAuth, loginPageErrorMessage,backendUrl }) {
     const [userName, setUserName] = React.useState("");
     const [password, setPassword] = React.useState("");
     const [errorMessage, setErrorMessage] = React.useState("")

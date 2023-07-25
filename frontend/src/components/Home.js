@@ -7,14 +7,14 @@ import { Container, Box, Typography, Grid, Paper, TextField, MenuItem } from "@m
 import dateFormat from "dateformat";
 const sortCategories = ["Newest First", "Oldest First", "Most Liked"]
 
-export default function Home({ userAuth, userName }) {
+export default function Home({ userAuth, userName,backendUrl }) {
 
   const [currentText, setCurrentText] = useState("");
   const [allPosts, setAllPosts] = useState([])
   const [sortMethod, setSortMethod] = useState("Newest First")
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/?sortMethod=${sortMethod}`)
+      .get(`${backendUrl}/?sortMethod=${sortMethod}`)
       .then((res) => {
         setAllPosts(res.data)
       })

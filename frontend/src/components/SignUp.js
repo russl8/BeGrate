@@ -7,7 +7,7 @@ import { Error } from "@mui/icons-material"
 
 
 
-export default function SignUp() {
+export default function SignUp({backendUrl}) {
     const navigate = useNavigate();
 
     const [RuserName, setRUserName] = React.useState("");
@@ -24,7 +24,7 @@ export default function SignUp() {
                 email: Remail
             },
             withCredentials: true,
-            url: "http://localhost:3001/sign-up"
+            url: backendUrl+"/sign-up"
         }).then(res => {
             if (res.data === "User Created") {
                 navigate("/")
