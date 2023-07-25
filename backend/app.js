@@ -44,7 +44,11 @@ app.use(session({
 }))
 app.use(cookieParser("secretkey"));
 app.use(
-  cors()
+  cors({
+    origin: 'https://super-moonbeam-3b61d6.netlify.app/',
+    credentials: true
+    
+  })
 );
 app.use(passport.initialize());
 app.use(passport.session());
