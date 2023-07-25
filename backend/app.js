@@ -44,10 +44,7 @@ app.use(session({
 }))
 app.use(cookieParser("secretkey"));
 app.use(
-  cors({
-    origin: 'http://localhost:3000',
-    credentials: true
-  })
+  cors()
 );
 app.use(passport.initialize());
 app.use(passport.session());
