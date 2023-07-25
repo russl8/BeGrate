@@ -16,7 +16,7 @@ export default function Account({backendUrl}) {
 
         axios({
             method: "GET",
-            url: `${backendUrl}/${params.id}`,
+            url: `${backendUrl}/account/${params.id}`,
             withCredentials: true,
             headers: {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
@@ -34,7 +34,7 @@ export default function Account({backendUrl}) {
         //fetch to backend, pass sort method
         axios({
             method: "POST",
-            url: `${backendUrl}/${params.id}`,
+            url: `${backendUrl}/account/${params.id}`,
             withCredentials: true,
             data: { sortMethod: sortMethod },
             headers: {
