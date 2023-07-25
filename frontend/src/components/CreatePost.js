@@ -106,14 +106,14 @@ export default function CreatePost({backendUrl}) {
                                 color: "form.label",
                                 width:  "100%",
                                 mb: 1,
+                                "& label.Mui-focused": {
+                                    color: "primary.link"
+                                },
                                 "& .MuiOutlinedInput-root": {
                                     "&.Mui-focused fieldset": {
-                                        borderColor: "form.button"
+                                        borderColor: "primary.link"
                                     }
-                                },
-                                "& label.Mui-focused": {
-                                    color: "form.button"
-                                },
+                                }
                             }}
 
                         />
@@ -134,14 +134,14 @@ export default function CreatePost({backendUrl}) {
                                 bgcolor: "form.input",
                                 width:  "100%",
                                 mb: 1,
+                                "& label.Mui-focused": {
+                                    color: "primary.link"
+                                },
                                 "& .MuiOutlinedInput-root": {
                                     "&.Mui-focused fieldset": {
-                                        borderColor: "form.button"
+                                        borderColor: "primary.link"
                                     }
-                                },
-                                "& label.Mui-focused": {
-                                    color: "form.button"
-                                },
+                                }
                             }}
 
                         />
