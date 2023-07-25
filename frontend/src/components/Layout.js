@@ -114,7 +114,7 @@ export default function Layout({ isAuthenticated, handleLogout, userName, userId
                     )}
                 </Container >
                 <Outlet />
-                <Container sx={{ mt:6, display: "flex",
+                <Container sx={{ mt:12, display: "flex",
                         justifyContent: "center",
                         textAlign: "center",
                         width:"100%"}}>

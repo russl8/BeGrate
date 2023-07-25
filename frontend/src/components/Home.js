@@ -32,7 +32,8 @@ export default function Home({ userAuth, userName,backendUrl }) {
         ?
         <>
           <Typography variant="h1" textAlign="center">BeGrate!</Typography>
-          <Typography variant="h6" textAlign="center">The best blogging site for all your blogging needs. Use the power of words to provide snippets of the things you are thankful for in your daily lives.</Typography>
+          <Typography variant="h6" textAlign="center">
+Welcome to BeGrate! - a place where gratitude shines bright. Share your daily moments of thankfulness, big or small, and inspire others to find joy in the little things too. Connect with a community of positivity as you spread appreciation for life's blessings, one heartfelt post at a time.</Typography>
 
           <Typography variant="body1" textAlign="center" sx={{ my: 1 }}>
             <NavLink to="/sign-up" style={{ textDecoration: "none", color: "#6246ea" }} > Create an account here! </NavLink>
