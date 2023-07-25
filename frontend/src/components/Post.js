@@ -84,7 +84,7 @@ export default function Post({backendUrl}) {
     const handleDelete = async (e) => {
         axios({
             method: "POST",
-            url: `http://localhost:3001/posts/${params.id}/delete`,
+            url: `${backendUrl}/posts/${params.id}/delete`,
         }).then(res => {
             //redirect user to account page after deleting the post.
             if (res.data.msg === "post deleted") {
