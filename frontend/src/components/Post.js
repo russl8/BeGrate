@@ -116,7 +116,7 @@ export default function Post({backendUrl}) {
         //make request to backend, send the current comment data., as well as the user data.
         axios({
             method: "POST",
-            url: `http://localhost:3001/posts/${params.id}`,
+            url: `${backendUrl}/posts/${params.id}`,
             data: { comment: currentComment, dateCreated: Date() },
             withCredentials: true,
             headers: {
@@ -221,7 +221,7 @@ export default function Post({backendUrl}) {
         axios({
             method: "POST",
             withCredentials: true,
-            url: `http://localhost:3001/posts/${params.id}/like`,
+            url: `${backendUrl}/posts/${params.id}/like`,
             headers: {
                 Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
             }
