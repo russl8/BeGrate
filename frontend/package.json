@@ -29,11 +29,9 @@
     }
   },
   "scripts": {
-    "watch": "npm-watch",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "deploy": "serve -s build"
   },
   "eslintConfig": {
     "extends": [

@@ -15,6 +15,8 @@ import { Box, TextField } from "@mui/material";
 
 
 function App() {
+  let backendUrl = "https://begrate-backend.onrender.com"
+
   //declaration of constants
   const navigate = useNavigate();
 
@@ -41,7 +43,7 @@ function App() {
         token
       },
       withCredentials: true,
-      url: "http://localhost:3001/"
+      url: backendUrl + "/"
     }).then(res => {
       // console.log(res.data)
       setGlobalState({
@@ -75,7 +77,7 @@ function App() {
         password: password
       },
       withCredentials: true,
-      url: "http://localhost:3001/login"
+      url: backendUrl + "/login"
     }).then(res => {
       const isAuth = res.data.isAuth
       console.log(res.data)
@@ -118,26 +120,28 @@ function App() {
     <Box className="App" sx={{ bgcolor: "#fffffe" }}>
       <Routes>
         {/* nav bar  */}
-        <Route element={<Layout
-          isAuthenticated={globalState.userAuth}
-          handleLogout={handleLogout}
-          userName={() => {
-            if (globalState.userData) {
-              return globalState.userData.user.username;
-            }
-            return "Account";
-          }}
-          // postData.post?.user?.username || ""
-          // globalState.userData.user._id
-          userId={globalState.userData?.user?._id || ""}
-        />} >
-          <Route path="/" element={<Home userAuth={globalState.userAuth} userName={globalState?.userData?.user?.username}/>} />
-          <Route path="/login" element={<Login verifyAuth={loginSetAuth} loginPageErrorMessage={loginPageErrorMessage} />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/posts" element={<CreatePost />} />
-          <Route path="/posts/:id" element={<Post />} />
-          <Route path="/posts/:id/update" element={<EditPost />} />
-          <Route path="/account/:id" element={<Account />} />
+        <Route element={
+          <Layout
+            backendUrl={backendUrl}
+            isAuthenticated={globalState.userAuth}
+            handleLogout={handleLogout}
+            userName={() => {
+              if (globalState.userData) {
+                return globalState.userData.user.username;
+              }
+              return "Account";
+            }}
+            // postData.post?.user?.username || ""
+            // globalState.userData.user._id
+            userId={globalState.userData?.user?._id || ""}
+          />} >
+          <Route path="/" element={<Home backendUrl={backendUrl} userAuth={globalState.userAuth} userName={globalState?.userData?.user?.username} />} />
+          <Route path="/login" element={<Login backendUrl={backendUrl} verifyAuth={loginSetAuth} loginPageErrorMessage={loginPageErrorMessage} />} />
+          <Route path="/sign-up" element={<SignUp backendUrl={backendUrl} />} />
+          <Route path="/posts" element={<CreatePost backendUrl={backendUrl} />} />
+          <Route path="/posts/:id" element={<Post backendUrl={backendUrl} />} />
+          <Route path="/posts/:id/update" element={<EditPost backendUrl={backendUrl} />} />
+          <Route path="/account/:id" element={<Account backendUrl={backendUrl} />} />
 
         </Route> {/* nav bar route ends */}
       </Routes>
