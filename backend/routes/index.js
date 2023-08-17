@@ -60,8 +60,8 @@ router.get('/', asyncHandler(async (req, res, next) => {
 						"$sort": { "numLikes": -1 }
 					}
 				]).exec();
-				await Post.populate(userPosts, {path: "user"});
-			}
+				await Post.populate(userPosts, { path: "user" });
+		}
 		// console.log(userPosts)
 		res.json(userPosts)
 	} catch (e) {
@@ -90,32 +90,30 @@ router.post("/", asyncHandler(async (req, res, next) => {
 	})
 }))
 /* login page. */
-router.get('/login', loginController.loginPage);
-router.post('/login', loginController.loginSubmit);
+router.get('/login', loginController.loginPage); //login page
+router.post('/login', loginController.loginSubmit); //user press login button
 
 //sign up
-router.get("/sign-up", signupController.signupPage)
-router.post("/sign-up", signupController.signupSubmit)
+router.get("/sign-up", signupController.signupPage) //sign up page
+router.post("/sign-up", signupController.signupSubmit) // user press signup button
 // ACCOUNT page
-router.get("/account/:accountid", verifyToken2, accountController.accountPage)
-router.post("/account/:accountid", verifyToken2, accountController.accountSortMethod)
+router.get("/account/:accountid", verifyToken2, accountController.accountPage) //individual account page render
+router.post("/account/:accountid", verifyToken2, accountController.accountSortMethod) //sorts post son account page
 
 // post-creator page
-router.get("/posts", verifyToken, postsController.postsPage)
-router.post("/posts", verifyToken, postsController.postsSubmit);
+router.get("/posts", verifyToken, postsController.postsPage) //form to create posts
+router.post("/posts", verifyToken, postsController.postsSubmit); // handles form submit
 
 // INDIVIDUAL post page
-router.get("/posts/:postid", verifyToken, postController.postPage)
-router.post("/posts/:postid", verifyToken2, commentController.commentSubmit)
-router.post("/posts/:postid/like", verifyToken2, postController.postLike)
-router.get("/posts/:postid/like", verifyToken2, postController.getLike)
+router.get("/posts/:postid", verifyToken, postController.postPage) //handle individual post page
+router.post("/posts/:postid", verifyToken2, commentController.commentSubmit) //handles comment on post
+router.post("/posts/:postid/like", verifyToken2, postController.postLike) //handles the event where user presses like button
+router.get("/posts/:postid/like", verifyToken2, postController.getLike) //handles the like button render depending on if user has liekd post already
+router.get("/posts/:postid/update", verifyToken, postController.postUpdateGet) //handles updatepost form render
+router.post("/posts/:postid/update", postController.postUpdatePost)//handles updatepost form submit
 
-
-router.get("/posts/:postid/update", verifyToken, postController.postUpdateGet)
-router.post("/posts/:postid/update", postController.postUpdatePost)
-
-router.get("/posts/:postid/delete", postController.postDeleteGet)
-router.post("/posts/:postid/delete", postController.postDeletePost)
+router.get("/posts/:postid/delete", postController.postDeleteGet)//handles deletepost form render
+router.post("/posts/:postid/delete", postController.postDeletePost)//handles deletepost form submit
 
 
 

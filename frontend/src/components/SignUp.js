@@ -59,14 +59,14 @@ export default function SignUp({backendUrl}) {
                         setRUserName(e.target.value)
                     }}
                     sx={{
-                        width: "100%", mb: 2, "& label.Mui-focused": {
-                            color: "primary.link"
-                        },
-                        "& .MuiOutlinedInput-root": {
-                            "&.Mui-focused fieldset": {
-                                borderColor: "primary.link"
+                            width: "100%", mb: 2, "& label.Mui-focused": {
+                                color: "primary.link"
+                            },
+                            "& .MuiOutlinedInput-root": {
+                                "&.Mui-focused fieldset": {
+                                    borderColor: "primary.link"
+                                }
                             }
-                        }
                     }}
                 />
                 <TextField

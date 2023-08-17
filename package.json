@@ -6,5 +6,8 @@
     "@mui/material": "^5.14.1",
     "dateformat": "^5.0.3",
     "uniqid": "^5.4.0"
+  },
+  "devDependencies": {
+    "@testing-library/user-event": "^14.4.3"
   }
 }

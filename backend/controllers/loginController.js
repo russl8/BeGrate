@@ -15,9 +15,8 @@ exports.loginPage = asyncHandler(async (req, res, next) => {
 });
 
 exports.loginSubmit = [
-  body("username").escape(),
-  body("password").escape(),
-
+  body("username").trim().escape(),
+  body("password").trim().escape(),
   asyncHandler(async (req, res, next) => {
     // authenticate user
     passport.authenticate("local", (err, user, info) => {
@@ -28,7 +27,6 @@ exports.loginSubmit = [
         req.logIn(user, err => {
           if (err) throw err;
         })
-
         //after a user is signed in, we get a token that contains info to make a request to a protected route
         jwt.sign({ user: user }, "secretkey", { expiresIn: "100d" }, (err, token) => {
           let isAuthenticated = false;
@@ -43,11 +41,6 @@ exports.loginSubmit = [
               console.log("Signed in");
               isAuthenticated = true;
               userData = authData;
-
-              // res.json({
-              //   message: "post created",
-              //   authData: authData
-              // })
             }
 
           })
@@ -63,7 +56,6 @@ exports.loginSubmit = [
 
     })(req, res, next);
   })
-
 ]
 
 
