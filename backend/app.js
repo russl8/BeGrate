@@ -46,7 +46,7 @@ app.use(session({
 app.use(cookieParser("secretkey"));
 app.use(
   cors({
-    origin: ['https://super-moonbeam-3b61d6.netlify.app',"http://localhost:3000/"],
+    origin: ['https://super-moonbeam-3b61d6.netlify.app',"http://localhost:3000"],
     credentials: true
     
   })
