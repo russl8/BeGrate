@@ -32,7 +32,7 @@ exports.accountPage = asyncHandler(async (req, res, next) => {
 
 exports.accountSortMethod = asyncHandler(async (req, res, next) => {
     let sortMethod = "Newest First";
-    
+
     console.log(req.params)
     //get user of account
     const accountid = req.params.accountid;
@@ -66,10 +66,11 @@ exports.accountSortMethod = asyncHandler(async (req, res, next) => {
                 if (userIsAccountHolder) {
                     userPosts = await Post.aggregate([
                         {
-                            "$match": {
-                                "user": accountid
-                            }
-                        },
+                            $match: { _id: { $eq: { $toObjectId: accountid } } }
+
+                        }
+                        ,
+
                         {
                             "$project": {
                                 "title": 1,
