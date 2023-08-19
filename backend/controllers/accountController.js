@@ -66,6 +66,11 @@ exports.accountSortMethod = asyncHandler(async (req, res, next) => {
                 if (userIsAccountHolder) {
                     userPosts = await Post.aggregate([
                         {
+                            "$match": {
+                                "user": accountUser
+                            }
+                        },
+                        {
                             "$project": {
                                 "title": 1,
                                 "content": 1,
