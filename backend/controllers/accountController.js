@@ -67,7 +67,7 @@ exports.accountSortMethod = asyncHandler(async (req, res, next) => {
                     userPosts = await Post.aggregate([
                         {
                             "$match": {
-                                "user": accountUser
+                                "user.id": accountid
                             }
                         },
                         {
