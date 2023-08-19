@@ -5,23 +5,7 @@ const { body, validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken")
 const util = require('util');
 
-/* fetch user data from databse
-   user can exist or not exist.
-       if posts exists
-           if post private
-               is post user === user?
-                   allow access WITH edit button
-               else 
-                   403 
-           else if post not private
-               is post user === user?
-                   allow access WITH edit button
-               else
-                   allow access WITHOUT edit button.
-       else
-           render error page
-
-
+/*
    remarks:
       - have one base function for the general page. can choose to render edit button.
         for the postUpdate route, verify that user is the author
@@ -64,19 +48,13 @@ exports.postUpdateGet = asyncHandler(async (req, res, next) => {
     try {
         const post = await Post.findOne({ _id: req.params.postid }).populate("user").exec();
         const userIsAuthor = await isUserAuthor(req.token, post.user.username);
-
-
         if (userIsAuthor) {
             res.json({ post: post, edit: true, })
         } else {
             res.json({ msg: "PAGE DOES NOT EXIST. RENDER ERROR PAGE", edit: false })
-
         }
-
     } catch (e) {
-
         res.json({ msg: "PAGE DOES NOT EXIST. RENDER ERROR PAGE", isVisible: false })
-
     }
 })
 exports.postUpdatePost = [

@@ -70,10 +70,8 @@ export default function EditPost({backendUrl}) {
                     // update error messages state so the errors can be displayed 
                     setErrors(res.data.errors.errors);
                 }
-
             })
         } catch (e) {
-
             console.error(e)
         }
 

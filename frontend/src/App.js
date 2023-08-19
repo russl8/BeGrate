@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
-import axios from "axios"
 import "./App.css"
 import Home from './components/Home';
 import Layout from './components/Layout';
@@ -13,6 +12,7 @@ import Account from './components/Account';
 import { Box, TextField } from "@mui/material";
 
 
+import axios from "axios"
 
 function App() {
   let backendUrl = "https://begrate-backend.onrender.com"
